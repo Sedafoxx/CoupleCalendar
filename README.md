@@ -20,11 +20,11 @@ Events have fixed public windows (e.g. vintage store: 2pm–8pm). Dimitri may on
 
 | Layer | Choice |
 |-------|--------|
-| Framework | Next.js (App Router) |
-| Auth | NextAuth.js — Google OAuth (Dimitri only) |
-| Database | Supabase — stores events |
+| Framework | Next.js 16 (App Router) |
+| Auth | NextAuth.js v4 — Google OAuth (Dimitri only) |
+| Database | Supabase — stores events + Google tokens |
 | Calendar | Google Calendar API — read free/busy, write events |
-| Deploy | Vercel |
+| Deploy | Vercel (pending) |
 
 ## Pages
 
@@ -33,16 +33,29 @@ Events have fixed public windows (e.g. vintage store: 2pm–8pm). Dimitri may on
 
 ## Data Model
 
-### `events` table (Supabase)
+### `events` table (Supabase) ✅ done
 ```
-id          uuid PK
-title       text
-location    text
-date        date
-start_time  time
-end_time    time
-created_at  timestamptz
+id          uuid PK default gen_random_uuid()
+title       text not null
+location    text not null
+date        date not null
+start_time  time not null
+end_time    time not null
+created_at  timestamptz default now()
 ```
+
+### `google_tokens` table (Supabase) — CREATE THIS NEXT SESSION
+```sql
+create table google_tokens (
+  id integer primary key default 1,
+  access_token text,
+  refresh_token text,
+  expires_at bigint,
+  constraint single_row check (id = 1)
+);
+insert into google_tokens (id) values (1);
+```
+Populated automatically when Dimitri logs in. Used for partner booking (no session needed).
 
 ## Key Decisions
 
@@ -51,6 +64,7 @@ created_at  timestamptz
 - No notifications — Dimitri checks his own calendar
 - No DB for calendar data — Google Cal is source of truth
 - Events are independent of Dimitri's availability; app shows intersection at render time
+- `proxy.ts` (not `middleware.ts`) — Next.js 16 renamed middleware to proxy
 
 ## Dev Setup
 
@@ -59,16 +73,29 @@ npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env.local` and fill in:
-- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — Google OAuth app
-- `NEXTAUTH_SECRET` — random string
-- `NEXTAUTH_URL` — `http://localhost:3000` locally
-- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase project
+Copy `.env.example` to `.env.local` and fill in all values (already done locally).
 
-## Setup Checklist
+## Progress
 
-- [ ] Google Cloud project + OAuth credentials (Calendar API scope)
-- [ ] Supabase project + `events` table
-- [ ] `/` dashboard with event CRUD
-- [ ] `/plan` partner view with intersection logic
-- [ ] Vercel deploy + env vars
+- [x] Google Cloud project + OAuth credentials (Calendar API scopes)
+- [x] Supabase project (`flsgxwhozgdeekgplkep.supabase.co`) + `events` table
+- [x] `.env.local` configured
+- [x] NextAuth Google OAuth — working locally
+- [x] Dashboard `/` — event CRUD working
+- [x] `/plan` partner view — UI built
+- [ ] `google_tokens` table in Supabase — **DO THIS FIRST next session**
+- [ ] End-to-end test: add event → open /plan → book slot → verify Google Cal
+- [ ] Vercel deploy
+- [ ] Add production URL to Google Cloud OAuth redirect URIs
+- [ ] Set `NEXTAUTH_URL` to production URL in Vercel env vars
+
+## Vercel Deploy (next session)
+
+```bash
+npx vercel        # first deploy / login
+npx vercel --prod # production
+```
+
+After deploy:
+1. Copy all `.env.local` vars to Vercel project settings → Environment Variables
+2. Google Cloud Console → OAuth credentials → add `https://<vercel-url>/api/auth/callback/google` to Authorized redirect URIs
