@@ -1,65 +1,184 @@
-import Image from "next/image";
+'use client'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import { useState, useEffect } from 'react'
+import type { Event } from '@/lib/supabase'
 
-export default function Home() {
+export default function Dashboard() {
+  const { data: session, status } = useSession()
+  const [events, setEvents] = useState<Event[]>([])
+  const [loading, setLoading] = useState(true)
+  const [form, setForm] = useState({
+    title: '',
+    location: '',
+    date: '',
+    start_time: '',
+    end_time: '',
+  })
+  const [submitting, setSubmitting] = useState(false)
+
+  useEffect(() => {
+    if (status === 'authenticated') fetchEvents()
+  }, [status])
+
+  async function fetchEvents() {
+    setLoading(true)
+    const res = await fetch('/api/events')
+    const data = await res.json()
+    setEvents(Array.isArray(data) ? data : [])
+    setLoading(false)
+  }
+
+  async function addEvent(e: React.FormEvent) {
+    e.preventDefault()
+    setSubmitting(true)
+    await fetch('/api/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form),
+    })
+    setForm({ title: '', location: '', date: '', start_time: '', end_time: '' })
+    await fetchEvents()
+    setSubmitting(false)
+  }
+
+  async function deleteEvent(id: string) {
+    await fetch(`/api/events/${id}`, { method: 'DELETE' })
+    setEvents(prev => prev.filter(e => e.id !== id))
+  }
+
+  if (status === 'loading') {
+    return <div className="p-8 text-stone-400">Loading...</div>
+  }
+
+  if (!session) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <h1 className="text-3xl font-bold">CoupleCalendar</h1>
+          <p className="text-stone-500">Plan dates around your real schedule.</p>
+          <button
+            onClick={() => signIn('google')}
+            className="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition"
+          >
+            Sign in with Google
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="max-w-2xl mx-auto p-6 space-y-8">
+      <header className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">CoupleCalendar</h1>
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-stone-500">{session.user?.email}</span>
+          <button
+            onClick={() => signOut()}
+            className="text-sm text-stone-500 hover:text-stone-900 transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Sign out
+          </button>
+        </div>
+      </header>
+
+      <section className="space-y-3">
+        <h2 className="font-semibold text-lg">Add Event</h2>
+        <form onSubmit={addEvent} className="bg-white border border-stone-200 rounded-xl p-4 space-y-3">
+          <input
+            required
+            placeholder="Event title (e.g. Vintage store opening)"
+            value={form.title}
+            onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+            className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+          />
+          <input
+            required
+            placeholder="Location"
+            value={form.location}
+            onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
+            className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+          />
+          <input
+            required
+            type="date"
+            value={form.date}
+            onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
+            className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+          />
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label className="text-xs text-stone-500 block mb-1">Event opens</label>
+              <input
+                required
+                type="time"
+                value={form.start_time}
+                onChange={e => setForm(f => ({ ...f, start_time: e.target.value }))}
+                className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+              />
+            </div>
+            <div className="flex-1">
+              <label className="text-xs text-stone-500 block mb-1">Event closes</label>
+              <input
+                required
+                type="time"
+                value={form.end_time}
+                onChange={e => setForm(f => ({ ...f, end_time: e.target.value }))}
+                className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            disabled={submitting}
+            className="w-full bg-stone-900 text-white py-2 rounded-lg text-sm hover:bg-stone-700 transition disabled:opacity-50"
           >
-            Documentation
+            {submitting ? 'Adding...' : 'Add Event'}
+          </button>
+        </form>
+      </section>
+
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold text-lg">Your Events</h2>
+          <a
+            href="/plan"
+            target="_blank"
+            className="text-sm text-stone-500 hover:text-stone-900 underline"
+          >
+            Open partner view ↗
           </a>
         </div>
-      </main>
+
+        {loading ? (
+          <p className="text-stone-400 text-sm">Loading...</p>
+        ) : events.length === 0 ? (
+          <p className="text-stone-400 text-sm">No events yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {events.map(ev => (
+              <li
+                key={ev.id}
+                className="bg-white border border-stone-200 rounded-xl p-4 flex items-start justify-between gap-4"
+              >
+                <div>
+                  <p className="font-medium">{ev.title}</p>
+                  <p className="text-sm text-stone-500">{ev.location}</p>
+                  <p className="text-xs text-stone-400 mt-1">
+                    {ev.date} · {ev.start_time}–{ev.end_time}
+                  </p>
+                </div>
+                <button
+                  onClick={() => deleteEvent(ev.id)}
+                  className="text-stone-300 hover:text-red-400 transition text-sm shrink-0"
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
-  );
+  )
 }
