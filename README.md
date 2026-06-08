@@ -52,12 +52,23 @@ created_at  timestamptz
 - No DB for calendar data — Google Cal is source of truth
 - Events are independent of Dimitri's availability; app shows intersection at render time
 
-## Setup (TODO)
+## Dev Setup
 
-- [ ] `npx create-next-app` scaffold
-- [ ] NextAuth + Google provider
+```bash
+npm install
+npm run dev
+```
+
+Copy `.env.example` to `.env.local` and fill in:
+- `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — Google OAuth app
+- `NEXTAUTH_SECRET` — random string
+- `NEXTAUTH_URL` — `http://localhost:3000` locally
+- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase project
+
+## Setup Checklist
+
+- [ ] Google Cloud project + OAuth credentials (Calendar API scope)
 - [ ] Supabase project + `events` table
-- [ ] Google Calendar API: free/busy read + event write
 - [ ] `/` dashboard with event CRUD
 - [ ] `/plan` partner view with intersection logic
 - [ ] Vercel deploy + env vars
