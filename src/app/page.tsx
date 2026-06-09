@@ -1,24 +1,36 @@
 'use client'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import type { Event } from '@/lib/supabase'
+
+interface ChatMsg {
+  role: 'user' | 'assistant'
+  text: string
+  imageUrl?: string
+  event?: Event
+}
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
-  const [form, setForm] = useState({
-    title: '',
-    location: '',
-    date: '',
-    start_time: '',
-    end_time: '',
-  })
-  const [submitting, setSubmitting] = useState(false)
+
+  const [messages, setMessages] = useState<ChatMsg[]>([])
+  const [input, setInput] = useState('')
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [sending, setSending] = useState(false)
+
+  const chatEndRef = useRef<HTMLDivElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (status === 'authenticated') fetchEvents()
   }, [status])
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, sending])
 
   async function fetchEvents() {
     setLoading(true)
@@ -28,22 +40,65 @@ export default function Dashboard() {
     setLoading(false)
   }
 
-  async function addEvent(e: React.FormEvent) {
-    e.preventDefault()
-    setSubmitting(true)
-    await fetch('/api/events', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    })
-    setForm({ title: '', location: '', date: '', start_time: '', end_time: '' })
-    await fetchEvents()
-    setSubmitting(false)
-  }
-
   async function deleteEvent(id: string) {
     await fetch(`/api/events/${id}`, { method: 'DELETE' })
     setEvents(prev => prev.filter(e => e.id !== id))
+  }
+
+  async function sendMessage(e: React.FormEvent) {
+    e.preventDefault()
+    if ((!input.trim() && !imageFile) || sending) return
+    setSending(true)
+
+    const userMsg: ChatMsg = {
+      role: 'user',
+      text: input.trim(),
+      imageUrl: imagePreview ?? undefined,
+    }
+    setMessages(prev => [...prev, userMsg])
+
+    const currentInput = input.trim()
+    const currentImage = imageFile
+    setInput('')
+    setImageFile(null)
+    setImagePreview(null)
+
+    const formData = new FormData()
+    if (currentInput) formData.append('message', currentInput)
+    if (currentImage) formData.append('image', currentImage)
+
+    try {
+      const res = await fetch('/api/chat', { method: 'POST', body: formData })
+      const data = await res.json()
+      const assistantMsg: ChatMsg = {
+        role: 'assistant',
+        text: data.reply ?? 'Something went wrong.',
+        event: data.event ?? undefined,
+      }
+      setMessages(prev => [...prev, assistantMsg])
+      if (data.event) fetchEvents()
+    } catch {
+      setMessages(prev => [
+        ...prev,
+        { role: 'assistant', text: 'Network error. Try again?' },
+      ])
+    }
+
+    setSending(false)
+  }
+
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setImageFile(file)
+    setImagePreview(URL.createObjectURL(file))
+    e.target.value = ''
+  }
+
+  function removeImage() {
+    setImageFile(null)
+    if (imagePreview) URL.revokeObjectURL(imagePreview)
+    setImagePreview(null)
   }
 
   if (status === 'loading') {
@@ -54,8 +109,9 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold">CoupleCalendar</h1>
-          <p className="text-stone-500">Plan dates around your real schedule.</p>
+          <p className="text-4xl">♡</p>
+          <h1 className="text-3xl font-bold">Dimi Time</h1>
+          <p className="text-stone-500">Time together, planned with love.</p>
           <button
             onClick={() => signIn('google')}
             className="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition"
@@ -70,7 +126,7 @@ export default function Dashboard() {
   return (
     <div className="max-w-2xl mx-auto p-6 space-y-8">
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">CoupleCalendar</h1>
+        <h1 className="text-2xl font-bold">Dimi Time</h1>
         <div className="flex items-center gap-3">
           <span className="text-sm text-stone-500">{session.user?.email}</span>
           <button
@@ -82,71 +138,124 @@ export default function Dashboard() {
         </div>
       </header>
 
+      {/* Chat section */}
       <section className="space-y-3">
         <h2 className="font-semibold text-lg">Add Event</h2>
-        <form onSubmit={addEvent} className="bg-white border border-stone-200 rounded-xl p-4 space-y-3">
-          <input
-            required
-            placeholder="Event title (e.g. Vintage store opening)"
-            value={form.title}
-            onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
-          />
-          <input
-            required
-            placeholder="Location"
-            value={form.location}
-            onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
-            className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
-          />
-          <input
-            required
-            type="date"
-            value={form.date}
-            onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-            className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
-          />
-          <div className="flex gap-3">
-            <div className="flex-1">
-              <label className="text-xs text-stone-500 block mb-1">Event opens</label>
-              <input
-                required
-                type="time"
-                value={form.start_time}
-                onChange={e => setForm(f => ({ ...f, start_time: e.target.value }))}
-                className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
-              />
+
+        {/* Messages */}
+        <div className="bg-stone-50 border border-stone-200 rounded-xl p-4 h-80 overflow-y-auto flex flex-col gap-3">
+          {messages.length === 0 && (
+            <p className="text-stone-400 text-sm text-center m-auto">
+              Tell me about an event or drop a screenshot!
+            </p>
+          )}
+          {messages.map((msg, i) => (
+            <div
+              key={i}
+              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+            >
+              <div
+                className={`max-w-xs rounded-2xl px-4 py-2 text-sm space-y-1 ${
+                  msg.role === 'user'
+                    ? 'bg-stone-900 text-white rounded-tr-sm'
+                    : 'bg-white border border-stone-200 rounded-tl-sm'
+                }`}
+              >
+                {msg.imageUrl && (
+                  <img
+                    src={msg.imageUrl}
+                    alt="Uploaded"
+                    className="rounded-lg max-h-40 object-cover w-full"
+                  />
+                )}
+                {msg.text && <p className="whitespace-pre-wrap leading-relaxed">{msg.text}</p>}
+                {msg.event && (
+                  <div className="mt-2 pt-2 border-t border-stone-100 space-y-0.5">
+                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">
+                      Added to calendar
+                    </p>
+                    <p className="font-semibold">{msg.event.title}</p>
+                    <p className="text-xs text-stone-500">
+                      {msg.event.date} · {msg.event.start_time}–{msg.event.end_time}
+                    </p>
+                    {msg.event.location && (
+                      <p className="text-xs text-stone-500">{msg.event.location}</p>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="flex-1">
-              <label className="text-xs text-stone-500 block mb-1">Event closes</label>
-              <input
-                required
-                type="time"
-                value={form.end_time}
-                onChange={e => setForm(f => ({ ...f, end_time: e.target.value }))}
-                className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
-              />
+          ))}
+          {sending && (
+            <div className="flex justify-start">
+              <div className="bg-white border border-stone-200 rounded-2xl rounded-tl-sm px-4 py-2 text-sm text-stone-400">
+                Thinking...
+              </div>
             </div>
+          )}
+          <div ref={chatEndRef} />
+        </div>
+
+        {/* Image preview */}
+        {imagePreview && (
+          <div className="relative inline-flex">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="h-16 w-16 rounded-lg object-cover border border-stone-200"
+            />
+            <button
+              onClick={removeImage}
+              className="absolute -top-1.5 -right-1.5 bg-stone-900 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center leading-none hover:bg-stone-700 transition"
+            >
+              ×
+            </button>
           </div>
+        )}
+
+        {/* Input bar */}
+        <form onSubmit={sendMessage} className="flex items-center gap-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleImageChange}
+          />
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            title="Attach image"
+            className="p-2 text-stone-400 hover:text-stone-700 transition text-lg"
+          >
+            📎
+          </button>
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder="Jazz festival Saturday 7pm at Central Park..."
+            className="flex-1 border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+          />
           <button
             type="submit"
-            disabled={submitting}
-            className="w-full bg-stone-900 text-white py-2 rounded-lg text-sm hover:bg-stone-700 transition disabled:opacity-50"
+            disabled={sending || (!input.trim() && !imageFile)}
+            className="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-stone-700 transition disabled:opacity-40"
           >
-            {submitting ? 'Adding...' : 'Add Event'}
+            Send
           </button>
         </form>
       </section>
 
+      {/* Events list */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-lg">Your Events</h2>
+          <h2 className="font-semibold text-lg">Our Plans</h2>
           <a
             href="/plan"
             target="_blank"
             className="text-sm text-stone-500 hover:text-stone-900 underline"
           >
-            Open partner view ↗
+            Share with your love ♡
           </a>
         </div>
 

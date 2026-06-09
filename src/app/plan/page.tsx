@@ -73,11 +73,11 @@ export default function PlanPage() {
 
   if (booked) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center space-y-2">
-          <div className="text-4xl">🗓</div>
-          <h2 className="text-xl font-semibold">Booked!</h2>
-          <p className="text-stone-500">It&apos;s on the calendar.</p>
+      <div className="min-h-screen flex items-center justify-center bg-rose-50">
+        <div className="text-center space-y-3">
+          <div className="text-5xl">♡</div>
+          <h2 className="text-2xl font-bold">It&apos;s a date!</h2>
+          <p className="text-stone-500">Dimi will see you then.</p>
         </div>
       </div>
     )
@@ -86,35 +86,36 @@ export default function PlanPage() {
   return (
     <div className="max-w-xl mx-auto p-6 space-y-6">
       <header className="space-y-1">
-        <h1 className="text-2xl font-bold">Pick a date</h1>
-        <p className="text-stone-500 text-sm">These are events with time where Dimitri is free.</p>
+        <p className="text-2xl">♡</p>
+        <h1 className="text-2xl font-bold">Dimi Time</h1>
+        <p className="text-stone-500 text-sm">Pick a moment — Dimi is keeping these free for you.</p>
       </header>
 
       {loading && <p className="text-stone-400 text-sm">Checking calendar...</p>}
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
       {!loading && !error && data.length === 0 && (
-        <p className="text-stone-400 text-sm">No available slots right now. Check back soon.</p>
+        <p className="text-stone-400 text-sm">No free moments right now. Check back soon 💕</p>
       )}
 
       <ul className="space-y-4">
         {data.map(({ event, freeSlots }) => (
-          <li key={event.id} className="bg-white border border-stone-200 rounded-xl overflow-hidden">
-            <div className="p-4 border-b border-stone-100">
+          <li key={event.id} className="bg-white border border-rose-100 rounded-xl overflow-hidden">
+            <div className="p-4 border-b border-rose-50">
               <p className="font-semibold">{event.title}</p>
               <p className="text-sm text-stone-500">{event.location}</p>
               <p className="text-xs text-stone-400 mt-1">{fmtDate(event.date)}</p>
             </div>
             <div className="p-3 space-y-2">
-              <p className="text-xs text-stone-400 uppercase tracking-wide px-1">Available windows</p>
+              <p className="text-xs text-rose-300 uppercase tracking-wide px-1">Free for you</p>
               {freeSlots.map((slot, i) => (
                 <button
                   key={i}
                   onClick={() => openBooking(event, slot)}
-                  className="w-full text-left px-3 py-2 rounded-lg bg-stone-50 hover:bg-stone-100 transition text-sm flex justify-between items-center"
+                  className="w-full text-left px-3 py-2 rounded-lg bg-rose-50 hover:bg-rose-100 transition text-sm flex justify-between items-center"
                 >
                   <span>{fmt(slot.start)} – {fmt(slot.end)}</span>
-                  <span className="text-stone-400 text-xs">Book →</span>
+                  <span className="text-rose-400 text-xs">Pick this ♡</span>
                 </button>
               ))}
             </div>
@@ -126,6 +127,7 @@ export default function PlanPage() {
         <div className="fixed inset-0 bg-black/40 flex items-end sm:items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl w-full max-w-sm p-6 space-y-4">
             <div>
+              <p className="text-xl mb-1">♡</p>
               <h3 className="font-semibold text-lg">{booking.event.title}</h3>
               <p className="text-sm text-stone-500">{booking.event.location} · {fmtDate(booking.event.date)}</p>
             </div>
@@ -146,7 +148,7 @@ export default function PlanPage() {
                       d.setHours(Number(h), Number(m), 0, 0)
                       setBooking(b => b ? { ...b, start: d.toISOString() } : b)
                     }}
-                    className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+                    className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
                   />
                 </div>
                 <div className="flex-1">
@@ -163,7 +165,7 @@ export default function PlanPage() {
                       d.setHours(Number(h), Number(m), 0, 0)
                       setBooking(b => b ? { ...b, end: d.toISOString() } : b)
                     }}
-                    className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+                    className="w-full border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
                   />
                 </div>
               </div>
@@ -174,14 +176,14 @@ export default function PlanPage() {
                   onClick={() => setBooking(null)}
                   className="flex-1 border border-stone-200 py-2 rounded-lg text-sm hover:bg-stone-50 transition"
                 >
-                  Cancel
+                  Maybe not
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex-1 bg-stone-900 text-white py-2 rounded-lg text-sm hover:bg-stone-700 transition disabled:opacity-50"
+                  className="flex-1 bg-rose-500 text-white py-2 rounded-lg text-sm hover:bg-rose-600 transition disabled:opacity-50"
                 >
-                  {submitting ? 'Booking...' : 'Confirm'}
+                  {submitting ? 'Saving...' : "It's a date ♡"}
                 </button>
               </div>
             </form>

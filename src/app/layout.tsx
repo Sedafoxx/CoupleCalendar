@@ -6,8 +6,8 @@ import Providers from "./providers";
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CoupleCalendar",
-  description: "Plan dates together",
+  title: "Dimi Time",
+  description: "Time together, planned with love",
 };
 
 export default function RootLayout({
