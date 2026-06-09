@@ -135,7 +135,7 @@ export default function PlanPage() {
           <p className="text-5xl">💌</p>
           <h1 className="text-3xl font-bold text-rose-700">Hey Theresa,</h1>
           <p className="text-rose-400 font-medium text-lg">wann hast du Zeit? ♡</p>
-          <p className="text-stone-400 text-sm pt-1">Dimi hält diese Zeiten frei — nur für dich.</p>
+          <p className="text-stone-400 text-sm pt-1">Dimi hat da noch nichts vor. Such dir was aus :)</p>
         </header>
 
         {loading && (
