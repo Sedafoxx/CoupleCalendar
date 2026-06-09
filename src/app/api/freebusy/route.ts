@@ -1,69 +1,30 @@
 import { getCalendarClient } from '@/lib/google-auth'
-import { supabase } from '@/lib/supabase'
 
-export async function GET() {
-  const { data: events, error } = await supabase
-    .from('events')
-    .select('*')
-    .order('date', { ascending: true })
+const TZ = 'Europe/Vienna'
+const DAY_START_H = 9
+const DAY_END_H = 22
+const MIN_SLOT_MIN = 60
+const DAYS_AHEAD = 14
 
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  if (!events?.length) return Response.json([])
-
-  let calendar
-  try {
-    calendar = await getCalendarClient()
-  } catch {
-    return Response.json({ error: 'Calendar not connected. Dimitri must log in first.' }, { status: 503 })
-  }
-
-  const now = new Date()
-  const results = []
-
-  for (const event of events) {
-    const eventStart = parseVienna(event.date, event.start_time)
-    const eventEnd = parseVienna(event.date, event.end_time)
-
-    if (eventEnd < now) continue
-
-    try {
-      const res = await calendar.freebusy.query({
-        requestBody: {
-          timeMin: eventStart.toISOString(),
-          timeMax: eventEnd.toISOString(),
-          items: [{ id: 'primary' }],
-        },
-      })
-
-      const busy = res.data.calendars?.primary?.busy ?? []
-      const freeSlots = computeFreeSlots(eventStart, eventEnd, busy as BusyBlock[])
-
-      if (freeSlots.length > 0) {
-        results.push({ event, freeSlots })
-      }
-    } catch {
-      // skip events where calendar query fails
-    }
-  }
-
-  return Response.json(results)
-}
-
-function parseVienna(dateStr: string, timeStr: string): Date {
+function viennaDate(dateStr: string, timeH: number): Date {
   const probe = new Date(`${dateStr}T12:00:00Z`)
   const viennaHour = parseInt(
-    new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Vienna', hour: 'numeric', hour12: false }).format(probe)
+    new Intl.DateTimeFormat('en-US', { timeZone: TZ, hour: 'numeric', hour12: false }).format(probe)
   )
   const offset = viennaHour - 12
   const tz = `${offset >= 0 ? '+' : '-'}${String(Math.abs(offset)).padStart(2, '0')}:00`
-  return new Date(`${dateStr}T${timeStr.slice(0, 5)}:00${tz}`)
+  return new Date(`${dateStr}T${String(timeH).padStart(2, '0')}:00:00${tz}`)
+}
+
+function isoDateVienna(date: Date): string {
+  return date.toLocaleDateString('sv-SE', { timeZone: TZ })
 }
 
 type BusyBlock = { start?: string | null; end?: string | null }
 
-function computeFreeSlots(start: Date, end: Date, busy: BusyBlock[]) {
+function computeFreeSlots(dayStart: Date, dayEnd: Date, busy: BusyBlock[]) {
   const slots: { start: string; end: string }[] = []
-  let cursor = start
+  let cursor = dayStart
 
   const sorted = busy
     .filter((b): b is { start: string; end: string } => !!b.start && !!b.end)
@@ -72,14 +33,82 @@ function computeFreeSlots(start: Date, end: Date, busy: BusyBlock[]) {
 
   for (const block of sorted) {
     if (block.start > cursor) {
-      slots.push({ start: cursor.toISOString(), end: block.start.toISOString() })
+      const gap = (block.start.getTime() - cursor.getTime()) / 60000
+      if (gap >= MIN_SLOT_MIN) {
+        slots.push({ start: cursor.toISOString(), end: block.start.toISOString() })
+      }
     }
     if (block.end > cursor) cursor = block.end
   }
 
-  if (cursor < end) {
-    slots.push({ start: cursor.toISOString(), end: end.toISOString() })
+  if (cursor < dayEnd) {
+    const gap = (dayEnd.getTime() - cursor.getTime()) / 60000
+    if (gap >= MIN_SLOT_MIN) {
+      slots.push({ start: cursor.toISOString(), end: dayEnd.toISOString() })
+    }
   }
 
   return slots
+}
+
+export async function GET() {
+  let calendar
+  try {
+    calendar = await getCalendarClient()
+  } catch {
+    return Response.json({ error: 'Kalender nicht verbunden. Dimitri muss sich zuerst einloggen.' }, { status: 503 })
+  }
+
+  const now = new Date()
+  const todayStr = isoDateVienna(now)
+
+  // Build list of next DAYS_AHEAD dates
+  const dates: string[] = []
+  for (let i = 0; i < DAYS_AHEAD; i++) {
+    const d = new Date(now)
+    d.setDate(d.getDate() + i)
+    dates.push(isoDateVienna(d))
+  }
+
+  const timeMin = viennaDate(todayStr, DAY_START_H).toISOString()
+  const timeMax = viennaDate(dates[dates.length - 1], DAY_END_H).toISOString()
+
+  const res = await calendar.freebusy.query({
+    requestBody: {
+      timeMin,
+      timeMax,
+      timeZone: TZ,
+      items: [{ id: 'primary' }],
+    },
+  })
+
+  const busy: BusyBlock[] = res.data.calendars?.primary?.busy ?? []
+
+  const results = []
+
+  for (const dateStr of dates) {
+    const dayStart = viennaDate(dateStr, DAY_START_H)
+    const dayEnd = viennaDate(dateStr, DAY_END_H)
+
+    // Skip days fully in the past
+    if (dayEnd < now) continue
+
+    // Clamp today's start to now
+    const effectiveStart = dayStart < now ? now : dayStart
+
+    // Filter busy blocks to this day
+    const dayBusy = busy.filter(b => {
+      if (!b.start || !b.end) return false
+      const bs = new Date(b.start)
+      const be = new Date(b.end)
+      return be > effectiveStart && bs < dayEnd
+    })
+
+    const freeSlots = computeFreeSlots(effectiveStart, dayEnd, dayBusy)
+    if (freeSlots.length > 0) {
+      results.push({ date: dateStr, freeSlots })
+    }
+  }
+
+  return Response.json(results)
 }

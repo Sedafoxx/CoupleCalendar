@@ -1,9 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
-import type { Event } from '@/lib/supabase'
 
 type FreeSlot = { start: string; end: string }
-type EventWithSlots = { event: Event; freeSlots: FreeSlot[] }
+type DateSlots = { date: string; freeSlots: FreeSlot[] }
 
 function fmt(iso: string) {
   return new Date(iso).toLocaleTimeString('de-AT', { hour: '2-digit', minute: '2-digit' })
@@ -33,11 +32,11 @@ const HEARTS = [
 ]
 
 export default function PlanPage() {
-  const [data, setData] = useState<EventWithSlots[]>([])
+  const [data, setData] = useState<DateSlots[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [booking, setBooking] = useState<{
-    event: Event
+    date: string
     slot: FreeSlot
     start: string
     end: string
@@ -60,8 +59,8 @@ export default function PlanPage() {
 
   useEffect(() => { loadSlots() }, [])
 
-  function openBooking(event: Event, slot: FreeSlot) {
-    setBooking({ event, slot, start: slot.start, end: slot.end })
+  function openBooking(date: string, slot: FreeSlot) {
+    setBooking({ date, slot, start: slot.start, end: slot.end })
   }
 
   async function submitBooking(e: React.FormEvent) {
@@ -73,8 +72,8 @@ export default function PlanPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title: booking.event.title,
-        location: booking.event.location,
+        title: 'Dimi & Theresa',
+        location: '',
         startTime: booking.start,
         endTime: booking.end,
       }),
@@ -153,19 +152,17 @@ export default function PlanPage() {
         )}
 
         <ul className="space-y-4">
-          {data.map(({ event, freeSlots }) => (
-            <li key={event.id} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl overflow-hidden shadow-sm">
+          {data.map(({ date, freeSlots }) => (
+            <li key={date} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl overflow-hidden shadow-sm">
               <div className="px-5 py-4 border-b border-rose-50">
-                <p className="font-semibold text-stone-800">{event.title}</p>
-                {event.location && <p className="text-sm text-stone-400 mt-0.5">📍 {event.location}</p>}
-                <p className="text-xs text-rose-300 mt-1">{fmtDate(event.date)}</p>
+                <p className="font-semibold text-stone-800">{fmtDate(date)}</p>
               </div>
               <div className="px-4 py-3 space-y-2">
                 <p className="text-xs text-rose-300 uppercase tracking-widest px-1">Dimi ist frei</p>
                 {freeSlots.map((slot, i) => (
                   <button
                     key={i}
-                    onClick={() => openBooking(event, slot)}
+                    onClick={() => openBooking(date, slot)}
                     className="w-full text-left px-4 py-3 rounded-xl bg-rose-50 hover:bg-rose-100 active:scale-95 transition-all text-sm flex justify-between items-center group"
                   >
                     <span className="font-medium text-stone-700">{fmt(slot.start)} – {fmt(slot.end)} Uhr</span>
@@ -183,10 +180,8 @@ export default function PlanPage() {
           <div className="bg-white rounded-3xl w-full max-w-sm p-6 space-y-5 shadow-xl">
             <div className="text-center space-y-1">
               <p className="text-3xl">🗓️</p>
-              <h3 className="font-bold text-xl text-stone-800">{booking.event.title}</h3>
-              <p className="text-sm text-stone-400">
-                {booking.event.location && `${booking.event.location} · `}{fmtDate(booking.event.date)}
-              </p>
+              <h3 className="font-bold text-xl text-stone-800">{fmtDate(booking.date)}</h3>
+              <p className="text-sm text-stone-400">Wann sollen wir uns treffen?</p>
             </div>
 
             <form onSubmit={submitBooking} className="space-y-4">
