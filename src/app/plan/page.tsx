@@ -30,7 +30,9 @@ export default function PlanPage() {
   const [booked, setBooked] = useState(false)
   const [submitting, setSubmitting] = useState(false)
 
-  useEffect(() => {
+  function loadSlots() {
+    setLoading(true)
+    setError('')
     fetch('/api/freebusy')
       .then(r => r.json())
       .then(d => {
@@ -39,7 +41,9 @@ export default function PlanPage() {
       })
       .catch(() => setError('Failed to load. Try again.'))
       .finally(() => setLoading(false))
-  }, [])
+  }
+
+  useEffect(() => { loadSlots() }, [])
 
   function openBooking(event: Event, slot: FreeSlot) {
     setBooking({ event, slot, start: slot.start, end: slot.end })
@@ -74,10 +78,16 @@ export default function PlanPage() {
   if (booked) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-rose-50">
-        <div className="text-center space-y-3">
+        <div className="text-center space-y-4">
           <div className="text-5xl">♡</div>
           <h2 className="text-2xl font-bold">It&apos;s a date!</h2>
           <p className="text-stone-500">Dimi will see you then.</p>
+          <button
+            onClick={() => { setBooked(false); loadSlots(); }}
+            className="text-sm text-rose-400 hover:text-rose-600 underline transition"
+          >
+            Book another time
+          </button>
         </div>
       </div>
     )

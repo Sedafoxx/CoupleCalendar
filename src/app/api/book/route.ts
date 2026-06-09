@@ -1,4 +1,5 @@
 import { getCalendarClient } from '@/lib/google-auth'
+import { supabase } from '@/lib/supabase'
 import { NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
@@ -23,6 +24,22 @@ export async function POST(req: NextRequest) {
       start: { dateTime: startTime },
       end: { dateTime: endTime },
     },
+  })
+
+  // Mirror to Supabase so it shows in the dashboard
+  const start = new Date(startTime)
+  const end = new Date(endTime)
+  const pad = (n: number) => String(n).padStart(2, '0')
+  const date = `${start.getFullYear()}-${pad(start.getMonth() + 1)}-${pad(start.getDate())}`
+  const startT = `${pad(start.getHours())}:${pad(start.getMinutes())}`
+  const endT = `${pad(end.getHours())}:${pad(end.getMinutes())}`
+
+  await supabase.from('events').insert({
+    title,
+    location: location ?? '',
+    date,
+    start_time: startT,
+    end_time: endT,
   })
 
   return Response.json({ id: event.data.id }, { status: 201 })
