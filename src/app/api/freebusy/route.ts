@@ -73,16 +73,21 @@ export async function GET() {
   const timeMin = viennaDate(todayStr, DAY_START_H).toISOString()
   const timeMax = viennaDate(dates[dates.length - 1], DAY_END_H).toISOString()
 
+  const WORK_CAL = 'buryak2001@gmail.com'
+
   const res = await calendar.freebusy.query({
     requestBody: {
       timeMin,
       timeMax,
       timeZone: TZ,
-      items: [{ id: 'primary' }],
+      items: [{ id: 'primary' }, { id: WORK_CAL }],
     },
   })
 
-  const busy: BusyBlock[] = res.data.calendars?.primary?.busy ?? []
+  const busy: BusyBlock[] = [
+    ...(res.data.calendars?.['primary']?.busy ?? []),
+    ...(res.data.calendars?.[WORK_CAL]?.busy ?? []),
+  ]
 
   const results = []
 
