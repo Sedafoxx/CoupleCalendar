@@ -21,8 +21,8 @@ export async function GET() {
   const results = []
 
   for (const event of events) {
-    const eventStart = new Date(`${event.date}T${event.start_time}`)
-    const eventEnd = new Date(`${event.date}T${event.end_time}`)
+    const eventStart = parseVienna(event.date, event.start_time)
+    const eventEnd = parseVienna(event.date, event.end_time)
 
     if (eventEnd < now) continue
 
@@ -47,6 +47,16 @@ export async function GET() {
   }
 
   return Response.json(results)
+}
+
+function parseVienna(dateStr: string, timeStr: string): Date {
+  const probe = new Date(`${dateStr}T12:00:00Z`)
+  const viennaHour = parseInt(
+    new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Vienna', hour: 'numeric', hour12: false }).format(probe)
+  )
+  const offset = viennaHour - 12
+  const tz = `${offset >= 0 ? '+' : '-'}${String(Math.abs(offset)).padStart(2, '0')}:00`
+  return new Date(`${dateStr}T${timeStr.slice(0, 5)}:00${tz}`)
 }
 
 type BusyBlock = { start?: string | null; end?: string | null }

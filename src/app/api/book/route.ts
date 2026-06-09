@@ -2,6 +2,12 @@ import { getCalendarClient } from '@/lib/google-auth'
 import { supabase } from '@/lib/supabase'
 import { NextRequest } from 'next/server'
 
+function utcToVienna(iso: string): { date: string; time: string } {
+  const str = new Date(iso).toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }) // "YYYY-MM-DD HH:MM:SS"
+  const [date, time] = str.split(' ')
+  return { date, time: time.slice(0, 5) }
+}
+
 export async function POST(req: NextRequest) {
   const { title, location, startTime, endTime } = await req.json()
 
@@ -27,12 +33,9 @@ export async function POST(req: NextRequest) {
   })
 
   // Mirror to Supabase so it shows in the dashboard
-  const start = new Date(startTime)
-  const end = new Date(endTime)
-  const pad = (n: number) => String(n).padStart(2, '0')
-  const date = `${start.getFullYear()}-${pad(start.getMonth() + 1)}-${pad(start.getDate())}`
-  const startT = `${pad(start.getHours())}:${pad(start.getMinutes())}`
-  const endT = `${pad(end.getHours())}:${pad(end.getMinutes())}`
+  // Convert UTC ISO times to Vienna local for storage
+  const { date, time: startT } = utcToVienna(startTime)
+  const { time: endT } = utcToVienna(endTime)
 
   await supabase.from('events').insert({
     title,
