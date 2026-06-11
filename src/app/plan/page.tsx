@@ -1,20 +1,20 @@
 'use client'
 import { useState, useEffect } from 'react'
+import type { Event } from '@/lib/supabase'
 
 type FreeSlot = { start: string; end: string }
 type DateSlots = { date: string; freeSlots: FreeSlot[] }
 
-function fmt(iso: string) {
-  return new Date(iso).toLocaleTimeString('de-AT', { hour: '2-digit', minute: '2-digit' })
-}
-
-function fmtDate(dateStr: string) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('de-AT', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-  })
-}
+const DEFAULTS = [
+  { emoji: '🍳', label: 'Kochen bei Dimi' },
+  { emoji: '🛍️', label: 'Vintage Shopping' },
+  { emoji: '☕', label: 'Kaffee & Kuchen' },
+  { emoji: '🎬', label: 'Filmabend' },
+  { emoji: '🌿', label: 'Spazieren gehen' },
+  { emoji: '🍷', label: 'Weinabend' },
+  { emoji: '🎵', label: 'Konzert' },
+  { emoji: '🎲', label: 'Spieleabend' },
+]
 
 const HEARTS = [
   { left: '5%',  size: '1.2rem', delay: '0s',    dur: '6s'  },
@@ -31,27 +31,54 @@ const HEARTS = [
   { left: '58%', size: '1.4rem', delay: '2.8s',  dur: '8s'  },
 ]
 
+function fmt(iso: string) {
+  return new Date(iso).toLocaleTimeString('de-AT', { hour: '2-digit', minute: '2-digit' })
+}
+
+function fmtDate(dateStr: string) {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('de-AT', {
+    weekday: 'long', month: 'long', day: 'numeric',
+  })
+}
+
+function toViennaHHMM(iso: string): string {
+  return new Date(iso).toLocaleTimeString('en-US', {
+    timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit', hour12: false,
+  })
+}
+
+function eventOverlapsSlot(event: Event, slot: FreeSlot): boolean {
+  const slotStart = toViennaHHMM(slot.start)
+  const slotEnd   = toViennaHHMM(slot.end)
+  return event.start_time < slotEnd && event.end_time > slotStart
+}
+
 export default function PlanPage() {
   const [data, setData] = useState<DateSlots[]>([])
+  const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [booking, setBooking] = useState<{
-    date: string
-    slot: FreeSlot
-    start: string
-    end: string
+    date: string; slot: FreeSlot; start: string; end: string
   } | null>(null)
+  const [idea, setIdea] = useState('')
+  const [customIdea, setCustomIdea] = useState('')
   const [booked, setBooked] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [joiningId, setJoiningId] = useState<string | null>(null)
+  const [joinedIds, setJoinedIds] = useState<string[]>([])
 
   function loadSlots() {
     setLoading(true)
     setError('')
-    fetch('/api/freebusy')
-      .then(r => r.json())
-      .then(d => {
-        if (d.error) setError(d.error)
-        else setData(Array.isArray(d) ? d : [])
+    Promise.all([
+      fetch('/api/freebusy').then(r => r.json()),
+      fetch('/api/events').then(r => r.json()),
+    ])
+      .then(([slots, evts]) => {
+        if (slots.error) setError(slots.error)
+        else setData(Array.isArray(slots) ? slots : [])
+        setEvents(Array.isArray(evts) ? evts : [])
       })
       .catch(() => setError('Laden fehlgeschlagen. Nochmal versuchen.'))
       .finally(() => setLoading(false))
@@ -59,9 +86,41 @@ export default function PlanPage() {
 
   useEffect(() => { loadSlots() }, [])
 
+  async function joinEvent(ev: Event) {
+    setJoiningId(ev.id)
+    const startIso = `${ev.date}T${ev.start_time}:00`
+    const endIso   = `${ev.date}T${ev.end_time}:00`
+    const offset = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Vienna', timeZoneName: 'shortOffset' })
+      .formatToParts(new Date(`${ev.date}T12:00:00Z`))
+      .find(p => p.type === 'timeZoneName')?.value ?? '+02:00'
+    const tz = offset.replace('GMT', '')
+    const res = await fetch('/api/book', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: ev.title,
+        location: ev.location,
+        startTime: `${startIso}${tz}`,
+        endTime:   `${endIso}${tz}`,
+      }),
+    })
+    if (res.ok) setJoinedIds(prev => [...prev, ev.id])
+    else setError('Konnte nicht beitreten. Nochmal versuchen.')
+    setJoiningId(null)
+  }
+
   function openBooking(date: string, slot: FreeSlot) {
     setBooking({ date, slot, start: slot.start, end: slot.end })
+    setIdea('')
+    setCustomIdea('')
   }
+
+  // Events on same date AND overlapping the selected slot
+  const dayEvents = booking
+    ? events.filter(e => e.date === booking.date && eventOverlapsSlot(e, booking.slot))
+    : []
+
+  const finalTitle = customIdea.trim() || idea || 'Dimi & Theresa'
 
   async function submitBooking(e: React.FormEvent) {
     e.preventDefault()
@@ -72,7 +131,7 @@ export default function PlanPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title: 'Dimi & Theresa',
+        title: finalTitle,
         location: '',
         startTime: booking.start,
         endTime: booking.end,
@@ -117,19 +176,15 @@ export default function PlanPage() {
           100% { transform: translateY(-95vh) scale(0.8); opacity: 0; }
         }
         .heart-float {
-          position: fixed;
-          bottom: -2rem;
+          position: fixed; bottom: -2rem;
           animation: floatUp linear infinite;
-          pointer-events: none;
-          user-select: none;
-          z-index: 0;
+          pointer-events: none; user-select: none; z-index: 0;
         }
       `}</style>
 
       <FloatingHearts />
 
       <div className="relative z-10 max-w-md mx-auto px-5 py-10 space-y-7">
-
         <header className="text-center space-y-2 pt-4">
           <p className="text-5xl">💌</p>
           <h1 className="text-3xl font-bold text-rose-700">Hey Theresa,</h1>
@@ -137,11 +192,39 @@ export default function PlanPage() {
           <p className="text-stone-400 text-sm pt-1">Dimi hat da noch nichts vor. Such dir was aus :)</p>
         </header>
 
-        {loading && (
-          <p className="text-center text-rose-300 text-sm animate-pulse">Lade Termine...</p>
-        )}
-        {error && (
-          <p className="text-center text-red-400 text-sm bg-red-50 rounded-xl px-4 py-3">{error}</p>
+        {loading && <p className="text-center text-rose-300 text-sm animate-pulse">Lade Termine...</p>}
+        {error && <p className="text-center text-red-400 text-sm bg-red-50 rounded-xl px-4 py-3">{error}</p>}
+
+        {/* Joinable events — Dimi is going, Theresa can join */}
+        {events.filter(e => e.joinable).length > 0 && (
+          <section className="space-y-3">
+            <p className="text-xs text-rose-400 uppercase tracking-widest text-center">Dimi ist dabei — willst du mit?</p>
+            <ul className="space-y-3">
+              {events.filter(e => e.joinable).map(ev => {
+                const joined = joinedIds.includes(ev.id)
+                return (
+                  <li key={ev.id} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-stone-800 truncate">{ev.title}</p>
+                      {ev.location && <p className="text-xs text-stone-400 truncate">{ev.location}</p>}
+                      <p className="text-xs text-rose-300 mt-0.5">{fmtDate(ev.date)} · {ev.start_time} – {ev.end_time} Uhr</p>
+                    </div>
+                    {joined ? (
+                      <span className="text-rose-400 text-sm shrink-0">💕 Dabei!</span>
+                    ) : (
+                      <button
+                        onClick={() => joinEvent(ev)}
+                        disabled={joiningId === ev.id}
+                        className="shrink-0 bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-50 shadow-sm"
+                      >
+                        {joiningId === ev.id ? '...' : 'Ich komme mit ♡'}
+                      </button>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
         )}
 
         {!loading && !error && data.length === 0 && (
@@ -156,6 +239,9 @@ export default function PlanPage() {
             <li key={date} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl overflow-hidden shadow-sm">
               <div className="px-5 py-4 border-b border-rose-50">
                 <p className="font-semibold text-stone-800">{fmtDate(date)}</p>
+                {events.filter(e => e.date === date).map(e => (
+                  <p key={e.id} className="text-xs text-rose-300 mt-0.5">📌 {e.title}{e.location ? ` · ${e.location}` : ''}</p>
+                ))}
               </div>
               <div className="px-4 py-3 space-y-2">
                 <p className="text-xs text-rose-300 uppercase tracking-widest px-1">Dimi ist frei</p>
@@ -177,14 +263,15 @@ export default function PlanPage() {
 
       {booking && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl w-full max-w-sm p-6 space-y-5 shadow-xl">
+          <div className="bg-white rounded-3xl w-full max-w-sm p-6 space-y-5 shadow-xl max-h-[90vh] overflow-y-auto">
             <div className="text-center space-y-1">
               <p className="text-3xl">🗓️</p>
               <h3 className="font-bold text-xl text-stone-800">{fmtDate(booking.date)}</h3>
               <p className="text-sm text-stone-400">Wann sollen wir uns treffen?</p>
             </div>
 
-            <form onSubmit={submitBooking} className="space-y-4">
+            <form onSubmit={submitBooking} className="space-y-5">
+              {/* Time picker */}
               <div className="flex gap-3">
                 <div className="flex-1">
                   <label className="text-xs text-stone-400 block mb-1.5">Von</label>
@@ -220,6 +307,54 @@ export default function PlanPage() {
                     className="w-full border border-rose-100 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/50"
                   />
                 </div>
+              </div>
+
+              {/* Date idea picker */}
+              <div className="space-y-2">
+                <p className="text-xs text-stone-400 uppercase tracking-widest">Was habt ihr vor? <span className="normal-case">(optional)</span></p>
+
+                <div className="flex flex-wrap gap-2">
+                  {/* Dimi's events on this day — shown first */}
+                  {dayEvents.map(e => (
+                    <button
+                      key={e.id}
+                      type="button"
+                      onClick={() => { setIdea(e.title); setCustomIdea('') }}
+                      className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                        idea === e.title && !customIdea
+                          ? 'bg-rose-500 text-white shadow-sm'
+                          : 'bg-rose-100 text-rose-600 hover:bg-rose-200'
+                      }`}
+                    >
+                      📌 {e.title}
+                    </button>
+                  ))}
+
+                  {/* Default suggestions */}
+                  {DEFAULTS.map(d => (
+                    <button
+                      key={d.label}
+                      type="button"
+                      onClick={() => { setIdea(d.label); setCustomIdea('') }}
+                      className={`px-3 py-1.5 rounded-full text-sm transition-all ${
+                        idea === d.label && !customIdea
+                          ? 'bg-rose-500 text-white shadow-sm'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                      }`}
+                    >
+                      {d.emoji} {d.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Custom input */}
+                <input
+                  type="text"
+                  placeholder="Oder eigene Idee eingeben..."
+                  value={customIdea}
+                  onChange={e => { setCustomIdea(e.target.value); setIdea('') }}
+                  className="w-full border border-stone-100 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-200 placeholder-stone-300 mt-1"
+                />
               </div>
 
               <div className="flex gap-2">

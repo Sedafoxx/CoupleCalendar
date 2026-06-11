@@ -1,8 +1,8 @@
 import OpenAI from 'openai'
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@/lib/auth'
+import { isTheresaAuthed } from '@/lib/theresa-auth'
 import { supabase } from '@/lib/supabase'
 import { getCalendarClient } from '@/lib/google-auth'
+import { getFreeBusySlots } from '@/lib/freebusy'
 import { NextRequest } from 'next/server'
 
 const openai = new OpenAI()
@@ -22,27 +22,47 @@ function addOneDay(dateStr: string): string {
   return d.toISOString().split('T')[0]
 }
 
-function buildSystemPrompt(bucketListSummary: string): string {
+function fmtSlots(slots: { date: string; freeSlots: { start: string; end: string }[] }[]): string {
+  if (!slots.length) return 'Keine freien Zeiten gefunden.'
+  return slots.slice(0, 7).map(({ date, freeSlots }) => {
+    const dateLabel = new Date(date + 'T12:00:00').toLocaleDateString('de-AT', {
+      weekday: 'long', day: 'numeric', month: 'long',
+    })
+    const times = freeSlots.map(s => {
+      const from = new Date(s.start).toLocaleTimeString('de-AT', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' })
+      const to = new Date(s.end).toLocaleTimeString('de-AT', { timeZone: 'Europe/Vienna', hour: '2-digit', minute: '2-digit' })
+      return `${from}–${to} Uhr`
+    }).join(', ')
+    return `${dateLabel}: ${times}`
+  }).join('\n')
+}
+
+function buildSystemPrompt(freeBusySummary: string, bucketListSummary: string): string {
   const today = new Date().toISOString().split('T')[0]
-  return `You are a smart calendar assistant for Dimitri and Theresa's shared couple calendar. Today is ${today}.
+  return `Du bist ein liebevoller Kalenderassistent für Dimitri und Theresa. Heute ist ${today}.
 
-You can handle four types of events:
-1. **single** – specific date and time (concert, dinner, cinema). Needs: title, date, start_time, end_time.
-2. **window** – active over a date range, no fixed time (circus in town, festival week, exhibition). Needs: title, date (start), end_date.
-3. **recurring** – repeats on a schedule (every Thursday dinner, weekly yoga). Needs: title, date (first occurrence), recurrence_rule format "weekly:DAY" (e.g. "weekly:thursday").
-4. **bucket_list** – no date yet, things to do someday. Needs: title, optional description/tags/duration_days.
+Du hilfst Theresa dabei, gemeinsame Zeit mit Dimitri zu planen. Theresa kann Events direkt erstellen — keine Bestätigung nötig.
 
-Current bucket list:
-${bucketListSummary || 'Empty — nothing added yet.'}
+Dimitris freie Zeiten (Wien-Zeit):
+${freeBusySummary}
 
-Always respond with valid JSON in exactly this format:
+Eure Bucket-List (Dinge die ihr noch tun wollt):
+${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
+
+Du kannst vier Arten von Events erstellen:
+1. **single** – bestimmtes Datum und Uhrzeit (Konzert, Abendessen, Kino). Braucht: title, date, start_time, end_time.
+2. **window** – über mehrere Tage aktiv, keine feste Zeit (Zirkus, Festival, Ausstellung). Braucht: title, date (Start), end_date.
+3. **recurring** – wiederkehrend (jeden Donnerstag, wöchentliches Kochen). Braucht: title, date (erste Occurrence), recurrence_rule Format "weekly:DAY".
+4. **bucket_list** – noch kein Datum, irgendwann machen. Braucht: title, optionale description/tags/duration_days.
+
+Antworte immer auf Deutsch in exakt diesem JSON-Format:
 {
-  "reply": "warm, friendly reply",
+  "reply": "liebevolle, warme Antwort auf Deutsch",
   "action": "create_event | add_bucket_list | none",
   "event": {
     "type": "single | window | recurring",
-    "title": "event name",
-    "location": "venue or address, empty string if unknown",
+    "title": "Name des Events",
+    "location": "Ort oder leerer String",
     "date": "YYYY-MM-DD",
     "start_time": "HH:MM",
     "end_time": "HH:MM",
@@ -50,28 +70,29 @@ Always respond with valid JSON in exactly this format:
     "recurrence_rule": "weekly:thursday"
   } | null,
   "bucket_list_item": {
-    "title": "activity name",
-    "description": "short description",
+    "title": "Aktivität",
+    "description": "kurze Beschreibung",
     "tags": ["romantic", "adventure", "food", "culture", "outdoor", "sport"],
     "duration_days": null
   } | null
 }
 
-Rules:
-- For images: read ALL visible text and extract every detail
-- Relative dates ("this Saturday", "next Friday", "tomorrow"): calculate from today (${today})
-- For single events: if end_time not stated, add 2 hours to start_time
-- For window events: end_date required, omit start_time/end_time
-- For recurring: recurrence_rule format is "weekly:DAYNAME" (e.g. "weekly:monday", "weekly:thursday")
-- Bucket list tags pick from: romantic, adventure, food, culture, outdoor, sport
-- location: empty string if unknown
-- When event/item saved, confirm clearly in reply
-- Set action to "none" if user is just chatting or asking questions`
+Regeln:
+- Schau dir Dimitris freie Zeiten an und schlage passende Slots vor wenn sie fragt
+- Relative Daten ("diesen Samstag", "nächste Woche"): berechne von heute (${today})
+- Für single Events: wenn kein end_time, füge 2 Stunden zur start_time hinzu
+- Für window Events: end_date Pflichtfeld, keine start_time/end_time
+- recurrence_rule Format: "weekly:DAYNAME" auf Englisch (z.B. "weekly:thursday")
+- Bucket-List Tags nur aus: romantic, adventure, food, culture, outdoor, sport
+- location: leerer String wenn unbekannt
+- Wenn gespeichert, freundlich bestätigen
+- Bei action "none" nur chatten oder Fragen beantworten`
 }
 
 export async function POST(req: NextRequest) {
-  const session = await getServerSession(authOptions)
-  if (!session) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!isTheresaAuthed(req)) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  }
 
   const formData = await req.formData()
   const message = formData.get('message') as string | null
@@ -81,12 +102,16 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'No message or image' }, { status: 400 })
   }
 
-  // Fetch bucket list for context
-  const { data: bucketListData } = await supabase
-    .from('bucket_list')
-    .select('title, description, tags, duration_days')
-    .order('created_at', { ascending: false })
+  // Fetch freebusy and bucket list for context
+  const [freeBusyResult, bucketListResult] = await Promise.allSettled([
+    getFreeBusySlots(),
+    supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
+  ])
 
+  const freeSlots = freeBusyResult.status === 'fulfilled' ? freeBusyResult.value : []
+  const bucketListData = bucketListResult.status === 'fulfilled' ? bucketListResult.value.data : []
+
+  const freeBusySummary = fmtSlots(freeSlots)
   const bucketListSummary = bucketListData?.length
     ? bucketListData.map(i => `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''}`).join('\n')
     : ''
@@ -105,7 +130,7 @@ export async function POST(req: NextRequest) {
 
   userContent.push({
     type: 'text',
-    text: message?.trim() || 'What event is shown in this image? Extract all details.',
+    text: message?.trim() || 'Was ist auf diesem Bild? Extrahiere alle Details.',
   })
 
   let gptText = ''
@@ -114,14 +139,14 @@ export async function POST(req: NextRequest) {
       model: 'gpt-4o',
       max_tokens: 1024,
       messages: [
-        { role: 'system', content: buildSystemPrompt(bucketListSummary) },
+        { role: 'system', content: buildSystemPrompt(freeBusySummary, bucketListSummary) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
     })
     gptText = res.choices[0]?.message?.content ?? ''
   } catch {
-    return Response.json({ reply: "Couldn't reach the AI. Try again?" })
+    return Response.json({ reply: 'KI nicht erreichbar. Bitte nochmal versuchen.' })
   }
 
   type AiEvent = {
@@ -172,14 +197,13 @@ export async function POST(req: NextRequest) {
         type,
         end_date: ev.end_date || null,
         recurrence_rule: ev.recurrence_rule || null,
-        added_by: 'dimitri',
+        added_by: 'theresa',
       })
       .select()
       .single()
 
     if (!error) {
       savedEvent = data
-      // Write to Google Cal for single and window events
       if (type === 'single' || type === 'window') {
         try {
           const calendar = await getCalendarClient()
@@ -206,7 +230,7 @@ export async function POST(req: NextRequest) {
             })
           }
         } catch {
-          // Google Cal write failed silently — event still saved in Supabase
+          // Google Cal write failed silently
         }
       }
     }
@@ -219,7 +243,7 @@ export async function POST(req: NextRequest) {
         description: item.description || null,
         tags: item.tags?.length ? item.tags : null,
         duration_days: item.duration_days || null,
-        added_by: 'dimitri',
+        added_by: 'theresa',
       })
       .select()
       .single()

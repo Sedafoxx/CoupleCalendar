@@ -1,19 +1,50 @@
 'use client'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useState, useEffect, useRef } from 'react'
-import type { Event } from '@/lib/supabase'
+import type { Event, BucketListItem } from '@/lib/supabase'
+
+const TAG_COLORS: Record<string, string> = {
+  romantic: 'bg-rose-100 text-rose-600',
+  adventure: 'bg-orange-100 text-orange-600',
+  food: 'bg-yellow-100 text-yellow-700',
+  culture: 'bg-blue-100 text-blue-600',
+  outdoor: 'bg-green-100 text-green-600',
+  sport: 'bg-purple-100 text-purple-600',
+}
 
 interface ChatMsg {
   role: 'user' | 'assistant'
   text: string
   imageUrl?: string
   event?: Event
+  bucket_list_item?: BucketListItem
+}
+
+function fmtDate(dateStr: string) {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('de-AT', {
+    weekday: 'short', day: 'numeric', month: 'short',
+  })
+}
+
+function nextOccurrenceLabel(rule: string): string {
+  const [freq, day] = rule.split(':')
+  if (freq !== 'weekly') return rule
+  const days: Record<string, string> = {
+    monday: 'Monday', tuesday: 'Tuesday', wednesday: 'Wednesday',
+    thursday: 'Thursday', friday: 'Friday', saturday: 'Saturday', sunday: 'Sunday',
+  }
+  return `Every ${days[day] ?? day}`
 }
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
+  const [tab, setTab] = useState<'events' | 'bucket'>('events')
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
+  const [bucketList, setBucketList] = useState<BucketListItem[]>([])
+  const [bucketLoading, setBucketLoading] = useState(false)
+  const [newItem, setNewItem] = useState('')
+  const [addingItem, setAddingItem] = useState(false)
 
   const [messages, setMessages] = useState<ChatMsg[]>([])
   const [input, setInput] = useState('')
@@ -25,7 +56,10 @@ export default function Dashboard() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (status === 'authenticated') fetchEvents()
+    if (status === 'authenticated') {
+      fetchEvents()
+      fetchBucketList()
+    }
   }, [status])
 
   useEffect(() => {
@@ -40,9 +74,51 @@ export default function Dashboard() {
     setLoading(false)
   }
 
+  async function fetchBucketList() {
+    setBucketLoading(true)
+    const res = await fetch('/api/bucket-list')
+    const data = await res.json()
+    setBucketList(Array.isArray(data) ? data : [])
+    setBucketLoading(false)
+  }
+
   async function deleteEvent(id: string) {
     await fetch(`/api/events/${id}`, { method: 'DELETE' })
     setEvents(prev => prev.filter(e => e.id !== id))
+  }
+
+  async function toggleJoinable(id: string, current: boolean) {
+    const res = await fetch(`/api/events/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ joinable: !current }),
+    })
+    if (res.ok) {
+      const updated = await res.json()
+      setEvents(prev => prev.map(e => e.id === id ? { ...e, joinable: updated.joinable } : e))
+    }
+  }
+
+  async function deleteBucketItem(id: string) {
+    await fetch(`/api/bucket-list/${id}`, { method: 'DELETE' })
+    setBucketList(prev => prev.filter(i => i.id !== id))
+  }
+
+  async function addBucketItem(e: React.FormEvent) {
+    e.preventDefault()
+    if (!newItem.trim()) return
+    setAddingItem(true)
+    const res = await fetch('/api/bucket-list', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: newItem.trim(), added_by: 'dimitri' }),
+    })
+    if (res.ok) {
+      const item = await res.json()
+      setBucketList(prev => [item, ...prev])
+      setNewItem('')
+    }
+    setAddingItem(false)
   }
 
   async function sendMessage(e: React.FormEvent) {
@@ -74,9 +150,11 @@ export default function Dashboard() {
         role: 'assistant',
         text: data.reply ?? 'Something went wrong.',
         event: data.event ?? undefined,
+        bucket_list_item: data.bucket_list_item ?? undefined,
       }
       setMessages(prev => [...prev, assistantMsg])
       if (data.event) fetchEvents()
+      if (data.bucket_list_item) fetchBucketList()
     } catch {
       setMessages(prev => [
         ...prev,
@@ -142,11 +220,10 @@ export default function Dashboard() {
       <section className="space-y-3">
         <h2 className="font-semibold text-lg">Add Event</h2>
 
-        {/* Messages */}
         <div className="bg-stone-50 border border-stone-200 rounded-xl p-4 h-80 overflow-y-auto flex flex-col gap-3">
           {messages.length === 0 && (
             <p className="text-stone-400 text-sm text-center m-auto">
-              Tell me about an event or drop a screenshot!
+              Tell me about an event, drop a screenshot, or add something to your bucket list!
             </p>
           )}
           {messages.map((msg, i) => (
@@ -171,15 +248,30 @@ export default function Dashboard() {
                 {msg.text && <p className="whitespace-pre-wrap leading-relaxed">{msg.text}</p>}
                 {msg.event && (
                   <div className="mt-2 pt-2 border-t border-stone-100 space-y-0.5">
-                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">
-                      Added to calendar
-                    </p>
+                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Added to calendar</p>
                     <p className="font-semibold">{msg.event.title}</p>
                     <p className="text-xs text-stone-500">
-                      {msg.event.date} · {msg.event.start_time}–{msg.event.end_time}
+                      {msg.event.type === 'window' && msg.event.end_date
+                        ? `${fmtDate(msg.event.date)} – ${fmtDate(msg.event.end_date)}`
+                        : msg.event.type === 'recurring' && msg.event.recurrence_rule
+                          ? nextOccurrenceLabel(msg.event.recurrence_rule)
+                          : `${msg.event.date} · ${msg.event.start_time}–${msg.event.end_time}`}
                     </p>
-                    {msg.event.location && (
-                      <p className="text-xs text-stone-500">{msg.event.location}</p>
+                    {msg.event.location && <p className="text-xs text-stone-500">{msg.event.location}</p>}
+                  </div>
+                )}
+                {msg.bucket_list_item && (
+                  <div className="mt-2 pt-2 border-t border-stone-100 space-y-0.5">
+                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Added to bucket list ✨</p>
+                    <p className="font-semibold">{msg.bucket_list_item.title}</p>
+                    {msg.bucket_list_item.tags && msg.bucket_list_item.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {msg.bucket_list_item.tags.map(tag => (
+                          <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? 'bg-stone-100 text-stone-500'}`}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
                 )}
@@ -196,7 +288,6 @@ export default function Dashboard() {
           <div ref={chatEndRef} />
         </div>
 
-        {/* Image preview */}
         {imagePreview && (
           <div className="relative inline-flex">
             <img
@@ -213,7 +304,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Input bar */}
         <form onSubmit={sendMessage} className="flex items-center gap-2">
           <input
             ref={fileInputRef}
@@ -233,7 +323,7 @@ export default function Dashboard() {
           <input
             value={input}
             onChange={e => setInput(e.target.value)}
-            placeholder="Jazz festival Saturday 7pm at Central Park..."
+            placeholder="Jazz festival Saturday 7pm... or 'add wine tasting to bucket list'"
             className="flex-1 border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
           />
           <button
@@ -246,10 +336,27 @@ export default function Dashboard() {
         </form>
       </section>
 
-      {/* Events list */}
+      {/* Events / Bucket List tabs */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-lg">Our Plans</h2>
+          <div className="flex rounded-lg overflow-hidden border border-stone-200">
+            <button
+              onClick={() => setTab('events')}
+              className={`px-4 py-2 text-sm font-medium transition ${
+                tab === 'events' ? 'bg-stone-900 text-white' : 'text-stone-500 hover:bg-stone-50'
+              }`}
+            >
+              Our Plans
+            </button>
+            <button
+              onClick={() => setTab('bucket')}
+              className={`px-4 py-2 text-sm font-medium transition ${
+                tab === 'bucket' ? 'bg-stone-900 text-white' : 'text-stone-500 hover:bg-stone-50'
+              }`}
+            >
+              Bucket List
+            </button>
+          </div>
           <a
             href="/plan"
             target="_blank"
@@ -259,33 +366,121 @@ export default function Dashboard() {
           </a>
         </div>
 
-        {loading ? (
-          <p className="text-stone-400 text-sm">Loading...</p>
-        ) : events.length === 0 ? (
-          <p className="text-stone-400 text-sm">No events yet.</p>
-        ) : (
-          <ul className="space-y-2">
-            {events.map(ev => (
-              <li
-                key={ev.id}
-                className="bg-white border border-stone-200 rounded-xl p-4 flex items-start justify-between gap-4"
-              >
-                <div>
-                  <p className="font-medium">{ev.title}</p>
-                  <p className="text-sm text-stone-500">{ev.location}</p>
-                  <p className="text-xs text-stone-400 mt-1">
-                    {ev.date} · {ev.start_time}–{ev.end_time}
-                  </p>
-                </div>
-                <button
-                  onClick={() => deleteEvent(ev.id)}
-                  className="text-stone-300 hover:text-red-400 transition text-sm shrink-0"
+        {/* Events list */}
+        {tab === 'events' && (
+          loading ? (
+            <p className="text-stone-400 text-sm">Loading...</p>
+          ) : events.length === 0 ? (
+            <p className="text-stone-400 text-sm">No events yet.</p>
+          ) : (
+            <ul className="space-y-2">
+              {events.map(ev => (
+                <li
+                  key={ev.id}
+                  className="bg-white border border-stone-200 rounded-xl p-4 flex items-start justify-between gap-4"
                 >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <div className="min-w-0 space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="font-medium truncate">{ev.title}</p>
+                      {ev.type === 'window' && (
+                        <span className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full shrink-0">Window</span>
+                      )}
+                      {ev.type === 'recurring' && (
+                        <span className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full shrink-0">Recurring</span>
+                      )}
+                      {ev.added_by === 'theresa' && (
+                        <span className="text-xs text-rose-400 shrink-0">from Theresa ♡</span>
+                      )}
+                    </div>
+                    {ev.location && <p className="text-sm text-stone-500 truncate">{ev.location}</p>}
+                    <p className="text-xs text-stone-400">
+                      {ev.type === 'window' && ev.end_date
+                        ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
+                        : ev.type === 'recurring' && ev.recurrence_rule
+                          ? nextOccurrenceLabel(ev.recurrence_rule)
+                          : `${ev.date} · ${ev.start_time}–${ev.end_time}`}
+                    </p>
+                  </div>
+                  <div className="flex flex-col items-end gap-2 shrink-0">
+                    <button
+                      onClick={() => toggleJoinable(ev.id, ev.joinable)}
+                      title={ev.joinable ? 'Theresa can join — click to hide' : 'Let Theresa join'}
+                      className={`text-xs px-2 py-1 rounded-full transition ${
+                        ev.joinable
+                          ? 'bg-rose-100 text-rose-500 hover:bg-rose-200'
+                          : 'bg-stone-100 text-stone-400 hover:bg-stone-200'
+                      }`}
+                    >
+                      {ev.joinable ? '♡ Theresa kann mit' : '+ Theresa einladen'}
+                    </button>
+                    <button
+                      onClick={() => deleteEvent(ev.id)}
+                      className="text-stone-300 hover:text-red-400 transition text-sm"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )
+        )}
+
+        {/* Bucket list */}
+        {tab === 'bucket' && (
+          <div className="space-y-3">
+            <form onSubmit={addBucketItem} className="flex gap-2">
+              <input
+                value={newItem}
+                onChange={e => setNewItem(e.target.value)}
+                placeholder="Add to bucket list..."
+                className="flex-1 border border-stone-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-400"
+              />
+              <button
+                type="submit"
+                disabled={addingItem || !newItem.trim()}
+                className="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-stone-700 transition disabled:opacity-40"
+              >
+                {addingItem ? '...' : '+ Add'}
+              </button>
+            </form>
+
+            {bucketLoading ? (
+              <p className="text-stone-400 text-sm">Loading...</p>
+            ) : bucketList.length === 0 ? (
+              <p className="text-stone-400 text-sm">No bucket list items yet. Add one or ask the AI!</p>
+            ) : (
+              <ul className="space-y-2">
+                {bucketList.map(item => (
+                  <li key={item.id} className="bg-white border border-stone-200 rounded-xl p-4 flex items-start justify-between gap-4">
+                    <div className="min-w-0 space-y-1">
+                      <p className="font-medium">{item.title}</p>
+                      {item.description && <p className="text-sm text-stone-500">{item.description}</p>}
+                      {item.duration_days && (
+                        <p className="text-xs text-stone-400">{item.duration_days} day{item.duration_days > 1 ? 's' : ''}</p>
+                      )}
+                      {item.tags && item.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1">
+                          {item.tags.map(tag => (
+                            <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? 'bg-stone-100 text-stone-500'}`}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <p className="text-xs text-stone-400">added by {item.added_by === 'theresa' ? 'Theresa ♡' : 'you'}</p>
+                    </div>
+                    <button
+                      onClick={() => deleteBucketItem(item.id)}
+                      className="text-stone-300 hover:text-red-400 transition text-sm shrink-0"
+                    >
+                      Delete
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
       </section>
     </div>
