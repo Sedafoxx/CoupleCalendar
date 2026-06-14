@@ -12,8 +12,11 @@ function getViennaOffset(dateStr: string): string {
     timeZone: 'Europe/Vienna',
     timeZoneName: 'shortOffset',
   }).formatToParts(new Date(`${dateStr}T12:00:00Z`))
-  const tzName = parts.find(p => p.type === 'timeZoneName')?.value ?? 'GMT+2'
-  return tzName.replace('GMT', '')
+  const tzName = parts.find(p => p.type === 'timeZoneName')?.value ?? 'GMT+02:00'
+  const raw = tzName.replace('GMT', '')
+  const match = raw.match(/^([+-])(\d+)(?::(\d{2}))?$/)
+  if (!match) return '+02:00'
+  return `${match[1]}${match[2].padStart(2, '0')}:${match[3] ?? '00'}`
 }
 
 function addOneDay(dateStr: string): string {
@@ -229,8 +232,8 @@ export async function POST(req: NextRequest) {
               },
             })
           }
-        } catch {
-          // Google Cal write failed silently
+        } catch (calErr) {
+          console.error('[Google Cal] insert failed:', calErr)
         }
       }
     }

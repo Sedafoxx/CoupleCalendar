@@ -90,10 +90,12 @@ export default function PlanPage() {
     setJoiningId(ev.id)
     const startIso = `${ev.date}T${ev.start_time}:00`
     const endIso   = `${ev.date}T${ev.end_time}:00`
-    const offset = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Vienna', timeZoneName: 'shortOffset' })
+    const rawOffset = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Vienna', timeZoneName: 'shortOffset' })
       .formatToParts(new Date(`${ev.date}T12:00:00Z`))
-      .find(p => p.type === 'timeZoneName')?.value ?? '+02:00'
-    const tz = offset.replace('GMT', '')
+      .find(p => p.type === 'timeZoneName')?.value ?? 'GMT+02:00'
+    const raw = rawOffset.replace('GMT', '')
+    const m = raw.match(/^([+-])(\d+)(?::(\d{2}))?$/)
+    const tz = m ? `${m[1]}${m[2].padStart(2, '0')}:${m[3] ?? '00'}` : '+02:00'
     const res = await fetch('/api/book', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
