@@ -25,6 +25,18 @@ function addOneDay(dateStr: string): string {
   return d.toISOString().split('T')[0]
 }
 
+// Each night Theresa stays = one 22:00→08:00(next day) entry. Inclusive range.
+function nightsBetween(start: string, end: string | null): string[] {
+  const last = end && end !== start ? end : start
+  const out: string[] = []
+  let cur = start
+  while (cur <= last) {
+    out.push(cur)
+    cur = addOneDay(cur)
+  }
+  return out
+}
+
 function fmtDay(dateStr: string): string {
   return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-GB', {
     weekday: 'short', day: 'numeric', month: 'short',
@@ -69,7 +81,7 @@ Du kannst fünf Arten von Events erstellen:
 2. **window** – über mehrere Tage aktiv, keine feste Zeit (Zirkus, Festival, Ausstellung). Braucht: title, date (Start), end_date.
 3. **recurring** – wiederkehrend (jeden Donnerstag, wöchentliches Kochen). Braucht: title, date (erste Occurrence), recurrence_rule Format "weekly:DAY".
 4. **bucket_list** – noch kein Datum, irgendwann machen. Braucht: title, optionale description/tags/duration_days.
-5. **sleepover** – Theresa bleibt bei Dimitri über Nacht. Braucht: date (Übernachtungsnacht). Für mehrere Nächte zusätzlich end_date (letzte Nacht / Abreisetag). Keine Uhrzeit nötig. Wenn sie sagt "ich schlaf heute/Samstag bei dir", "ich bleib über", "ich übernachte" → type sleepover. title z.B. "Theresa bleibt über 🌙".
+5. **sleepover** – Theresa bleibt bei Dimitri über Nacht. Braucht: date (erste Übernachtungsnacht). Für mehrere Nächte zusätzlich end_date = die LETZTE Nacht in der sie bleibt (nicht der Abreisetag). Eine Nacht → nur date. Keine Uhrzeit nötig (im Kalender wird automatisch 22:00–08:00 eingetragen). Wenn sie sagt "ich schlaf heute/Samstag bei dir", "ich bleib über", "ich übernachte" → type sleepover. title z.B. "Theresa bleibt über 🌙".
 
 Antworte immer auf Deutsch in exakt diesem JSON-Format:
 {
@@ -235,8 +247,21 @@ export async function POST(req: NextRequest) {
                 end: { dateTime: `${ev.date}T${ev.end_time}:00${offset}` },
               },
             })
+          } else if (type === 'sleepover') {
+            // One "Theresa" entry per night, 22:00 → 08:00 next morning.
+            for (const night of nightsBetween(ev.date, ev.end_date || null)) {
+              const morning = addOneDay(night)
+              await calendar.events.insert({
+                calendarId: 'primary',
+                requestBody: {
+                  summary: 'Theresa',
+                  start: { dateTime: `${night}T22:00:00${getViennaOffset(night)}` },
+                  end: { dateTime: `${morning}T08:00:00${getViennaOffset(morning)}` },
+                },
+              })
+            }
           } else {
-            // window + sleepover: all-day, end exclusive. Single-night sleepover has no end_date.
+            // window: all-day, end exclusive.
             await calendar.events.insert({
               calendarId: 'primary',
               requestBody: {
