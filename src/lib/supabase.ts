@@ -5,7 +5,7 @@ export const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
-export type EventType = 'single' | 'window' | 'recurring' | 'bucket_list'
+export type EventType = 'single' | 'window' | 'recurring' | 'bucket_list' | 'sleepover'
 
 export type Event = {
   id: string
@@ -30,5 +30,16 @@ export type BucketListItem = {
   tags: string[] | null
   duration_days: number | null
   added_by: string
+  created_at: string
+}
+
+export type NotificationKind = 'event' | 'sleepover' | 'bucket_list'
+
+export type Notification = {
+  id: string
+  message: string
+  kind: NotificationKind
+  event_id: string | null
+  read: boolean
   created_at: string
 }

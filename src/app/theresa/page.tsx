@@ -330,11 +330,15 @@ export default function TheresaPage() {
                         <p className="text-xs font-semibold text-rose-400 uppercase tracking-wide">Zum Kalender hinzugefügt</p>
                         <p className="font-semibold">{msg.event.title}</p>
                         <p className="text-xs text-stone-400">
-                          {msg.event.type === 'window'
-                            ? `${fmtDate(msg.event.date)} – ${fmtDate(msg.event.end_date!)}`
-                            : msg.event.type === 'recurring'
-                              ? nextOccurrenceLabel(msg.event.recurrence_rule!)
-                              : `${fmtDate(msg.event.date)} · ${msg.event.start_time}–${msg.event.end_time}`}
+                          {msg.event.type === 'sleepover'
+                            ? msg.event.end_date && msg.event.end_date !== msg.event.date
+                              ? `🌙 ${fmtDate(msg.event.date)} – ${fmtDate(msg.event.end_date)}`
+                              : `🌙 ${fmtDate(msg.event.date)} · Übernachtung`
+                            : msg.event.type === 'window'
+                              ? `${fmtDate(msg.event.date)} – ${fmtDate(msg.event.end_date!)}`
+                              : msg.event.type === 'recurring'
+                                ? nextOccurrenceLabel(msg.event.recurrence_rule!)
+                                : `${fmtDate(msg.event.date)} · ${msg.event.start_time}–${msg.event.end_time}`}
                         </p>
                       </div>
                     )}
@@ -414,17 +418,24 @@ export default function TheresaPage() {
                         {ev.type === 'recurring' && (
                           <span className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full shrink-0">Wiederkehrend</span>
                         )}
+                        {ev.type === 'sleepover' && (
+                          <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full shrink-0">🌙 Übernachtung</span>
+                        )}
                         {ev.added_by === 'theresa' && (
                           <span className="text-xs text-rose-400 shrink-0">von dir ♡</span>
                         )}
                       </div>
                       {ev.location && <p className="text-xs text-stone-400 truncate">{ev.location}</p>}
                       <p className="text-xs text-rose-300">
-                        {ev.type === 'window' && ev.end_date
-                          ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
-                          : ev.type === 'recurring' && ev.recurrence_rule
-                            ? nextOccurrenceLabel(ev.recurrence_rule)
-                            : `${fmtDate(ev.date)} · ${ev.start_time}–${ev.end_time} Uhr`}
+                        {ev.type === 'sleepover'
+                          ? ev.end_date && ev.end_date !== ev.date
+                            ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
+                            : `${fmtDate(ev.date)} · Übernachtung 🌙`
+                          : ev.type === 'window' && ev.end_date
+                            ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
+                            : ev.type === 'recurring' && ev.recurrence_rule
+                              ? nextOccurrenceLabel(ev.recurrence_rule)
+                              : `${fmtDate(ev.date)} · ${ev.start_time}–${ev.end_time} Uhr`}
                       </p>
                     </div>
                     <button
