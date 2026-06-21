@@ -1,7 +1,7 @@
 'use client'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useState, useEffect, useRef } from 'react'
-import type { Event, BucketListItem } from '@/lib/supabase'
+import type { Event, BucketListItem, Notification } from '@/lib/supabase'
 
 const TAG_COLORS: Record<string, string> = {
   romantic: 'bg-rose-100 text-rose-600',
@@ -52,15 +52,62 @@ export default function Dashboard() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [sending, setSending] = useState(false)
 
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [showNotif, setShowNotif] = useState(false)
+  const [toast, setToast] = useState<string | null>(null)
+  const seenNotifIds = useRef<Set<string>>(new Set())
+  const notifPrimed = useRef(false)
+
   const chatEndRef = useRef<HTMLDivElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const unreadCount = notifications.filter(n => !n.read).length
 
   useEffect(() => {
     if (status === 'authenticated') {
       fetchEvents()
       fetchBucketList()
+      fetchNotifications()
+      if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission()
+      }
+      const id = setInterval(fetchNotifications, 20000)
+      return () => clearInterval(id)
     }
   }, [status])
+
+  async function fetchNotifications() {
+    const res = await fetch('/api/notifications')
+    if (!res.ok) return
+    const data: Notification[] = await res.json()
+    if (!Array.isArray(data)) return
+
+    // Surface notifications we haven't shown this session (skip first load).
+    const fresh = data.filter(n => !seenNotifIds.current.has(n.id))
+    data.forEach(n => seenNotifIds.current.add(n.id))
+    if (notifPrimed.current) {
+      const newUnread = fresh.filter(n => !n.read)
+      if (newUnread.length) {
+        const latest = newUnread[0]
+        setToast(latest.message)
+        setTimeout(() => setToast(null), 6000)
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('Dimi Time ♡', { body: latest.message })
+        }
+      }
+    }
+    notifPrimed.current = true
+    setNotifications(data)
+  }
+
+  async function openNotifications() {
+    const next = !showNotif
+    setShowNotif(next)
+    if (next && unreadCount > 0) {
+      setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+      await fetch('/api/notifications', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: '{}' })
+    }
+  }
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -206,6 +253,37 @@ export default function Dashboard() {
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Dimi Time</h1>
         <div className="flex items-center gap-3">
+          {/* Notification bell */}
+          <div className="relative">
+            <button
+              onClick={openNotifications}
+              title="Notifications from Theresa"
+              className="relative text-xl text-stone-500 hover:text-stone-900 transition"
+            >
+              🔔
+              {unreadCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-4 px-1 flex items-center justify-center">
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+            {showNotif && (
+              <div className="absolute right-0 mt-2 w-72 max-h-96 overflow-y-auto bg-white border border-stone-200 rounded-xl shadow-lg z-20 p-2 space-y-1">
+                {notifications.length === 0 ? (
+                  <p className="text-sm text-stone-400 text-center py-4">Nothing yet ♡</p>
+                ) : (
+                  notifications.map(n => (
+                    <div key={n.id} className="px-3 py-2 rounded-lg hover:bg-stone-50">
+                      <p className="text-sm text-stone-700">{n.message}</p>
+                      <p className="text-xs text-stone-400 mt-0.5">
+                        {new Date(n.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
           <span className="text-sm text-stone-500">{session.user?.email}</span>
           <button
             onClick={() => signOut()}
@@ -215,6 +293,13 @@ export default function Dashboard() {
           </button>
         </div>
       </header>
+
+      {/* Toast for fresh notifications */}
+      {toast && (
+        <div className="fixed top-4 right-4 z-50 bg-rose-500 text-white text-sm px-4 py-3 rounded-xl shadow-lg max-w-xs animate-pulse">
+          {toast}
+        </div>
+      )}
 
       {/* Chat section */}
       <section className="space-y-3">
@@ -388,17 +473,24 @@ export default function Dashboard() {
                       {ev.type === 'recurring' && (
                         <span className="text-xs bg-purple-100 text-purple-600 px-2 py-0.5 rounded-full shrink-0">Recurring</span>
                       )}
+                      {ev.type === 'sleepover' && (
+                        <span className="text-xs bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full shrink-0">🌙 Stayover</span>
+                      )}
                       {ev.added_by === 'theresa' && (
                         <span className="text-xs text-rose-400 shrink-0">from Theresa ♡</span>
                       )}
                     </div>
                     {ev.location && <p className="text-sm text-stone-500 truncate">{ev.location}</p>}
                     <p className="text-xs text-stone-400">
-                      {ev.type === 'window' && ev.end_date
-                        ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
-                        : ev.type === 'recurring' && ev.recurrence_rule
-                          ? nextOccurrenceLabel(ev.recurrence_rule)
-                          : `${ev.date} · ${ev.start_time}–${ev.end_time}`}
+                      {ev.type === 'sleepover'
+                        ? ev.end_date && ev.end_date !== ev.date
+                          ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
+                          : `${fmtDate(ev.date)} · staying over 🌙`
+                        : ev.type === 'window' && ev.end_date
+                          ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
+                          : ev.type === 'recurring' && ev.recurrence_rule
+                            ? nextOccurrenceLabel(ev.recurrence_rule)
+                            : `${ev.date} · ${ev.start_time}–${ev.end_time}`}
                     </p>
                   </div>
                   <div className="flex flex-col items-end gap-2 shrink-0">

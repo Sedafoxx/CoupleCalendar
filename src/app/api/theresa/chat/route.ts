@@ -25,6 +25,18 @@ function addOneDay(dateStr: string): string {
   return d.toISOString().split('T')[0]
 }
 
+function fmtDay(dateStr: string): string {
+  return new Date(dateStr + 'T12:00:00').toLocaleDateString('en-GB', {
+    weekday: 'short', day: 'numeric', month: 'short',
+  })
+}
+
+function sleepoverWhen(date: string, endDate: string | null): string {
+  return endDate && endDate !== date
+    ? `${fmtDay(date)} – ${fmtDay(endDate)}`
+    : `on ${fmtDay(date)}`
+}
+
 function fmtSlots(slots: { date: string; freeSlots: { start: string; end: string }[] }[]): string {
   if (!slots.length) return 'Keine freien Zeiten gefunden.'
   return slots.slice(0, 7).map(({ date, freeSlots }) => {
@@ -52,18 +64,19 @@ ${freeBusySummary}
 Eure Bucket-List (Dinge die ihr noch tun wollt):
 ${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
 
-Du kannst vier Arten von Events erstellen:
+Du kannst fünf Arten von Events erstellen:
 1. **single** – bestimmtes Datum und Uhrzeit (Konzert, Abendessen, Kino). Braucht: title, date, start_time, end_time.
 2. **window** – über mehrere Tage aktiv, keine feste Zeit (Zirkus, Festival, Ausstellung). Braucht: title, date (Start), end_date.
 3. **recurring** – wiederkehrend (jeden Donnerstag, wöchentliches Kochen). Braucht: title, date (erste Occurrence), recurrence_rule Format "weekly:DAY".
 4. **bucket_list** – noch kein Datum, irgendwann machen. Braucht: title, optionale description/tags/duration_days.
+5. **sleepover** – Theresa bleibt bei Dimitri über Nacht. Braucht: date (Übernachtungsnacht). Für mehrere Nächte zusätzlich end_date (letzte Nacht / Abreisetag). Keine Uhrzeit nötig. Wenn sie sagt "ich schlaf heute/Samstag bei dir", "ich bleib über", "ich übernachte" → type sleepover. title z.B. "Theresa bleibt über 🌙".
 
 Antworte immer auf Deutsch in exakt diesem JSON-Format:
 {
   "reply": "liebevolle, warme Antwort auf Deutsch",
   "action": "create_event | add_bucket_list | none",
   "event": {
-    "type": "single | window | recurring",
+    "type": "single | window | recurring | sleepover",
     "title": "Name des Events",
     "location": "Ort oder leerer String",
     "date": "YYYY-MM-DD",
@@ -86,6 +99,7 @@ Regeln:
 - Für single Events: wenn kein end_time, füge 2 Stunden zur start_time hinzu
 - Für window Events: end_date Pflichtfeld, keine start_time/end_time
 - recurrence_rule Format: "weekly:DAYNAME" auf Englisch (z.B. "weekly:thursday")
+- sleepover: nur date setzen (eine Nacht), oder date + end_date (mehrere Nächte). Keine start_time/end_time. Dimitri wird automatisch benachrichtigt.
 - Bucket-List Tags nur aus: romantic, adventure, food, culture, outdoor, sport
 - location: leerer String wenn unbekannt
 - Wenn gespeichert, freundlich bestätigen
@@ -207,7 +221,7 @@ export async function POST(req: NextRequest) {
 
     if (!error) {
       savedEvent = data
-      if (type === 'single' || type === 'window') {
+      if (type === 'single' || type === 'window' || type === 'sleepover') {
         try {
           const calendar = await getCalendarClient()
           if (type === 'single') {
@@ -222,13 +236,14 @@ export async function POST(req: NextRequest) {
               },
             })
           } else {
+            // window + sleepover: all-day, end exclusive. Single-night sleepover has no end_date.
             await calendar.events.insert({
               calendarId: 'primary',
               requestBody: {
                 summary: ev.title,
                 location: ev.location || '',
                 start: { date: ev.date },
-                end: { date: addOneDay(ev.end_date) },
+                end: { date: addOneDay(ev.end_date || ev.date) },
               },
             })
           }
@@ -252,6 +267,23 @@ export async function POST(req: NextRequest) {
       .single()
 
     if (!error) savedBucketItem = data
+  }
+
+  // Notify Dimitri about anything Theresa just booked/confirmed.
+  if (savedEvent) {
+    await supabase.from('notifications').insert({
+      message:
+        savedEvent.type === 'sleepover'
+          ? `🌙 Theresa is staying over ${sleepoverWhen(savedEvent.date, savedEvent.end_date)}`
+          : `💕 Theresa booked: ${savedEvent.title} (${fmtDay(savedEvent.date)})`,
+      kind: savedEvent.type === 'sleepover' ? 'sleepover' : 'event',
+      event_id: savedEvent.id,
+    })
+  } else if (savedBucketItem) {
+    await supabase.from('notifications').insert({
+      message: `✨ Theresa added to the bucket list: ${savedBucketItem.title}`,
+      kind: 'bucket_list',
+    })
   }
 
   return Response.json({ reply: parsed.reply, event: savedEvent, bucket_list_item: savedBucketItem })
