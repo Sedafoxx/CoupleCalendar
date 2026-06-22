@@ -82,7 +82,13 @@ export async function getFreeBusySlots(): Promise<DateSlots[]> {
   const workCalData = res.data.calendars?.[WORK_CAL]
   const workCalErrors = workCalData?.errors
   if (workCalErrors?.length) {
-    throw new Error(`Work calendar not readable: ${workCalErrors.map((e: { reason?: string | null }) => e.reason ?? 'unknown').join(', ')}`)
+    // Don't kill the whole availability check just because the secondary
+    // (work) calendar isn't shared. Degrade to primary-only and warn.
+    console.warn(
+      `[freebusy] work calendar not readable, using primary only: ${workCalErrors
+        .map((e: { reason?: string | null }) => e.reason ?? 'unknown')
+        .join(', ')}`
+    )
   }
 
   const busy: BusyBlock[] = [
@@ -104,7 +110,12 @@ export async function getFreeBusySlots(): Promise<DateSlots[]> {
       if (!b.start || !b.end) return false
       const bs = new Date(b.start)
       const be = new Date(b.end)
-      return be > effectiveStart && bs < dayEnd
+      if (be <= effectiveStart || bs >= dayEnd) return false // no overlap with the day's window
+      // Ignore all-day / multi-day events: they span the entire 09–22 window
+      // (start ≤ dayStart, end ≥ dayEnd) and would otherwise zero out the day,
+      // even though Dimitri is actually free for a date/dinner.
+      if (bs <= dayStart && be >= dayEnd) return false
+      return true
     })
 
     const freeSlots = computeFreeSlots(effectiveStart, dayEnd, dayBusy)
