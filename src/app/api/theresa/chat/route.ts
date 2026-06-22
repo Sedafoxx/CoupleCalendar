@@ -25,6 +25,28 @@ function addOneDay(dateStr: string): string {
   return d.toISOString().split('T')[0]
 }
 
+function hhmmss(t: string | null | undefined): string {
+  const [h = '00', m = '00', s = '00'] = (t ?? '').split(':')
+  return `${h.padStart(2, '0')}:${m.padStart(2, '0')}:${s.padStart(2, '0')}`
+}
+
+// Is there already an event with this title on this day in Google Calendar?
+async function googleHasMatch(
+  calendar: Awaited<ReturnType<typeof getCalendarClient>>,
+  summary: string,
+  date: string,
+): Promise<boolean> {
+  const res = await calendar.events.list({
+    calendarId: 'primary',
+    timeMin: `${date}T00:00:00Z`,
+    timeMax: `${addOneDay(date)}T00:00:00Z`,
+    singleEvents: true,
+    maxResults: 250,
+  })
+  const want = summary.trim().toLowerCase()
+  return (res.data.items ?? []).some(it => (it.summary ?? '').trim().toLowerCase() === want)
+}
+
 // Each night Theresa stays = one 22:00→08:00(next day) entry. Inclusive range.
 function nightsBetween(start: string, end: string | null): string[] {
   const last = end && end !== start ? end : start
@@ -150,6 +172,7 @@ Antworte immer auf Deutsch in exakt diesem JSON-Format:
 
 Regeln:
 - Wenn Theresa fragt was an einem Tag/Datum geplant ist oder los ist, schau in "Bereits geplante Events" und zähle die passenden Einträge auf. Behaupte nie "keine Events" ohne dort nachgesehen zu haben.
+- Wenn Theresa ausdrücklich ein bereits in "Bereits geplante Events" vorhandenes Event eintragen / in den Kalender legen / "trag ihm ... ein" will, gib trotzdem action create_event mit den exakten Event-Details (gleicher title und date) zurück, damit es mit Dimitris Google-Kalender synchronisiert wird. Antworte nicht nur "schon eingetragen".
 - Doppelbuchungen vermeiden: weise freundlich hin wenn ein neuer Slot mit einem bestehenden Event kollidiert
 - Schau dir Dimitris freie Zeiten an und schlage passende Slots vor wenn sie fragt
 - Relative Daten ("diesen Samstag", "nächste Woche"): berechne von heute (${today})
@@ -271,72 +294,96 @@ export async function POST(req: NextRequest) {
   }
 
   let savedEvent = null
+  let savedEventIsNew = false
   let savedBucketItem = null
 
   if (parsed.action === 'create_event' && parsed.event?.title) {
     const ev = parsed.event
     const type = ev.type ?? 'single'
 
-    const { data, error } = await supabase
+    // Reuse an existing DB row if this event already exists (keyed title+date),
+    // so explicitly re-entering it doesn't create a duplicate — we still
+    // reconcile it to Google below.
+    const { data: existing } = await supabase
       .from('events')
-      .insert({
-        title: ev.title,
-        location: ev.location || '',
-        date: ev.date,
-        start_time: ev.start_time || '00:00',
-        end_time: ev.end_time || ev.start_time || '00:00',
-        type,
-        end_date: ev.end_date || null,
-        recurrence_rule: ev.recurrence_rule || null,
-        added_by: 'theresa',
-      })
-      .select()
-      .single()
+      .select('*')
+      .eq('title', ev.title)
+      .eq('date', ev.date)
+      .limit(1)
+      .maybeSingle()
 
-    if (!error) {
-      savedEvent = data
-      if (type === 'single' || type === 'window' || type === 'sleepover') {
-        try {
-          const calendar = await getCalendarClient()
-          if (type === 'single') {
-            const offset = getViennaOffset(ev.date)
+    if (existing) {
+      savedEvent = existing
+    } else {
+      const { data, error } = await supabase
+        .from('events')
+        .insert({
+          title: ev.title,
+          location: ev.location || '',
+          date: ev.date,
+          start_time: ev.start_time || '00:00',
+          end_time: ev.end_time || ev.start_time || '00:00',
+          type,
+          end_date: ev.end_date || null,
+          recurrence_rule: ev.recurrence_rule || null,
+          added_by: 'theresa',
+        })
+        .select()
+        .single()
+      if (!error) {
+        savedEvent = data
+        savedEventIsNew = true
+      }
+    }
+
+    // Ensure Google Calendar has it. Idempotent: skip anything already present,
+    // so reconciling an existing event never double-books.
+    if (savedEvent && (savedEvent.type === 'single' || savedEvent.type === 'window' || savedEvent.type === 'sleepover')) {
+      try {
+        const calendar = await getCalendarClient()
+        if (savedEvent.type === 'single') {
+          if (!(await googleHasMatch(calendar, savedEvent.title, savedEvent.date))) {
+            const offset = getViennaOffset(savedEvent.date)
             await calendar.events.insert({
               calendarId: 'primary',
               requestBody: {
-                summary: ev.title,
-                location: ev.location || '',
-                start: { dateTime: `${ev.date}T${ev.start_time}:00${offset}` },
-                end: { dateTime: `${ev.date}T${ev.end_time}:00${offset}` },
-              },
-            })
-          } else if (type === 'sleepover') {
-            // One "Theresa" entry per night, 22:00 → 08:00 next morning.
-            for (const night of nightsBetween(ev.date, ev.end_date || null)) {
-              const morning = addOneDay(night)
-              await calendar.events.insert({
-                calendarId: 'primary',
-                requestBody: {
-                  summary: 'Theresa',
-                  start: { dateTime: `${night}T22:00:00${getViennaOffset(night)}` },
-                  end: { dateTime: `${morning}T08:00:00${getViennaOffset(morning)}` },
-                },
-              })
-            }
-          } else {
-            // window: all-day, end exclusive.
-            await calendar.events.insert({
-              calendarId: 'primary',
-              requestBody: {
-                summary: ev.title,
-                location: ev.location || '',
-                start: { date: ev.date },
-                end: { date: addOneDay(ev.end_date || ev.date) },
+                summary: savedEvent.title,
+                location: savedEvent.location || '',
+                start: { dateTime: `${savedEvent.date}T${hhmmss(savedEvent.start_time)}${offset}` },
+                end: { dateTime: `${savedEvent.date}T${hhmmss(savedEvent.end_time)}${offset}` },
               },
             })
           }
-        } catch (calErr) {
-          console.error('[Google Cal] insert failed:', calErr)
+        } else if (savedEvent.type === 'sleepover') {
+          // One "Theresa" entry per night, 22:00 → 08:00 next morning.
+          for (const night of nightsBetween(savedEvent.date, savedEvent.end_date || null)) {
+            if (await googleHasMatch(calendar, 'Theresa', night)) continue
+            const morning = addOneDay(night)
+            await calendar.events.insert({
+              calendarId: 'primary',
+              requestBody: {
+                summary: 'Theresa',
+                start: { dateTime: `${night}T22:00:00${getViennaOffset(night)}` },
+                end: { dateTime: `${morning}T08:00:00${getViennaOffset(morning)}` },
+              },
+            })
+          }
+        } else {
+          // window: all-day, end exclusive.
+          if (!(await googleHasMatch(calendar, savedEvent.title, savedEvent.date))) {
+            await calendar.events.insert({
+              calendarId: 'primary',
+              requestBody: {
+                summary: savedEvent.title,
+                location: savedEvent.location || '',
+                start: { date: savedEvent.date },
+                end: { date: addOneDay(savedEvent.end_date || savedEvent.date) },
+              },
+            })
+          }
         }
+      } catch (calErr) {
+        console.error('[Google Cal] insert failed:', calErr)
       }
     }
   } else if (parsed.action === 'add_bucket_list' && parsed.bucket_list_item?.title) {
@@ -357,7 +404,9 @@ export async function POST(req: NextRequest) {
   }
 
   // Notify Dimitri about anything Theresa just booked/confirmed.
-  if (savedEvent) {
+  // Only for genuinely new events — not when we merely reconciled an
+  // existing one to Google (avoids duplicate "Theresa booked" pings).
+  if (savedEvent && savedEventIsNew) {
     await supabase.from('notifications').insert({
       message:
         savedEvent.type === 'sleepover'
