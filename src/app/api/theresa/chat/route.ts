@@ -64,7 +64,40 @@ function fmtSlots(slots: { date: string; freeSlots: { start: string; end: string
   }).join('\n')
 }
 
-function buildSystemPrompt(freeBusySummary: string, bucketListSummary: string, calendarConnected: boolean): string {
+type PlannedEvent = {
+  title: string
+  location: string | null
+  date: string
+  start_time: string | null
+  end_time: string | null
+  type: string | null
+  end_date: string | null
+  recurrence_rule: string | null
+  added_by: string | null
+}
+
+function fmtEvents(events: PlannedEvent[]): string {
+  if (!events.length) return 'Noch keine geplanten Events.'
+  return events.map(e => {
+    const who = e.added_by === 'theresa' ? ' (von Theresa ♡)' : ''
+    const loc = e.location ? ` @ ${e.location}` : ''
+    let when: string
+    if (e.type === 'sleepover') {
+      when = e.end_date && e.end_date !== e.date
+        ? `${fmtDay(e.date)} – ${fmtDay(e.end_date)} · Übernachtung 🌙`
+        : `${fmtDay(e.date)} · Übernachtung 🌙`
+    } else if (e.type === 'window' && e.end_date) {
+      when = `${fmtDay(e.date)} – ${fmtDay(e.end_date)} (ganztägig)`
+    } else if (e.type === 'recurring' && e.recurrence_rule) {
+      when = `${e.recurrence_rule} (wiederkehrend, ab ${fmtDay(e.date)})`
+    } else {
+      when = `${fmtDay(e.date)} · ${e.start_time ?? '??'}–${e.end_time ?? '??'} Uhr`
+    }
+    return `- ${e.title}${loc} — ${when}${who}`
+  }).join('\n')
+}
+
+function buildSystemPrompt(freeBusySummary: string, plannedEventsSummary: string, bucketListSummary: string, calendarConnected: boolean): string {
   const today = new Date().toISOString().split('T')[0]
 
   const availabilitySection = calendarConnected
@@ -79,6 +112,9 @@ Behaupte KEINE freien Zeiten, schlage KEINE konkreten Slots vor und erstelle KEI
 Du hilfst Theresa dabei, gemeinsame Zeit mit Dimitri zu planen. Theresa kann Events direkt erstellen — keine Bestätigung nötig.
 
 ${availabilitySection}
+
+Bereits geplante Events (kommende, inkl. von Theresa eingetragene):
+${plannedEventsSummary}
 
 Eure Bucket-List (Dinge die ihr noch tun wollt):
 ${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
@@ -113,6 +149,8 @@ Antworte immer auf Deutsch in exakt diesem JSON-Format:
 }
 
 Regeln:
+- Wenn Theresa fragt was an einem Tag/Datum geplant ist oder los ist, schau in "Bereits geplante Events" und zähle die passenden Einträge auf. Behaupte nie "keine Events" ohne dort nachgesehen zu haben.
+- Doppelbuchungen vermeiden: weise freundlich hin wenn ein neuer Slot mit einem bestehenden Event kollidiert
 - Schau dir Dimitris freie Zeiten an und schlage passende Slots vor wenn sie fragt
 - Relative Daten ("diesen Samstag", "nächste Woche"): berechne von heute (${today})
 - Für single Events: wenn kein end_time, füge 2 Stunden zur start_time hinzu
@@ -138,10 +176,11 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'No message or image' }, { status: 400 })
   }
 
-  // Fetch freebusy and bucket list for context
-  const [freeBusyResult, bucketListResult] = await Promise.allSettled([
+  // Fetch freebusy, bucket list, and already-planned events for context
+  const [freeBusyResult, bucketListResult, eventsResult] = await Promise.allSettled([
     getFreeBusySlots(),
     supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
+    supabase.from('events').select('title, location, date, start_time, end_time, type, end_date, recurrence_rule, added_by').order('date', { ascending: true }),
   ])
 
   // A rejected freebusy result means we genuinely couldn't reach Dimitri's
@@ -159,6 +198,14 @@ export async function POST(req: NextRequest) {
   const bucketListSummary = bucketListData?.length
     ? bucketListData.map(i => `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''}`).join('\n')
     : ''
+
+  // Show only current/upcoming events: future-dated, or multi-day windows still ongoing.
+  const today = new Date().toISOString().split('T')[0]
+  const eventsData = (eventsResult.status === 'fulfilled' ? eventsResult.value.data : []) as PlannedEvent[] | null
+  const upcomingEvents = (eventsData ?? [])
+    .filter(e => e.date >= today || (e.end_date != null && e.end_date >= today))
+    .slice(0, 40)
+  const plannedEventsSummary = fmtEvents(upcomingEvents)
 
   const userContent: OpenAI.ChatCompletionContentPart[] = []
 
@@ -183,7 +230,7 @@ export async function POST(req: NextRequest) {
       model: 'gpt-4o',
       max_tokens: 1024,
       messages: [
-        { role: 'system', content: buildSystemPrompt(freeBusySummary, bucketListSummary, calendarConnected) },
+        { role: 'system', content: buildSystemPrompt(freeBusySummary, plannedEventsSummary, bucketListSummary, calendarConnected) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
