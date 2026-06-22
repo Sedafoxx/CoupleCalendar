@@ -119,6 +119,84 @@ function fmtEvents(events: PlannedEvent[]): string {
   }).join('\n')
 }
 
+// Self-healing sync: make sure every upcoming Theresa-added event exists in
+// Google Calendar, regardless of what the chat AI decides. Catches events
+// whose original insert failed (e.g. created while the OAuth token was dead).
+// Idempotent — one list call, then inserts only what's missing.
+async function reconcileTheresaEvents(events: PlannedEvent[], today: string): Promise<void> {
+  const targets = events.filter(e =>
+    e.added_by === 'theresa' &&
+    (e.type === 'single' || e.type === 'window' || e.type === 'sleepover') &&
+    (e.date >= today || (e.end_date != null && e.end_date >= today))
+  )
+  if (!targets.length) return
+
+  const calendar = await getCalendarClient()
+  const maxDate = targets.reduce((mx, e) => {
+    const d = e.end_date && e.end_date > e.date ? e.end_date : e.date
+    return d > mx ? d : mx
+  }, today)
+
+  const list = await calendar.events.list({
+    calendarId: 'primary',
+    timeMin: `${today}T00:00:00Z`,
+    timeMax: `${addOneDay(maxDate)}T00:00:00Z`,
+    singleEvents: true,
+    maxResults: 2500,
+  })
+  const dayOf = (s: { date?: string | null; dateTime?: string | null } | undefined) =>
+    s?.date ?? (s?.dateTime ? new Date(s.dateTime).toLocaleDateString('sv-SE', { timeZone: 'Europe/Vienna' }) : '')
+  const present = new Set(
+    (list.data.items ?? []).map(it => `${(it.summary ?? '').trim().toLowerCase()}|${dayOf(it.start)}`)
+  )
+  const has = (summary: string, day: string) => present.has(`${summary.trim().toLowerCase()}|${day}`)
+
+  for (const e of targets) {
+    try {
+      if (e.type === 'sleepover') {
+        for (const night of nightsBetween(e.date, e.end_date || null)) {
+          if (has('Theresa', night)) continue
+          const morning = addOneDay(night)
+          await calendar.events.insert({
+            calendarId: 'primary',
+            requestBody: {
+              summary: 'Theresa',
+              start: { dateTime: `${night}T22:00:00${getViennaOffset(night)}` },
+              end: { dateTime: `${morning}T08:00:00${getViennaOffset(morning)}` },
+            },
+          })
+        }
+      } else if (e.type === 'single') {
+        if (has(e.title, e.date)) continue
+        const off = getViennaOffset(e.date)
+        await calendar.events.insert({
+          calendarId: 'primary',
+          requestBody: {
+            summary: e.title,
+            location: e.location || '',
+            start: { dateTime: `${e.date}T${hhmmss(e.start_time)}${off}` },
+            end: { dateTime: `${e.date}T${hhmmss(e.end_time)}${off}` },
+          },
+        })
+      } else {
+        if (has(e.title, e.date)) continue
+        await calendar.events.insert({
+          calendarId: 'primary',
+          requestBody: {
+            summary: e.title,
+            location: e.location || '',
+            start: { date: e.date },
+            end: { date: addOneDay(e.end_date || e.date) },
+          },
+        })
+      }
+      console.log(`[reconcile] synced "${e.title}" (${e.date}) to Google`)
+    } catch (err) {
+      console.error(`[reconcile] failed for "${e.title}" (${e.date}):`, err)
+    }
+  }
+}
+
 function buildSystemPrompt(freeBusySummary: string, plannedEventsSummary: string, bucketListSummary: string, calendarConnected: boolean): string {
   const today = new Date().toISOString().split('T')[0]
 
@@ -229,6 +307,16 @@ export async function POST(req: NextRequest) {
     .filter(e => e.date >= today || (e.end_date != null && e.end_date >= today))
     .slice(0, 40)
   const plannedEventsSummary = fmtEvents(upcomingEvents)
+
+  // Self-heal: ensure Theresa's plans are actually in Google, even if a prior
+  // insert failed. Independent of the AI's decision, so it can't be skipped.
+  if (calendarConnected) {
+    try {
+      await reconcileTheresaEvents(upcomingEvents, today)
+    } catch (err) {
+      console.error('[theresa/chat] reconcile failed:', err)
+    }
+  }
 
   const userContent: OpenAI.ChatCompletionContentPart[] = []
 
