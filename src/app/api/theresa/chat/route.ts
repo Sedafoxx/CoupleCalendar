@@ -64,14 +64,21 @@ function fmtSlots(slots: { date: string; freeSlots: { start: string; end: string
   }).join('\n')
 }
 
-function buildSystemPrompt(freeBusySummary: string, bucketListSummary: string): string {
+function buildSystemPrompt(freeBusySummary: string, bucketListSummary: string, calendarConnected: boolean): string {
   const today = new Date().toISOString().split('T')[0]
+
+  const availabilitySection = calendarConnected
+    ? `Dimitris freie Zeiten (Wien-Zeit):
+${freeBusySummary}`
+    : `⚠️ WICHTIG: Dimitris Google-Kalender ist gerade NICHT erreichbar — ich kann seine freien Zeiten nicht sehen.
+Sage Theresa in dieser Antwort liebevoll, dass sie Dimitri Bescheid geben soll: der Zugriff auf seinen Google-Kalender muss repariert werden (neu verbinden / einloggen).
+Behaupte KEINE freien Zeiten, schlage KEINE konkreten Slots vor und erstelle KEINE zeitgebundenen Events (kein single). Bucket-List-Einträge und Notizen sind weiterhin ok.`
+
   return `Du bist ein liebevoller Kalenderassistent für Dimitri und Theresa. Heute ist ${today}.
 
 Du hilfst Theresa dabei, gemeinsame Zeit mit Dimitri zu planen. Theresa kann Events direkt erstellen — keine Bestätigung nötig.
 
-Dimitris freie Zeiten (Wien-Zeit):
-${freeBusySummary}
+${availabilitySection}
 
 Eure Bucket-List (Dinge die ihr noch tun wollt):
 ${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
@@ -137,10 +144,18 @@ export async function POST(req: NextRequest) {
     supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
   ])
 
-  const freeSlots = freeBusyResult.status === 'fulfilled' ? freeBusyResult.value : []
+  // A rejected freebusy result means we genuinely couldn't reach Dimitri's
+  // Google calendar (e.g. expired/revoked OAuth token). Treat that distinctly
+  // from "connected but no slots" so the bot tells Theresa to flag it to
+  // Dimitri instead of silently claiming he has no free time.
+  const calendarConnected = freeBusyResult.status === 'fulfilled'
+  if (!calendarConnected) {
+    console.error('[theresa/chat] freebusy unavailable:', freeBusyResult.reason)
+  }
+  const freeSlots = calendarConnected ? freeBusyResult.value : []
   const bucketListData = bucketListResult.status === 'fulfilled' ? bucketListResult.value.data : []
 
-  const freeBusySummary = fmtSlots(freeSlots)
+  const freeBusySummary = calendarConnected ? fmtSlots(freeSlots) : ''
   const bucketListSummary = bucketListData?.length
     ? bucketListData.map(i => `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''}`).join('\n')
     : ''
@@ -168,7 +183,7 @@ export async function POST(req: NextRequest) {
       model: 'gpt-4o',
       max_tokens: 1024,
       messages: [
-        { role: 'system', content: buildSystemPrompt(freeBusySummary, bucketListSummary) },
+        { role: 'system', content: buildSystemPrompt(freeBusySummary, bucketListSummary, calendarConnected) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
