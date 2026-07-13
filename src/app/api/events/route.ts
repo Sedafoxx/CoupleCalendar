@@ -4,9 +4,11 @@ import { supabase } from '@/lib/supabase'
 import { NextRequest } from 'next/server'
 
 export async function GET() {
+  const today = new Date().toISOString().slice(0, 10)
   const { data, error } = await supabase
     .from('events')
     .select('*')
+    .gte('date', today)
     .order('date', { ascending: true })
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
