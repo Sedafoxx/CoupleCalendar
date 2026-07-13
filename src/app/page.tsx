@@ -1,7 +1,8 @@
 'use client'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useState, useEffect, useRef } from 'react'
-import type { Event, BucketListItem, Notification } from '@/lib/supabase'
+import type { Event, BucketListItem, Notification, Rsvp } from '@/lib/supabase'
+import { bothGoing } from '@/lib/supabase'
 
 const TAG_COLORS: Record<string, string> = {
   romantic: 'bg-rose-100 text-rose-600',
@@ -38,7 +39,7 @@ function nextOccurrenceLabel(rule: string): string {
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
-  const [tab, setTab] = useState<'events' | 'bucket'>('events')
+  const [tab, setTab] = useState<'events' | 'city' | 'bucket'>('events')
   const [events, setEvents] = useState<Event[]>([])
   const [loading, setLoading] = useState(true)
   const [bucketList, setBucketList] = useState<BucketListItem[]>([])
@@ -62,6 +63,39 @@ export default function Dashboard() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const unreadCount = notifications.filter(n => !n.read).length
+
+  // Missing category (pre-migration rows) counts as a personal plan.
+  const personalEvents = events.filter(e => e.category !== 'city')
+  const cityEvents = events.filter(e => e.category === 'city')
+  // Theresa flagged interest in a city idea, Dimi hasn't answered → needs a decision.
+  const proposals = cityEvents.filter(e => e.rsvp_theresa && !e.rsvp_dimitri)
+
+  async function setDimitriRsvp(id: string, value: Rsvp) {
+    const res = await fetch(`/api/events/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      // "Ich will hin" also invites Theresa so it surfaces on her side.
+      body: JSON.stringify({ rsvp_dimitri: value, joinable: value === 'going' }),
+    })
+    if (res.ok) {
+      const updated: Event = await res.json()
+      setEvents(prev => prev.map(e => e.id === id ? updated : e))
+    }
+  }
+
+  // Confirm one of Theresa's proposals → both going, invite on, and promote the
+  // city idea into the shared plans list.
+  async function confirmProposal(id: string) {
+    const res = await fetch(`/api/events/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rsvp_dimitri: 'going', joinable: true, category: 'personal' }),
+    })
+    if (res.ok) {
+      const updated: Event = await res.json()
+      setEvents(prev => prev.map(e => e.id === id ? updated : e))
+    }
+  }
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -421,7 +455,42 @@ export default function Dashboard() {
         </form>
       </section>
 
-      {/* Events / Bucket List tabs */}
+      {/* Proposals from Theresa — city ideas she's interested in, awaiting Dimi */}
+      {proposals.length > 0 && (
+        <section className="space-y-2">
+          <h2 className="font-semibold text-lg">Theresa hat Ideen ♡</h2>
+          <ul className="space-y-2">
+            {proposals.map(ev => (
+              <li key={ev.id} className="bg-rose-50 border border-rose-200 rounded-xl p-4 flex items-start justify-between gap-4">
+                <div className="min-w-0 space-y-0.5">
+                  <p className="font-medium truncate">{ev.title}</p>
+                  {ev.location && <p className="text-sm text-stone-500 truncate">{ev.location}</p>}
+                  <p className="text-xs text-stone-400">{fmtDate(ev.date)} · {ev.start_time}–{ev.end_time}</p>
+                  <p className="text-xs text-rose-500 mt-0.5">
+                    Theresa {ev.rsvp_theresa === 'going' ? 'will da hin ♡' : 'hat Interesse ♡'}
+                  </p>
+                </div>
+                <div className="flex flex-col items-end gap-2 shrink-0">
+                  <button
+                    onClick={() => confirmProposal(ev.id)}
+                    className="text-xs bg-rose-500 text-white px-3 py-1.5 rounded-full hover:bg-rose-600 transition"
+                  >
+                    Ja, machen wir ♡
+                  </button>
+                  <button
+                    onClick={() => setDimitriRsvp(ev.id, 'maybe')}
+                    className="text-xs text-stone-400 hover:text-stone-600 transition"
+                  >
+                    Vielleicht
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Events / City / Bucket List tabs */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex rounded-lg overflow-hidden border border-stone-200">
@@ -432,6 +501,14 @@ export default function Dashboard() {
               }`}
             >
               Our Plans
+            </button>
+            <button
+              onClick={() => setTab('city')}
+              className={`px-4 py-2 text-sm font-medium transition ${
+                tab === 'city' ? 'bg-stone-900 text-white' : 'text-stone-500 hover:bg-stone-50'
+              }`}
+            >
+              Wien {cityEvents.length > 0 && <span className="opacity-60">({cityEvents.length})</span>}
             </button>
             <button
               onClick={() => setTab('bucket')}
@@ -455,11 +532,11 @@ export default function Dashboard() {
         {tab === 'events' && (
           loading ? (
             <p className="text-stone-400 text-sm">Loading...</p>
-          ) : events.length === 0 ? (
+          ) : personalEvents.length === 0 ? (
             <p className="text-stone-400 text-sm">No events yet.</p>
           ) : (
             <ul className="space-y-2">
-              {events.map(ev => (
+              {personalEvents.map(ev => (
                 <li
                   key={ev.id}
                   className="bg-white border border-stone-200 rounded-xl p-4 flex items-start justify-between gap-4"
@@ -478,6 +555,9 @@ export default function Dashboard() {
                       )}
                       {ev.added_by === 'theresa' && (
                         <span className="text-xs text-rose-400 shrink-0">from Theresa ♡</span>
+                      )}
+                      {bothGoing(ev) && (
+                        <span className="text-xs bg-rose-500 text-white px-2 py-0.5 rounded-full shrink-0">❤️ beide dabei</span>
                       )}
                     </div>
                     {ev.location && <p className="text-sm text-stone-500 truncate">{ev.location}</p>}
@@ -510,6 +590,59 @@ export default function Dashboard() {
                       className="text-stone-300 hover:text-red-400 transition text-sm"
                     >
                       Delete
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )
+        )}
+
+        {/* City suggestions — imported Vienna events, browse & mark interest */}
+        {tab === 'city' && (
+          loading ? (
+            <p className="text-stone-400 text-sm">Loading...</p>
+          ) : cityEvents.length === 0 ? (
+            <p className="text-stone-400 text-sm">Noch keine Vorschläge. Der tägliche Scan füllt das hier ♡</p>
+          ) : (
+            <ul className="space-y-2">
+              {cityEvents.map(ev => (
+                <li key={ev.id} className="bg-white border border-stone-200 rounded-xl p-4 flex items-start justify-between gap-4">
+                  <div className="min-w-0 space-y-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {ev.url ? (
+                        <a href={ev.url} target="_blank" rel="noreferrer" className="font-medium truncate hover:underline">{ev.title}</a>
+                      ) : (
+                        <p className="font-medium truncate">{ev.title}</p>
+                      )}
+                      {ev.rsvp_theresa && (
+                        <span className="text-xs text-rose-400 shrink-0">Theresa: {ev.rsvp_theresa} ♡</span>
+                      )}
+                    </div>
+                    {ev.location && <p className="text-sm text-stone-500 truncate">{ev.location}</p>}
+                    <p className="text-xs text-stone-400">{fmtDate(ev.date)} · {ev.start_time}–{ev.end_time}</p>
+                    {ev.tags && ev.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1">
+                        {ev.tags.map(tag => (
+                          <span key={tag} className={`text-xs px-2 py-0.5 rounded-full ${TAG_COLORS[tag] ?? 'bg-stone-100 text-stone-500'}`}>{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex flex-col items-end gap-1.5 shrink-0">
+                    <button
+                      onClick={() => setDimitriRsvp(ev.id, ev.rsvp_dimitri === 'going' ? null : 'going')}
+                      className={`text-xs px-2 py-1 rounded-full transition ${
+                        ev.rsvp_dimitri === 'going' ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200'
+                      }`}
+                    >
+                      {ev.rsvp_dimitri === 'going' ? '♡ Ich will hin' : '+ Interesse'}
+                    </button>
+                    <button
+                      onClick={() => deleteEvent(ev.id)}
+                      className="text-stone-300 hover:text-red-400 transition text-xs"
+                    >
+                      Ausblenden
                     </button>
                   </div>
                 </li>

@@ -7,6 +7,10 @@ export const supabase = createClient(
 
 export type EventType = 'single' | 'window' | 'recurring' | 'bucket_list' | 'sleepover'
 
+export type EventCategory = 'personal' | 'city'
+export type EventStatus = 'confirmed' | 'proposed'
+export type Rsvp = 'going' | 'interested' | 'maybe' | null
+
 export type Event = {
   id: string
   title: string
@@ -21,6 +25,26 @@ export type Event = {
   recurrence_rule: string | null
   duration_days: number | null
   added_by: string
+  category: EventCategory
+  status: EventStatus
+  rsvp_dimitri: Rsvp
+  rsvp_theresa: Rsvp
+  source: string | null
+  source_id: string | null
+  image_url: string | null
+  url: string | null
+  tags: string[] | null
+  archived: boolean
+}
+
+// Both partners said "going" → it's a real, confirmed date.
+export function bothGoing(e: Pick<Event, 'rsvp_dimitri' | 'rsvp_theresa'>): boolean {
+  return e.rsvp_dimitri === 'going' && e.rsvp_theresa === 'going'
+}
+
+// Today in Vienna as YYYY-MM-DD (avoids UTC-midnight drift that hides today's events).
+export function viennaToday(): string {
+  return new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }).slice(0, 10)
 }
 
 export type BucketListItem = {

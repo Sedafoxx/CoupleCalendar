@@ -173,6 +173,9 @@ export async function POST(req: NextRequest) {
         end_date: ev.end_date || null,
         recurrence_rule: ev.recurrence_rule || null,
         added_by: 'dimitri',
+        category: 'personal',
+        status: 'confirmed',
+        rsvp_dimitri: 'going',
       })
       .select()
       .single()

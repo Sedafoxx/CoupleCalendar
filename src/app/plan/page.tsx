@@ -67,6 +67,7 @@ export default function PlanPage() {
   const [submitting, setSubmitting] = useState(false)
   const [joiningId, setJoiningId] = useState<string | null>(null)
   const [joinedIds, setJoinedIds] = useState<string[]>([])
+  const [interestId, setInterestId] = useState<string | null>(null)
 
   function loadSlots() {
     setLoading(true)
@@ -109,6 +110,23 @@ export default function PlanPage() {
     if (res.ok) setJoinedIds(prev => [...prev, ev.id])
     else setError('Konnte nicht beitreten. Nochmal versuchen.')
     setJoiningId(null)
+  }
+
+  // Theresa flags interest in a city suggestion → notifies Dimi (a proposal).
+  async function proposeCity(ev: Event, value: 'interested' | 'going') {
+    setInterestId(ev.id)
+    const res = await fetch(`/api/events/${ev.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ rsvp_theresa: value }),
+    })
+    if (res.ok) {
+      const updated: Event = await res.json()
+      setEvents(prev => prev.map(e => e.id === ev.id ? updated : e))
+    } else {
+      setError('Konnte nicht senden. Nochmal versuchen.')
+    }
+    setInterestId(null)
   }
 
   function openBooking(date: string, slot: FreeSlot) {
@@ -221,6 +239,56 @@ export default function PlanPage() {
                       >
                         {joiningId === ev.id ? '...' : 'Ich komme mit ♡'}
                       </button>
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </section>
+        )}
+
+        {/* Was ist los in Wien — city suggestions Theresa can propose */}
+        {events.filter(e => e.category === 'city' && !e.joinable).length > 0 && (
+          <section className="space-y-3">
+            <p className="text-xs text-rose-400 uppercase tracking-widest text-center">Was ist los in Wien?</p>
+            <p className="text-center text-stone-400 text-xs -mt-1">Tipp an, worauf du Lust hast — Dimi kriegt Bescheid ♡</p>
+            <ul className="space-y-3">
+              {events.filter(e => e.category === 'city' && !e.joinable).slice(0, 20).map(ev => {
+                const mine = ev.rsvp_theresa
+                return (
+                  <li key={ev.id} className="bg-white/80 backdrop-blur-sm border border-rose-100 rounded-2xl p-4 shadow-sm space-y-2">
+                    <div className="flex items-start gap-3">
+                      <div className="flex-1 min-w-0">
+                        {ev.url ? (
+                          <a href={ev.url} target="_blank" rel="noreferrer" className="font-semibold text-stone-800 hover:underline block truncate">{ev.title}</a>
+                        ) : (
+                          <p className="font-semibold text-stone-800 truncate">{ev.title}</p>
+                        )}
+                        {ev.location && <p className="text-xs text-stone-400 truncate">{ev.location}</p>}
+                        <p className="text-xs text-rose-300 mt-0.5">{fmtDate(ev.date)} · {ev.start_time} – {ev.end_time} Uhr</p>
+                      </div>
+                    </div>
+                    {mine ? (
+                      <p className="text-sm text-rose-400 text-right">
+                        {mine === 'going' ? '💕 Du willst hin!' : '♡ Interesse gesendet'}
+                      </p>
+                    ) : (
+                      <div className="flex gap-2 justify-end">
+                        <button
+                          onClick={() => proposeCity(ev, 'interested')}
+                          disabled={interestId === ev.id}
+                          className="text-xs px-3 py-1.5 rounded-xl bg-rose-100 text-rose-500 hover:bg-rose-200 transition disabled:opacity-50"
+                        >
+                          Interesse ♡
+                        </button>
+                        <button
+                          onClick={() => proposeCity(ev, 'going')}
+                          disabled={interestId === ev.id}
+                          className="text-xs px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-400 to-pink-500 text-white hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-50"
+                        >
+                          Da will ich hin!
+                        </button>
+                      </div>
                     )}
                   </li>
                 )

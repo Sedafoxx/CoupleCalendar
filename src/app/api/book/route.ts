@@ -43,6 +43,11 @@ export async function POST(req: NextRequest) {
     date,
     start_time: startT,
     end_time: endT,
+    category: 'personal',
+    status: 'confirmed',
+    added_by: 'theresa',
+    rsvp_dimitri: 'going',
+    rsvp_theresa: 'going',
   })
 
   return Response.json({ id: event.data.id }, { status: 201 })
