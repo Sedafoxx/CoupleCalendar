@@ -17,7 +17,7 @@ interface ChatMsg {
   role: 'user' | 'assistant'
   text: string
   imageUrl?: string
-  event?: Event
+  events?: Event[]
   bucket_list_item?: BucketListItem
 }
 
@@ -227,14 +227,15 @@ export default function Dashboard() {
     try {
       const res = await fetch('/api/chat', { method: 'POST', body: formData })
       const data = await res.json()
+      const evts: Event[] = data.events ?? (data.event ? [data.event] : [])
       const assistantMsg: ChatMsg = {
         role: 'assistant',
         text: data.reply ?? 'Something went wrong.',
-        event: data.event ?? undefined,
+        events: evts.length ? evts : undefined,
         bucket_list_item: data.bucket_list_item ?? undefined,
       }
       setMessages(prev => [...prev, assistantMsg])
-      if (data.event) fetchEvents()
+      if (evts.length) fetchEvents()
       if (data.bucket_list_item) fetchBucketList()
     } catch {
       setMessages(prev => [
@@ -365,18 +366,24 @@ export default function Dashboard() {
                   />
                 )}
                 {msg.text && <p className="whitespace-pre-wrap leading-relaxed">{msg.text}</p>}
-                {msg.event && (
-                  <div className="mt-2 pt-2 border-t border-stone-100 space-y-0.5">
-                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">Added to calendar</p>
-                    <p className="font-semibold">{msg.event.title}</p>
-                    <p className="text-xs text-stone-500">
-                      {msg.event.type === 'window' && msg.event.end_date
-                        ? `${fmtDate(msg.event.date)} – ${fmtDate(msg.event.end_date)}`
-                        : msg.event.type === 'recurring' && msg.event.recurrence_rule
-                          ? nextOccurrenceLabel(msg.event.recurrence_rule)
-                          : `${msg.event.date} · ${msg.event.start_time}–${msg.event.end_time}`}
+                {msg.events && msg.events.length > 0 && (
+                  <div className="mt-2 pt-2 border-t border-stone-100 space-y-2">
+                    <p className="text-xs font-semibold text-stone-500 uppercase tracking-wide">
+                      Added to calendar{msg.events.length > 1 ? ` · ${msg.events.length} Termine` : ''}
                     </p>
-                    {msg.event.location && <p className="text-xs text-stone-500">{msg.event.location}</p>}
+                    {msg.events.map(ev => (
+                      <div key={ev.id} className="space-y-0.5">
+                        <p className="font-semibold">{ev.title}</p>
+                        <p className="text-xs text-stone-500">
+                          {ev.type === 'window' && ev.end_date
+                            ? `${fmtDate(ev.date)} – ${fmtDate(ev.end_date)}`
+                            : ev.type === 'recurring' && ev.recurrence_rule
+                              ? nextOccurrenceLabel(ev.recurrence_rule)
+                              : `${fmtDate(ev.date)} · ${ev.start_time}–${ev.end_time}`}
+                        </p>
+                        {ev.location && <p className="text-xs text-stone-500">{ev.location}</p>}
+                      </div>
+                    ))}
                   </div>
                 )}
                 {msg.bucket_list_item && (

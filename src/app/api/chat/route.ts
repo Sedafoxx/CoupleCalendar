@@ -39,16 +39,18 @@ Always respond with valid JSON in exactly this format:
 {
   "reply": "warm, friendly reply",
   "action": "create_event | add_bucket_list | none",
-  "event": {
-    "type": "single | window | recurring",
-    "title": "event name",
-    "location": "venue or address, empty string if unknown",
-    "date": "YYYY-MM-DD",
-    "start_time": "HH:MM",
-    "end_time": "HH:MM",
-    "end_date": "YYYY-MM-DD",
-    "recurrence_rule": "weekly:thursday"
-  } | null,
+  "events": [
+    {
+      "type": "single | window | recurring",
+      "title": "event name",
+      "location": "venue or address, empty string if unknown",
+      "date": "YYYY-MM-DD",
+      "start_time": "HH:MM",
+      "end_time": "HH:MM",
+      "end_date": "YYYY-MM-DD",
+      "recurrence_rule": "weekly:thursday"
+    }
+  ],
   "bucket_list_item": {
     "title": "activity name",
     "description": "short description",
@@ -58,6 +60,10 @@ Always respond with valid JSON in exactly this format:
 }
 
 Rules:
+- "events" is ALWAYS an array. One event → array of one. Multiple → one object each.
+- CRITICAL: when the text lists several explicit dates (e.g. "20.09, 18.10, 15.11, 20.12"), create ONE separate single event PER date. Same title/time/location, different date. NEVER collapse explicit dates into a recurring event.
+- Only use type "recurring" when the user describes an open-ended repeating pattern with NO explicit end list (e.g. "every Thursday", "wöchentlich"). A finite list of dates is NOT recurring.
+- If the user says "all 4 dates" / "mach alle Termine" referring to dates mentioned earlier in the conversation, reproduce every one of those dates as its own single event.
 - For images: read ALL visible text and extract every detail
 - Relative dates ("this Saturday", "next Friday", "tomorrow"): calculate from today (${today})
 - For single events: if end_time not stated, add 2 hours to start_time
@@ -143,7 +149,8 @@ export async function POST(req: NextRequest) {
   type AiResponse = {
     reply: string
     action: 'create_event' | 'add_bucket_list' | 'none'
-    event: AiEvent | null
+    events?: AiEvent[] | null
+    event?: AiEvent | null   // legacy single-event shape, still tolerated
     bucket_list_item: AiBucketItem | null
   }
 
@@ -154,34 +161,39 @@ export async function POST(req: NextRequest) {
     return Response.json({ reply: gptText })
   }
 
-  let savedEvent = null
+  const savedEvents: unknown[] = []
   let savedBucketItem = null
 
-  if (parsed.action === 'create_event' && parsed.event?.title) {
-    const ev = parsed.event
-    const type = ev.type ?? 'single'
+  // Normalize to an array (model may still emit a single "event").
+  const eventList = (parsed.events ?? (parsed.event ? [parsed.event] : []))
+    .filter(e => e && e.title)
 
-    const { data, error } = await supabase
-      .from('events')
-      .insert({
-        title: ev.title,
-        location: ev.location || '',
-        date: ev.date,
-        start_time: ev.start_time || '00:00',
-        end_time: ev.end_time || ev.start_time || '00:00',
-        type,
-        end_date: ev.end_date || null,
-        recurrence_rule: ev.recurrence_rule || null,
-        added_by: 'dimitri',
-        category: 'personal',
-        status: 'confirmed',
-        rsvp_dimitri: 'going',
-      })
-      .select()
-      .single()
+  if (parsed.action === 'create_event' && eventList.length) {
+    for (const ev of eventList) {
+      const type = ev.type ?? 'single'
 
-    if (!error) {
-      savedEvent = data
+      const { data, error } = await supabase
+        .from('events')
+        .insert({
+          title: ev.title,
+          location: ev.location || '',
+          date: ev.date,
+          start_time: ev.start_time || '00:00',
+          end_time: ev.end_time || ev.start_time || '00:00',
+          type,
+          end_date: ev.end_date || null,
+          recurrence_rule: ev.recurrence_rule || null,
+          added_by: 'dimitri',
+          category: 'personal',
+          status: 'confirmed',
+          rsvp_dimitri: 'going',
+        })
+        .select()
+        .single()
+
+      if (error) continue
+      savedEvents.push(data)
+
       // Write to Google Cal for single and window events
       if (type === 'single' || type === 'window') {
         try {
@@ -230,5 +242,10 @@ export async function POST(req: NextRequest) {
     if (!error) savedBucketItem = data
   }
 
-  return Response.json({ reply: parsed.reply, event: savedEvent, bucket_list_item: savedBucketItem })
+  return Response.json({
+    reply: parsed.reply,
+    events: savedEvents,
+    event: savedEvents[0] ?? null, // legacy field for older clients
+    bucket_list_item: savedBucketItem,
+  })
 }
