@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import { supabase, viennaToday } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
+import { viennaToday } from '@/lib/event-utils'
 import { NextRequest } from 'next/server'
 
 export async function GET() {

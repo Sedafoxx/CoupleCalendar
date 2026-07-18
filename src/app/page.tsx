@@ -2,7 +2,7 @@
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { useState, useEffect, useRef } from 'react'
 import type { Event, BucketListItem, Notification, Rsvp } from '@/lib/supabase'
-import { bothGoing } from '@/lib/supabase'
+import { bothGoing } from '@/lib/event-utils'
 
 const TAG_COLORS: Record<string, string> = {
   romantic: 'bg-rose-100 text-rose-600',

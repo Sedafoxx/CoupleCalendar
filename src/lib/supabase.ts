@@ -37,15 +37,8 @@ export type Event = {
   archived: boolean
 }
 
-// Both partners said "going" → it's a real, confirmed date.
-export function bothGoing(e: Pick<Event, 'rsvp_dimitri' | 'rsvp_theresa'>): boolean {
-  return e.rsvp_dimitri === 'going' && e.rsvp_theresa === 'going'
-}
-
-// Today in Vienna as YYYY-MM-DD (avoids UTC-midnight drift that hides today's events).
-export function viennaToday(): string {
-  return new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }).slice(0, 10)
-}
+// Runtime helpers live in lib/event-utils.ts so client components can import
+// them without pulling this service-role client into the browser bundle.
 
 export type BucketListItem = {
   id: string

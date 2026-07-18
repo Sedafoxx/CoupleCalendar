@@ -1,4 +1,5 @@
-import { supabase, viennaToday } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
+import { viennaToday } from '@/lib/event-utils'
 import { NextRequest } from 'next/server'
 
 // Daily Vercel cron. Archives past events so they stop cluttering both views.
