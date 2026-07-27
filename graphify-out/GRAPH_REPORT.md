@@ -1,16 +1,16 @@
 # Graph Report - CoupleCalendar  (2026-07-28)
 
 ## Corpus Check
-- 50 files · ~19,359 words
+- 51 files · ~19,858 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 250 nodes · 371 edges · 23 communities (16 shown, 7 thin omitted)
+- 257 nodes · 378 edges · 24 communities (17 shown, 7 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `03dfff07`
+- Built from commit: `98f05619`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -36,6 +36,7 @@
 - [[_COMMUNITY_Community 19|Community 19]]
 - [[_COMMUNITY_Community 20|Community 20]]
 - [[_COMMUNITY_Community 22|Community 22]]
+- [[_COMMUNITY_Community 23|Community 23]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `supabase` - 16 edges
@@ -64,7 +65,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (23 total, 7 thin omitted)
+## Communities (24 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
@@ -79,8 +80,8 @@ Cohesion: 0.11
 Nodes (18): POST(), utcToVienna(), GET(), Ctx, BusyBlock, computeFreeSlots(), DateSlots, FreeSlot (+10 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.22
-Nodes (11): DELETE(), RouteParams, Who, whoIs(), isTheresaAuthed(), GET(), POST(), whoIs() (+3 more)
+Cohesion: 0.15
+Nodes (14): DELETE(), RouteParams, Who, whoIs(), authOptions, isTheresaAuthed(), GET(), POST() (+6 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.10
@@ -111,8 +112,8 @@ Cohesion: 0.28
 Nodes (5): geist, metadata, Providers(), BottomNav(), NAV_ITEMS
 
 ### Community 11 - "Community 11"
-Cohesion: 0.19
-Nodes (6): authorized(), GET(), GET(), authOptions, viennaToday(), handler
+Cohesion: 0.36
+Nodes (4): authorized(), GET(), GET(), viennaToday()
 
 ### Community 12 - "Community 12"
 Cohesion: 0.29
@@ -122,8 +123,12 @@ Nodes (6): __dirname, env, envContent, envPath, migrationPath, sql
 Cohesion: 0.40
 Nodes (4): env, serviceKey, supabase, supabaseUrl
 
+### Community 23 - "Community 23"
+Cohesion: 0.33
+Nodes (5): env, events, serviceKey, supabase, supabaseUrl
+
 ## Knowledge Gaps
-- **101 isolated node(s):** `env`, `supabaseUrl`, `serviceKey`, `supabase`, `CaptureState` (+96 more)
+- **106 isolated node(s):** `env`, `supabaseUrl`, `serviceKey`, `supabase`, `events` (+101 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -131,15 +136,15 @@ Nodes (4): env, serviceKey, supabase, supabaseUrl
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `supabase` connect `Community 2` to `Community 0`, `Community 3`, `Community 5`, `Community 6`, `Community 11`?**
-  _High betweenness centrality (0.053) - this node is a cross-community bridge._
+  _High betweenness centrality (0.051) - this node is a cross-community bridge._
 - **Why does `Event` connect `Community 0` to `Community 8`, `Community 9`, `Community 11`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+  _High betweenness centrality (0.017) - this node is a cross-community bridge._
 - **Why does `getFreeBusySlots()` connect `Community 2` to `Community 6`?**
   _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `POST()` (e.g. with `getFreeBusySlots()` and `getCalendarClient()`) actually correct?**
   _`POST()` has 3 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `env`, `supabaseUrl`, `serviceKey` to the rest of the system?**
-  _101 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _106 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.09759759759759759 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**

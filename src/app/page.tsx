@@ -15,6 +15,7 @@ export default function MemoriesPage() {
   const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [showDebug, setShowDebug] = useState(false)
+  const [pastEvents, setPastEvents] = useState<Event[]>([])
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -28,14 +29,17 @@ export default function MemoriesPage() {
   // Fetch data
   const fetchAll = useCallback(async () => {
     try {
-      const [memoriesRes, eventsRes] = await Promise.all([
+      const [memoriesRes, eventsRes, pastRes] = await Promise.all([
         fetch('/api/memories?recent=true&limit=50'),
         fetch('/api/events'),
+        fetch('/api/events?past=true'),
       ])
       const memoriesData = await memoriesRes.json()
       const eventsData = await eventsRes.json()
+      const pastData = await pastRes.json()
       setMemories(Array.isArray(memoriesData) ? memoriesData : [])
       setEvents(Array.isArray(eventsData) ? eventsData : [])
+      setPastEvents(Array.isArray(pastData) ? pastData : [])
     } catch {
       // Silent fail
     }
@@ -224,7 +228,7 @@ export default function MemoriesPage() {
         </div>
       )}
 
-      {/* Memories feed */}
+      {/* Memories feed — combine photo memories + past events without photos */}
       <section className="space-y-4">
         {loading ? (
           <div className="space-y-4">
@@ -232,16 +236,9 @@ export default function MemoriesPage() {
               <div key={i} className="bg-stone-50 rounded-2xl h-64 animate-pulse" />
             ))}
           </div>
-        ) : memories.length === 0 ? (
-          <div className="text-center py-16 space-y-4">
-            <p className="text-6xl">📸</p>
-            <h2 className="text-xl font-semibold text-stone-700">No memories yet</h2>
-            <p className="text-stone-400 text-sm max-w-xs mx-auto">
-              Capture your first moment together! Take a BeReal-style photo and attach it to an event.
-            </p>
-          </div>
         ) : (
           <>
+            {/* Photo memories first */}
             {memories.map((memory) => (
               <MemoryCard
                 key={memory.id}
@@ -249,6 +246,60 @@ export default function MemoriesPage() {
                 onClick={() => handleMemoryClick(memory)}
               />
             ))}
+
+            {/* Past events without photos — shown as memory placeholders */}
+            {pastEvents
+              .filter(ev =>
+                ev.date < new Date().toISOString().split('T')[0] &&
+                ev.category !== 'city' &&
+                !memories.some(m => m.event_id === ev.id)
+              )
+              .map((ev) => (
+                <button
+                  key={ev.id}
+                  onClick={() => setSelectedEvent(ev)}
+                  className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group"
+                >
+                  {/* Gradient placeholder instead of photo */}
+                  <div className="h-32 bg-gradient-to-br from-rose-100 via-pink-50 to-stone-100 flex items-center justify-center">
+                    <div className="text-center">
+                      <span className="text-4xl">♡</span>
+                      <p className="text-rose-300 text-xs mt-1 font-medium">Memory</p>
+                    </div>
+                  </div>
+
+                  {/* Event info */}
+                  <div className="px-4 py-3 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-sm text-stone-800 truncate">
+                        {ev.title}
+                      </span>
+                    </div>
+                    <p className="text-xs text-stone-400">
+                      {new Date(ev.date + 'T00:00:00').toLocaleDateString('de-AT', {
+                        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+                      })}
+                      {ev.start_time && ` · ${ev.start_time}–${ev.end_time}`}
+                    </p>
+                    <p className="text-xs text-rose-400 font-medium opacity-0 group-hover:opacity-100 transition">
+                      + Add Photos 📸
+                    </p>
+                  </div>
+                </button>
+              ))}
+
+            {/* Empty state if nothing at all */}
+            {memories.length === 0 && pastEvents.filter(ev =>
+              ev.date < new Date().toISOString().split('T')[0] && ev.category !== 'city'
+            ).length === 0 && (
+              <div className="text-center py-16 space-y-4">
+                <p className="text-6xl">📸</p>
+                <h2 className="text-xl font-semibold text-stone-700">No memories yet</h2>
+                <p className="text-stone-400 text-sm max-w-xs mx-auto">
+                  Capture your first moment together! Take a BeReal-style photo and attach it to an event.
+                </p>
+              </div>
+            )}
           </>
         )}
       </section>
@@ -272,6 +323,14 @@ export default function MemoriesPage() {
       >
         📸
       </button>
+
+      {/* Event detail modal — for past events without photos */}
+      {selectedEvent && (
+        <EventDetail
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
     </div>
   )
 }

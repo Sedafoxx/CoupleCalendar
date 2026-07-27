@@ -4,14 +4,124 @@
   "graph": {},
   "nodes": [
     {
+      "label": "seed-events.mjs",
+      "file_type": "code",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_seed_events",
+      "community": 23,
+      "norm_label": "seed-events.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_seed_events_env",
+      "community": 23,
+      "norm_label": "env"
+    },
+    {
+      "label": "supabaseUrl",
+      "file_type": "code",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_seed_events_supabaseurl",
+      "community": 23,
+      "norm_label": "supabaseurl"
+    },
+    {
+      "label": "serviceKey",
+      "file_type": "code",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_seed_events_servicekey",
+      "community": 23,
+      "norm_label": "servicekey"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_seed_events_supabase",
+      "community": 23,
+      "norm_label": "supabase"
+    },
+    {
+      "label": "events",
+      "file_type": "code",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "scripts_seed_events_events",
+      "community": 23,
+      "norm_label": "events"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "route.ts",
+      "id": "memories_route"
+    },
+    {
+      "label": "uuid()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "uuid()",
+      "id": "memories_route_uuid"
+    },
+    {
+      "label": "whoIs()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "whois()",
+      "id": "memories_route_whois"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "get()",
+      "id": "memories_route_get"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L98",
+      "_origin": "ast",
+      "community": 3,
+      "norm_label": "post()",
+      "id": "memories_route_post"
+    },
+    {
       "label": "create-event.mjs",
       "file_type": "code",
       "source_file": "scripts/create-event.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_create_event",
       "community": 22,
-      "norm_label": "create-event.mjs"
+      "norm_label": "create-event.mjs",
+      "id": "scripts_create_event"
     },
     {
       "label": "env",
@@ -19,9 +129,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_create_event_env",
       "community": 22,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_create_event_env"
     },
     {
       "label": "supabaseUrl",
@@ -29,9 +139,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_create_event_supabaseurl",
       "community": 22,
-      "norm_label": "supabaseurl"
+      "norm_label": "supabaseurl",
+      "id": "scripts_create_event_supabaseurl"
     },
     {
       "label": "serviceKey",
@@ -39,9 +149,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "scripts_create_event_servicekey",
       "community": 22,
-      "norm_label": "servicekey"
+      "norm_label": "servicekey",
+      "id": "scripts_create_event_servicekey"
     },
     {
       "label": "supabase",
@@ -49,9 +159,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "scripts_create_event_supabase",
       "community": 22,
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "scripts_create_event_supabase"
     },
     {
       "label": "DualCamera.tsx",
@@ -59,9 +169,9 @@
       "source_file": "src/components/DualCamera.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_dualcamera",
       "community": 0,
-      "norm_label": "dualcamera.tsx"
+      "norm_label": "dualcamera.tsx",
+      "id": "components_dualcamera"
     },
     {
       "label": "CaptureState",
@@ -69,9 +179,9 @@
       "source_file": "src/components/DualCamera.tsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "components_dualcamera_capturestate",
       "community": 0,
-      "norm_label": "capturestate"
+      "norm_label": "capturestate",
+      "id": "components_dualcamera_capturestate"
     },
     {
       "label": "DualCameraProps",
@@ -79,9 +189,9 @@
       "source_file": "src/components/DualCamera.tsx",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "components_dualcamera_dualcameraprops",
       "community": 0,
-      "norm_label": "dualcameraprops"
+      "norm_label": "dualcameraprops",
+      "id": "components_dualcamera_dualcameraprops"
     },
     {
       "label": "fmtDate()",
@@ -89,9 +199,9 @@
       "source_file": "src/components/DualCamera.tsx",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "components_dualcamera_fmtdate",
       "community": 0,
-      "norm_label": "fmtdate()"
+      "norm_label": "fmtdate()",
+      "id": "components_dualcamera_fmtdate"
     },
     {
       "label": "canvasToBlob()",
@@ -99,9 +209,9 @@
       "source_file": "src/components/DualCamera.tsx",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "components_dualcamera_canvastoblob",
       "community": 0,
-      "norm_label": "canvastoblob()"
+      "norm_label": "canvastoblob()",
+      "id": "components_dualcamera_canvastoblob"
     },
     {
       "label": "DualCamera()",
@@ -109,9 +219,9 @@
       "source_file": "src/components/DualCamera.tsx",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "components_dualcamera_dualcamera",
       "community": 0,
-      "norm_label": "dualcamera()"
+      "norm_label": "dualcamera()",
+      "id": "components_dualcamera_dualcamera"
     },
     {
       "label": "route.ts",
@@ -352,46 +462,6 @@
       "community": 3,
       "norm_label": "delete()",
       "id": "id_route_delete"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "route.ts",
-      "id": "memories_route"
-    },
-    {
-      "label": "whoIs()",
-      "file_type": "code",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L11",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "whois()",
-      "id": "memories_route_whois"
-    },
-    {
-      "label": "GET()",
-      "file_type": "code",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "get()",
-      "id": "memories_route_get"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L94",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "post()",
-      "id": "memories_route_post"
     },
     {
       "label": "layout.tsx",
@@ -1109,7 +1179,7 @@
       "source_file": "src/app/api/auth/[...nextauth]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "route.ts",
       "id": "nextauth_route"
     },
@@ -1119,7 +1189,7 @@
       "source_file": "src/app/api/auth/[...nextauth]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "handler",
       "id": "nextauth_route_handler"
     },
@@ -1419,7 +1489,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "route.ts",
       "id": "notifications_route"
     },
@@ -1429,7 +1499,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "get()",
       "id": "notifications_route_get"
     },
@@ -1439,7 +1509,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "patch()",
       "id": "notifications_route_patch"
     },
@@ -1849,7 +1919,7 @@
       "source_file": "src/lib/auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "auth.ts",
       "id": "lib_auth"
     },
@@ -1859,7 +1929,7 @@
       "source_file": "src/lib/auth.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 11,
+      "community": 3,
       "norm_label": "authoptions",
       "id": "lib_auth_authoptions"
     },
@@ -2508,12 +2578,212 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_seed_events",
+      "target": "scripts_seed_events_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "scripts_seed_events",
+      "target": "scripts_seed_events_events",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_seed_events",
+      "target": "scripts_seed_events_servicekey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_seed_events",
+      "target": "scripts_seed_events_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/seed-events.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_seed_events",
+      "target": "scripts_seed_events_supabaseurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_auth_authoptions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_theresa_auth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_theresa_auth_istheresaauthed"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "memories_route_get"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "memories_route_post"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "memories_route_uuid"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "memories_route_whois"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route_post",
+      "target": "memories_route_uuid"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route_get",
+      "target": "memories_route_whois"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route_post",
+      "target": "memories_route_whois"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route_whois",
+      "target": "lib_theresa_auth_istheresaauthed"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/create-event.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_create_event",
-      "target": "scripts_create_event_env",
-      "confidence_score": 1.0
+      "target": "scripts_create_event_env"
     },
     {
       "relation": "contains",
@@ -2521,9 +2791,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_create_event",
-      "target": "scripts_create_event_servicekey",
-      "confidence_score": 1.0
+      "target": "scripts_create_event_servicekey"
     },
     {
       "relation": "contains",
@@ -2531,9 +2801,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_create_event",
-      "target": "scripts_create_event_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_create_event_supabase"
     },
     {
       "relation": "contains",
@@ -2541,9 +2811,9 @@
       "source_file": "scripts/create-event.mjs",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_create_event",
-      "target": "scripts_create_event_supabaseurl",
-      "confidence_score": 1.0
+      "target": "scripts_create_event_supabaseurl"
     },
     {
       "relation": "imports_from",
@@ -3180,135 +3450,6 @@
       "confidence_score": 1.0,
       "source": "id_route_delete",
       "target": "id_route_whois"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_theresa_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_theresa_auth_istheresaauthed"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "memories_route_get"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L94",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "memories_route_post"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "memories_route_whois"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route_get",
-      "target": "memories_route_whois"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L95",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route_post",
-      "target": "memories_route_whois"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route_whois",
-      "target": "lib_theresa_auth_istheresaauthed"
     },
     {
       "relation": "contains",
@@ -6384,5 +6525,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "03dfff071c27a34372ee916a75f86faf69fb2bdc"
+  "built_at_commit": "98f0561950779f5afead7e595244754220f37521"
 }
