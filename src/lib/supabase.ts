@@ -60,3 +60,16 @@ export type Notification = {
   read: boolean
   created_at: string
 }
+
+export type Memory = {
+  id: string
+  event_id: string
+  captured_by: 'dimitri' | 'theresa'
+  photo_front: string   // Supabase Storage URL
+  photo_back: string    // Supabase Storage URL
+  caption: string | null
+  created_at: string
+  // Joined from events table when fetching with event details
+  event_title?: string
+  event_date?: string
+}
