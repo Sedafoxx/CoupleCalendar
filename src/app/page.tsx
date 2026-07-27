@@ -238,16 +238,19 @@ export default function MemoriesPage() {
           </div>
         ) : (() => {
           // Merge photo memories + past events into one chronologically-sorted feed
+          // Filter out text-only notes (they show inside EventDetail, not in the feed)
+          const photoMemories = memories.filter(m => !m.photo_back.includes('note.gif'))
           const pastEventsWithoutPhotos = pastEvents.filter(ev =>
             ev.date < new Date().toISOString().split('T')[0] &&
             ev.category !== 'city' &&
-            !memories.some(m => m.event_id === ev.id)
+            !photoMemories.some(m => m.event_id === ev.id) &&
+            !memories.some(m => m.event_id === ev.id && m.photo_back.includes('note.gif'))
           )
 
           // Build combined feed items
           type FeedItem = { id: string; date: string; type: 'memory' | 'event'; data: Memory | Event; event_title?: string }
           const feed: FeedItem[] = [
-            ...memories.map(m => ({ id: m.id, date: m.event_date || m.created_at.split('T')[0], type: 'memory' as const, data: m, event_title: m.event_title })),
+            ...photoMemories.map(m => ({ id: m.id, date: m.event_date || m.created_at.split('T')[0], type: 'memory' as const, data: m, event_title: m.event_title })),
             ...pastEventsWithoutPhotos.map(ev => ({ id: ev.id, date: ev.date, type: 'event' as const, data: ev })),
           ]
 

@@ -1,16 +1,16 @@
 # Graph Report - CoupleCalendar  (2026-07-28)
 
 ## Corpus Check
-- 55 files · ~21,387 words
+- 56 files · ~21,527 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 277 nodes · 387 edges · 27 communities (20 shown, 7 thin omitted)
+- 282 nodes · 391 edges · 29 communities (22 shown, 7 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `be40e170`
+- Built from commit: `a82dd8eb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -18,6 +18,7 @@
 - [[_COMMUNITY_Community 0|Community 0]]
 - [[_COMMUNITY_Community 1|Community 1]]
 - [[_COMMUNITY_Community 2|Community 2]]
+- [[_COMMUNITY_Community 3|Community 3]]
 - [[_COMMUNITY_Community 4|Community 4]]
 - [[_COMMUNITY_Community 5|Community 5]]
 - [[_COMMUNITY_Community 6|Community 6]]
@@ -25,6 +26,7 @@
 - [[_COMMUNITY_Community 8|Community 8]]
 - [[_COMMUNITY_Community 9|Community 9]]
 - [[_COMMUNITY_Community 10|Community 10]]
+- [[_COMMUNITY_Community 11|Community 11]]
 - [[_COMMUNITY_Community 12|Community 12]]
 - [[_COMMUNITY_Community 13|Community 13]]
 - [[_COMMUNITY_Community 15|Community 15]]
@@ -54,33 +56,37 @@
 10. `authOptions` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `POST()` --calls--> `getFreeBusySlots()`  [INFERRED]
+  src/app/api/theresa/chat/route.ts → src/lib/freebusy.ts
 - `POST()` --calls--> `getCalendarClient()`  [INFERRED]
-  src/app/api/chat/route.ts → src/lib/google-auth.ts
+  src/app/api/theresa/chat/route.ts → src/lib/google-auth.ts
 - `POST()` --calls--> `isTheresaAuthed()`  [INFERRED]
   src/app/api/theresa/chat/route.ts → src/lib/theresa-auth.ts
 - `DualCameraProps` --references--> `Memory`  [EXTRACTED]
   src/components/DualCamera.tsx → src/lib/supabase.ts
 - `EventDetailProps` --references--> `Event`  [EXTRACTED]
   src/components/EventDetail.tsx → src/lib/supabase.ts
-- `GET()` --calls--> `viennaToday()`  [EXTRACTED]
-  src/app/api/events/route.ts → src/lib/event-utils.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (27 total, 7 thin omitted)
+## Communities (29 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.10
-Nodes (17): CalendarProps, MONTHS, WEEKDAYS, CaptureState, DualCameraProps, EventDetail(), EventDetailProps, fmtDate() (+9 more)
+Cohesion: 0.09
+Nodes (22): CalendarProps, MONTHS, WEEKDAYS, CaptureState, DualCameraProps, EventDetail(), EventDetailProps, fmtDate() (+14 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.07
 Nodes (26): dependencies, @auth/supabase-adapter, googleapis, next, next-auth, openai, react, react-dom (+18 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.09
-Nodes (20): POST(), utcToVienna(), authorized(), GET(), GET(), Ctx, authOptions, viennaToday() (+12 more)
+Cohesion: 0.11
+Nodes (18): POST(), utcToVienna(), GET(), Ctx, BusyBlock, computeFreeSlots(), DateSlots, FreeSlot (+10 more)
+
+### Community 3 - "Community 3"
+Cohesion: 0.36
+Nodes (4): authorized(), GET(), GET(), viennaToday()
 
 ### Community 4 - "Community 4"
 Cohesion: 0.10
@@ -91,8 +97,8 @@ Cohesion: 0.21
 Nodes (14): authorized(), GET(), decode(), IngestResult, MONTHS, openai, pad(), plusHours() (+6 more)
 
 ### Community 6 - "Community 6"
-Cohesion: 0.17
-Nodes (23): fmtDay(), fmtEvents(), fmtSlots(), googleHasMatch(), hhmmss(), nightsBetween(), PlannedEvent, reconcileTheresaEvents() (+15 more)
+Cohesion: 0.30
+Nodes (14): fmtDay(), fmtEvents(), fmtSlots(), googleHasMatch(), hhmmss(), nightsBetween(), PlannedEvent, reconcileTheresaEvents() (+6 more)
 
 ### Community 7 - "Community 7"
 Cohesion: 0.15
@@ -109,6 +115,10 @@ Nodes (4): BucketListItem, ChatMsg, HEARTS, TAG_COLORS
 ### Community 10 - "Community 10"
 Cohesion: 0.28
 Nodes (5): geist, metadata, Providers(), BottomNav(), NAV_ITEMS
+
+### Community 11 - "Community 11"
+Cohesion: 0.40
+Nodes (4): env, key, supabase, url
 
 ### Community 12 - "Community 12"
 Cohesion: 0.29
@@ -127,8 +137,8 @@ Cohesion: 0.33
 Nodes (5): env, renames, serviceKey, supabase, supabaseUrl
 
 ### Community 25 - "Community 25"
-Cohesion: 0.24
-Nodes (10): DELETE(), PATCH(), RouteParams, Who, whoIs(), isTheresaAuthed(), GET(), POST() (+2 more)
+Cohesion: 0.16
+Nodes (12): DELETE(), PATCH(), RouteParams, Who, whoIs(), authOptions, isTheresaAuthed(), GET() (+4 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.33
@@ -143,24 +153,24 @@ Cohesion: 0.40
 Nodes (4): env, key, supabase, url
 
 ## Knowledge Gaps
-- **124 isolated node(s):** `CaptureState`, `env`, `url`, `key`, `supabase` (+119 more)
+- **128 isolated node(s):** `env`, `url`, `key`, `supabase`, `CaptureState` (+123 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `supabase` connect `Community 2` to `Community 25`, `Community 5`, `Community 6`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
-- **Why does `Event` connect `Community 0` to `Community 8`, `Community 9`, `Community 2`?**
+- **Why does `supabase` connect `Community 2` to `Community 0`, `Community 3`, `Community 5`, `Community 6`, `Community 25`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
+- **Why does `Event` connect `Community 0` to `Community 8`, `Community 9`, `Community 3`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
+- **Why does `getFreeBusySlots()` connect `Community 2` to `Community 6`?**
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `POST()` (e.g. with `getFreeBusySlots()` and `getCalendarClient()`) actually correct?**
   _`POST()` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `CaptureState`, `env`, `url` to the rest of the system?**
-  _124 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `env`, `url`, `key` to the rest of the system?**
+  _128 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.10483870967741936 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.09388335704125178 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.08717948717948718 - nodes in this community are weakly interconnected._

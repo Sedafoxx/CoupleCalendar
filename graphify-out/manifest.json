@@ -298,5 +298,10 @@
     "mtime": 1785193521.1714725,
     "ast_hash": "72b26311147d0533801eb300a73d336e",
     "semantic_hash": ""
+  },
+  "scripts/merge-rathaus.mjs": {
+    "mtime": 1785194871.2185545,
+    "ast_hash": "4f5f5709c3599e3556a5bcc93173574c",
+    "semantic_hash": ""
   }
 }
