@@ -36,6 +36,11 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
   const [backPreview, setBackPreview] = useState<string | null>(null)
   const [caption, setCaption] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const [mode, setMode] = useState<'camera' | 'gallery'>('camera')
+
+  // Gallery upload refs
+  const galleryBackRef = useRef<HTMLInputElement>(null)
+  const galleryFrontRef = useRef<HTMLInputElement>(null)
 
   // Event selection
   const [events, setEvents] = useState<Event[]>([])
@@ -155,6 +160,9 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
     setCaption('')
     setError(null)
     setState('idle')
+    // Clear gallery files
+    delete (window as unknown as Record<string, unknown>).__galleryFrontFile
+    delete (window as unknown as Record<string, unknown>).__galleryBackFile
   }, [])
 
   // Save memory
@@ -168,11 +176,12 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
     setError(null)
 
     try {
-      // Convert data URLs to blobs
-      const frontRes = await fetch(frontPreview)
-      const backRes = await fetch(backPreview)
-      const frontBlob = await frontRes.blob()
-      const backBlob = await backRes.blob()
+      // Use gallery files if available, otherwise convert canvas data URLs
+      const galleryFrontFile = (window as unknown as Record<string, unknown>).__galleryFrontFile as File | undefined
+      const galleryBackFile = (window as unknown as Record<string, unknown>).__galleryBackFile as File | undefined
+
+      const frontBlob = galleryFrontFile || await (await fetch(frontPreview)).blob()
+      const backBlob = galleryBackFile || await (await fetch(backPreview)).blob()
 
       // Build form data
       const formData = new FormData()
@@ -241,15 +250,88 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
           </div>
         )}
 
-        {/* Shutter button */}
+        {/* Mode switch + shutter/gallery buttons */}
         {state === 'idle' && (
-          <div className="absolute bottom-12 inset-x-0 flex justify-center z-10">
-            <button
-              onClick={startCapture}
-              className="w-20 h-20 rounded-full border-4 border-white bg-white/20 hover:bg-white/30 transition flex items-center justify-center"
-            >
-              <div className="w-16 h-16 rounded-full bg-white" />
-            </button>
+          <div className="absolute bottom-8 inset-x-0 z-10 flex flex-col items-center gap-4">
+            {/* Mode toggle */}
+            <div className="flex gap-2 bg-black/40 rounded-full p-1">
+              <button
+                onClick={() => setMode('camera')}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition ${
+                  mode === 'camera' ? 'bg-white text-black' : 'text-white/70'
+                }`}
+              >
+                📸 Camera
+              </button>
+              <button
+                onClick={() => setMode('gallery')}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium transition ${
+                  mode === 'gallery' ? 'bg-white text-black' : 'text-white/70'
+                }`}
+              >
+                🖼️ Gallery
+              </button>
+            </div>
+
+            {mode === 'camera' ? (
+              <button
+                onClick={startCapture}
+                className="w-20 h-20 rounded-full border-4 border-white bg-white/20 hover:bg-white/30 transition flex items-center justify-center"
+              >
+                <div className="w-16 h-16 rounded-full bg-white" />
+              </button>
+            ) : (
+              <div className="flex gap-4">
+                <button
+                  onClick={() => galleryBackRef.current?.click()}
+                  className="flex flex-col items-center gap-1 px-6 py-3 rounded-2xl bg-white/20 hover:bg-white/30 transition"
+                >
+                  <span className="text-2xl">🖼️</span>
+                  <span className="text-white text-xs">Main photo</span>
+                </button>
+                <button
+                  onClick={() => galleryFrontRef.current?.click()}
+                  className="flex flex-col items-center gap-1 px-6 py-3 rounded-2xl bg-white/20 hover:bg-white/30 transition"
+                >
+                  <span className="text-2xl">🤳</span>
+                  <span className="text-white text-xs">Selfie</span>
+                </button>
+              </div>
+            )}
+
+            {/* Hidden file inputs for gallery */}
+            <input
+              ref={galleryBackRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (!file) return
+                const url = URL.createObjectURL(file)
+                setBackPreview(url)
+                // Store the file for later upload
+                ;(window as unknown as Record<string, unknown>).__galleryBackFile = file
+                e.target.value = ''
+                // If both photos are selected, go to preview
+                if (frontPreview) setState('preview')
+              }}
+            />
+            <input
+              ref={galleryFrontRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (!file) return
+                const url = URL.createObjectURL(file)
+                setFrontPreview(url)
+                ;(window as unknown as Record<string, unknown>).__galleryFrontFile = file
+                e.target.value = ''
+                if (backPreview) setState('preview')
+              }}
+            />
           </div>
         )}
 

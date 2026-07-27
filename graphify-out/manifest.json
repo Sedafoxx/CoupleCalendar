@@ -65,8 +65,8 @@
     "semantic_hash": ""
   },
   "src/app/api/events/route.ts": {
-    "mtime": 1784384390.5394514,
-    "ast_hash": "a2cea2da28500e643c7f92c219ea6f57",
+    "mtime": 1785189099.4864106,
+    "ast_hash": "8b699f24af074b1beadbf38a7ec1b81e",
     "semantic_hash": ""
   },
   "src/app/api/freebusy/route.ts": {
@@ -100,8 +100,8 @@
     "semantic_hash": ""
   },
   "src/app/calendar/page.tsx": {
-    "mtime": 1785187225.3717382,
-    "ast_hash": "a95523c734b33dc666aa4cc1d64cb4d0",
+    "mtime": 1785189118.998983,
+    "ast_hash": "d4496a723e7dec450815404bca5d55be",
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "src/components/DualCamera.tsx": {
-    "mtime": 1785187151.746705,
-    "ast_hash": "d474d90de3747701e715ec3bc89120b9",
+    "mtime": 1785189106.2747633,
+    "ast_hash": "889ed672fd2f5f00c076613f96842521",
     "semantic_hash": ""
   },
   "src/components/EventDetail.tsx": {

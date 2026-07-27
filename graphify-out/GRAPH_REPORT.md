@@ -1,7 +1,7 @@
 # Graph Report - CoupleCalendar  (2026-07-27)
 
 ## Corpus Check
-- 49 files · ~18,897 words
+- 49 files · ~18,923 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9bdd4ef9`
+- Built from commit: `a9ec0be2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -54,8 +54,8 @@
   src/app/api/theresa/chat/route.ts → src/lib/google-auth.ts
 - `POST()` --calls--> `isTheresaAuthed()`  [INFERRED]
   src/app/api/theresa/chat/route.ts → src/lib/theresa-auth.ts
-- `GET()` --calls--> `getFreeBusySlots()`  [EXTRACTED]
-  src/app/api/freebusy/route.ts → src/lib/freebusy.ts
+- `GET()` --calls--> `viennaToday()`  [EXTRACTED]
+  src/app/api/events/route.ts → src/lib/event-utils.ts
 - `DualCameraProps` --references--> `Memory`  [EXTRACTED]
   src/components/DualCamera.tsx → src/lib/supabase.ts
 
@@ -113,7 +113,7 @@ Cohesion: 0.29
 Nodes (6): __dirname, env, envContent, envPath, migrationPath, sql
 
 ## Knowledge Gaps
-- **97 isolated node(s):** `BusyBlock`, `FreeSlot`, `DateSlots`, `__dirname`, `envPath` (+92 more)
+- **97 isolated node(s):** `CaptureState`, `BusyBlock`, `FreeSlot`, `DateSlots`, `__dirname` (+92 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -128,7 +128,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.009) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `POST()` (e.g. with `getFreeBusySlots()` and `getCalendarClient()`) actually correct?**
   _`POST()` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `BusyBlock`, `FreeSlot`, `DateSlots` to the rest of the system?**
+- **What connects `CaptureState`, `BusyBlock`, `FreeSlot` to the rest of the system?**
   _97 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.10967741935483871 - nodes in this community are weakly interconnected._
