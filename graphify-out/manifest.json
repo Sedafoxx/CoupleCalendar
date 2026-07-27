@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "supabase/migrations/0003_memories.sql": {
-    "mtime": 1785186984.1469483,
-    "ast_hash": "488ee26369ed40e7a8f550066e304eca",
+    "mtime": 1785188118.7721658,
+    "ast_hash": "6c8fa93d0b26c7c49de2893d59325cad",
     "semantic_hash": ""
   },
   "tsconfig.json": {
@@ -262,6 +262,11 @@
   "public/window.svg": {
     "mtime": 1780956874.9579713,
     "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": ""
+  },
+  "scripts/run-migration.mjs": {
+    "mtime": 1785187605.4901364,
+    "ast_hash": "e9a84171b8b051af67a706946eb9ac82",
     "semantic_hash": ""
   }
 }

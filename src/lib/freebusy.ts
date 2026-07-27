@@ -1,4 +1,5 @@
 import { getCalendarClient } from './google-auth'
+import { supabase } from './supabase'
 
 const TZ = 'Europe/Vienna'
 const DAY_START_H = 9
@@ -60,6 +61,25 @@ export async function getFreeBusySlots(): Promise<DateSlots[]> {
   const now = new Date()
   const todayStr = isoDateVienna(now)
 
+  // Fetch joinable events from local DB — these are "Theresa time" slots that
+  // Dimi specifically set aside for her. They should NOT count as busy.
+  const { data: theresaEvents } = await supabase
+    .from('events')
+    .select('title, date, start_time, end_time')
+    .eq('joinable', true)
+    .gte('date', todayStr)
+
+  const localBusy: BusyBlock[] = (theresaEvents ?? [])
+    .filter(e => e.start_time && e.end_time)
+    .map(e => {
+      const start = viennaDate(e.date, parseInt(e.start_time!.split(':')[0]))
+      const end = viennaDate(e.date, parseInt(e.end_time!.split(':')[0]))
+      // Adjust end minute
+      const endMin = parseInt(e.end_time!.split(':')[1])
+      end.setMinutes(endMin)
+      return { start: start.toISOString(), end: end.toISOString() }
+    })
+
   const dates: string[] = []
   for (let i = 0; i < DAYS_AHEAD; i++) {
     const d = new Date(now)
@@ -96,6 +116,20 @@ export async function getFreeBusySlots(): Promise<DateSlots[]> {
     ...(workCalData?.busy ?? []),
   ]
 
+  // Filter out Google Calendar busy blocks that overlap with "Theresa time" events.
+  // When Dimi creates a joinable event, that time is reserved FOR Theresa — not busy.
+  const filteredBusy = busy.filter(b => {
+    if (!b.start || !b.end) return true
+    const bs = new Date(b.start).getTime()
+    const be = new Date(b.end).getTime()
+    // Keep the busy block only if it doesn't overlap with any Theresa event
+    return !localBusy.some(t => {
+      const ts = new Date(t.start!).getTime()
+      const te = new Date(t.end!).getTime()
+      return bs < te && be > ts // overlaps
+    })
+  })
+
   const results: DateSlots[] = []
 
   for (const dateStr of dates) {
@@ -106,7 +140,7 @@ export async function getFreeBusySlots(): Promise<DateSlots[]> {
 
     const effectiveStart = dayStart < now ? now : dayStart
 
-    const dayBusy = busy.filter(b => {
+    const dayBusy = filteredBusy.filter(b => {
       if (!b.start || !b.end) return false
       const bs = new Date(b.start)
       const be = new Date(b.end)
@@ -123,6 +157,42 @@ export async function getFreeBusySlots(): Promise<DateSlots[]> {
       results.push({ date: dateStr, freeSlots })
     }
   }
+
+  // Add "Theresa time" events as special free slots so Theresa sees them as available.
+  for (const ev of theresaEvents ?? []) {
+    if (!ev.start_time || !ev.end_time) continue
+    const dateStr = ev.date
+    const startH = parseInt(ev.start_time.split(':')[0])
+    const startM = parseInt(ev.start_time.split(':')[1])
+    const endH = parseInt(ev.end_time.split(':')[0])
+    const endM = parseInt(ev.end_time.split(':')[1])
+
+    const slotStart = viennaDate(dateStr, startH)
+    slotStart.setMinutes(startM)
+    const slotEnd = viennaDate(dateStr, endH)
+    slotEnd.setMinutes(endM)
+
+    // If this date already has results, add to its freeSlots
+    const existing = results.find(r => r.date === dateStr)
+    if (existing) {
+      existing.freeSlots.push({
+        start: slotStart.toISOString(),
+        end: slotEnd.toISOString(),
+      })
+    } else {
+      // Create a new date entry with just this slot
+      results.push({
+        date: dateStr,
+        freeSlots: [{
+          start: slotStart.toISOString(),
+          end: slotEnd.toISOString(),
+        }],
+      })
+    }
+  }
+
+  // Sort results by date
+  results.sort((a, b) => a.date.localeCompare(b.date))
 
   return results
 }
