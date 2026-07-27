@@ -34,6 +34,7 @@ interface EventDetailProps {
 
 // ── Component ──────────────────────────────────────────────
 export default function EventDetail({ event, onClose }: EventDetailProps) {
+  const [deleting, setDeleting] = useState(false)
   const [memories, setMemories] = useState<Memory[]>([])
   const [loading, setLoading] = useState(true)
   const [showCamera, setShowCamera] = useState(false)
@@ -97,6 +98,14 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
       setEditing(false)
     }
     setSaving(false)
+  }
+
+  async function deleteEvent() {
+    if (!confirm('Really delete this event?')) return
+    setDeleting(true)
+    const res = await fetch(`/api/events/${event.id}`, { method: 'DELETE' })
+    if (res.ok) onClose()
+    setDeleting(false)
   }
 
   async function addNote() {
@@ -232,9 +241,18 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
                   {fmtTime(event.start_time)}{event.end_time ? ` – ${fmtTime(event.end_time)}` : ''}
                 </p>
               )}
-              <button onClick={() => setEditing(true)} className="text-xs text-stone-400 hover:text-rose-500 transition">
-                ✏️ Edit
-              </button>
+              <div className="flex gap-3">
+                <button onClick={() => setEditing(true)} className="text-xs text-stone-400 hover:text-rose-500 transition">
+                  ✏️ Edit
+                </button>
+                <button
+                  onClick={deleteEvent}
+                  disabled={deleting}
+                  className="text-xs text-red-300 hover:text-red-500 transition"
+                >
+                  {deleting ? '...' : '🗑️ Delete'}
+                </button>
+              </div>
             </>
           )}
         </div>
