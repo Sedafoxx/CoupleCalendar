@@ -16,7 +16,7 @@ export default function CalendarPage() {
   useEffect(() => {
     if (status === 'authenticated') {
       Promise.all([
-        fetch('/api/events').then((r) => r.json()),
+        fetch('/api/events?past=true').then((r) => r.json()),
         fetch('/api/memories?recent=true&limit=100').then((r) => r.json()),
       ]).then(([eventsData, memoriesData]) => {
         setEvents(Array.isArray(eventsData) ? eventsData : [])

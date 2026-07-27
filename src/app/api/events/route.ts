@@ -4,15 +4,22 @@ import { supabase } from '@/lib/supabase'
 import { viennaToday } from '@/lib/event-utils'
 import { NextRequest } from 'next/server'
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   const today = viennaToday()
-  // Keep events whose date OR end_date is still today-or-future, and not archived.
-  const { data, error } = await supabase
+  const { searchParams } = new URL(req.url)
+  const includePast = searchParams.get('past') === 'true'
+
+  let query = supabase
     .from('events')
     .select('*')
     .eq('archived', false)
-    .or(`date.gte.${today},end_date.gte.${today}`)
-    .order('date', { ascending: true })
+
+  if (!includePast) {
+    // Default: only today-or-future events
+    query = query.or(`date.gte.${today},end_date.gte.${today}`)
+  }
+
+  const { data, error } = await query.order('date', { ascending: true })
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
   return Response.json(data)

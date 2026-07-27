@@ -50,9 +50,9 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
   const frontStreamRef = useRef<MediaStream | null>(null)
   const backStreamRef = useRef<MediaStream | null>(null)
 
-  // Fetch events for the event picker
+  // Fetch events for the event picker (include past events so you can attach photos to old memories)
   useEffect(() => {
-    fetch('/api/events')
+    fetch('/api/events?past=true')
       .then((r) => r.json())
       .then((data) => {
         setEvents(Array.isArray(data) ? data : [])
