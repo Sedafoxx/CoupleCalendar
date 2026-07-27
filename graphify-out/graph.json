@@ -4,14 +4,84 @@
   "graph": {},
   "nodes": [
     {
+      "label": "DualCamera.tsx",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_dualcamera",
+      "community": 0,
+      "norm_label": "dualcamera.tsx"
+    },
+    {
+      "label": "CaptureState",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "components_dualcamera_capturestate",
+      "community": 0,
+      "norm_label": "capturestate"
+    },
+    {
+      "label": "DualCameraProps",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "components_dualcamera_dualcameraprops",
+      "community": 0,
+      "norm_label": "dualcameraprops"
+    },
+    {
+      "label": "fmtDate()",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "components_dualcamera_fmtdate",
+      "community": 0,
+      "norm_label": "fmtdate()"
+    },
+    {
+      "label": "canvasToBlob()",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "components_dualcamera_canvastoblob",
+      "community": 0,
+      "norm_label": "canvastoblob()"
+    },
+    {
+      "label": "compressImage()",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "components_dualcamera_compressimage",
+      "community": 0,
+      "norm_label": "compressimage()"
+    },
+    {
+      "label": "DualCamera()",
+      "file_type": "code",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L57",
+      "_origin": "ast",
+      "id": "components_dualcamera_dualcamera",
+      "community": 0,
+      "norm_label": "dualcamera()"
+    },
+    {
       "label": "route.ts",
       "file_type": "code",
       "source_file": "src/app/api/memories/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "memories_route",
-      "community": 3,
-      "norm_label": "route.ts"
+      "community": 25,
+      "norm_label": "route.ts",
+      "id": "memories_route"
     },
     {
       "label": "uuid()",
@@ -19,9 +89,9 @@
       "source_file": "src/app/api/memories/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "memories_route_uuid",
-      "community": 3,
-      "norm_label": "uuid()"
+      "community": 25,
+      "norm_label": "uuid()",
+      "id": "memories_route_uuid"
     },
     {
       "label": "whoIs()",
@@ -29,9 +99,9 @@
       "source_file": "src/app/api/memories/route.ts",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "memories_route_whois",
-      "community": 3,
-      "norm_label": "whois()"
+      "community": 25,
+      "norm_label": "whois()",
+      "id": "memories_route_whois"
     },
     {
       "label": "GET()",
@@ -39,9 +109,9 @@
       "source_file": "src/app/api/memories/route.ts",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "memories_route_get",
-      "community": 3,
-      "norm_label": "get()"
+      "community": 25,
+      "norm_label": "get()",
+      "id": "memories_route_get"
     },
     {
       "label": "POST()",
@@ -49,9 +119,9 @@
       "source_file": "src/app/api/memories/route.ts",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "memories_route_post",
-      "community": 3,
-      "norm_label": "post()"
+      "community": 25,
+      "norm_label": "post()",
+      "id": "memories_route_post"
     },
     {
       "label": "delete-july15.mjs",
@@ -494,72 +564,12 @@
       "id": "scripts_create_event_supabase"
     },
     {
-      "label": "DualCamera.tsx",
-      "file_type": "code",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "dualcamera.tsx",
-      "id": "components_dualcamera"
-    },
-    {
-      "label": "CaptureState",
-      "file_type": "code",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "capturestate",
-      "id": "components_dualcamera_capturestate"
-    },
-    {
-      "label": "DualCameraProps",
-      "file_type": "code",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "dualcameraprops",
-      "id": "components_dualcamera_dualcameraprops"
-    },
-    {
-      "label": "fmtDate()",
-      "file_type": "code",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "fmtdate()",
-      "id": "components_dualcamera_fmtdate"
-    },
-    {
-      "label": "canvasToBlob()",
-      "file_type": "code",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "canvastoblob()",
-      "id": "components_dualcamera_canvastoblob"
-    },
-    {
-      "label": "DualCamera()",
-      "file_type": "code",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L32",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "dualcamera()",
-      "id": "components_dualcamera_dualcamera"
-    },
-    {
       "label": "route.ts",
       "file_type": "code",
       "source_file": "src/app/api/events/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "events_route"
     },
@@ -569,7 +579,7 @@
       "source_file": "src/app/api/events/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "get()",
       "id": "events_route_get"
     },
@@ -579,7 +589,7 @@
       "source_file": "src/app/api/events/route.ts",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "post()",
       "id": "events_route_post"
     },
@@ -609,7 +619,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "freebusy.ts",
       "id": "lib_freebusy"
     },
@@ -619,7 +629,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "viennadate()",
       "id": "lib_freebusy_viennadate"
     },
@@ -629,7 +639,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "isodatevienna()",
       "id": "lib_freebusy_isodatevienna"
     },
@@ -639,7 +649,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "busyblock",
       "id": "lib_freebusy_busyblock"
     },
@@ -649,7 +659,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "computefreeslots()",
       "id": "lib_freebusy_computefreeslots"
     },
@@ -659,7 +669,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "freeslot",
       "id": "lib_freebusy_freeslot"
     },
@@ -669,7 +679,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "dateslots",
       "id": "lib_freebusy_dateslots"
     },
@@ -679,7 +689,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "getfreebusyslots()",
       "id": "lib_freebusy_getfreebusyslots"
     },
@@ -979,7 +989,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "norm_label": "supabase.ts",
       "id": "lib_supabase"
     },
@@ -999,7 +1009,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "norm_label": "eventtype",
       "id": "lib_supabase_eventtype"
     },
@@ -1009,7 +1019,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "norm_label": "eventcategory",
       "id": "lib_supabase_eventcategory"
     },
@@ -1019,7 +1029,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "norm_label": "eventstatus",
       "id": "lib_supabase_eventstatus"
     },
@@ -1029,7 +1039,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "norm_label": "rsvp",
       "id": "lib_supabase_rsvp"
     },
@@ -1059,7 +1069,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 0,
+      "community": 2,
       "norm_label": "notificationkind",
       "id": "lib_supabase_notificationkind"
     },
@@ -1419,7 +1429,7 @@
       "source_file": "src/app/api/auth/[...nextauth]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "nextauth_route"
     },
@@ -1429,7 +1439,7 @@
       "source_file": "src/app/api/auth/[...nextauth]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "handler",
       "id": "nextauth_route_handler"
     },
@@ -1599,7 +1609,7 @@
       "source_file": "src/app/api/cron/cleanup/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "cleanup_route"
     },
@@ -1609,7 +1619,7 @@
       "source_file": "src/app/api/cron/cleanup/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "authorized()",
       "id": "cleanup_route_authorized"
     },
@@ -1619,7 +1629,7 @@
       "source_file": "src/app/api/cron/cleanup/route.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "get()",
       "id": "cleanup_route_get"
     },
@@ -1659,7 +1669,7 @@
       "source_file": "src/app/api/freebusy/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "route.ts",
       "id": "freebusy_route"
     },
@@ -1669,7 +1679,7 @@
       "source_file": "src/app/api/freebusy/route.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "get()",
       "id": "freebusy_route_get"
     },
@@ -1679,7 +1689,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "notifications_route"
     },
@@ -1689,7 +1699,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "get()",
       "id": "notifications_route_get"
     },
@@ -1699,7 +1709,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "patch()",
       "id": "notifications_route_patch"
     },
@@ -2109,7 +2119,7 @@
       "source_file": "src/lib/auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "auth.ts",
       "id": "lib_auth"
     },
@@ -2119,7 +2129,7 @@
       "source_file": "src/lib/auth.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "authoptions",
       "id": "lib_auth_authoptions"
     },
@@ -2259,7 +2269,7 @@
       "source_file": "src/lib/event-utils.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "event-utils.ts",
       "id": "lib_event_utils"
     },
@@ -2269,7 +2279,7 @@
       "source_file": "src/lib/event-utils.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "bothgoing()",
       "id": "lib_event_utils_bothgoing"
     },
@@ -2279,7 +2289,7 @@
       "source_file": "src/lib/event-utils.ts",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 11,
+      "community": 2,
       "norm_label": "viennatoday()",
       "id": "lib_event_utils_viennatoday"
     },
@@ -2299,7 +2309,7 @@
       "source_file": "src/lib/google-auth.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 6,
       "norm_label": "getcalendarclient()",
       "id": "lib_google_auth_getcalendarclient"
     },
@@ -2309,7 +2319,7 @@
       "source_file": "src/lib/theresa-auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 25,
       "norm_label": "theresa-auth.ts",
       "id": "lib_theresa_auth"
     },
@@ -2319,7 +2329,7 @@
       "source_file": "src/lib/theresa-auth.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 6,
+      "community": 25,
       "norm_label": "istheresaauthed()",
       "id": "lib_theresa_auth_istheresaauthed"
     },
@@ -2769,6 +2779,132 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_dualcamera"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "components_dualcamera_canvastoblob"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "components_dualcamera_capturestate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "components_dualcamera",
+      "target": "components_dualcamera_compressimage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "components_dualcamera_dualcamera"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "components_dualcamera_dualcameraprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "components_dualcamera_fmtdate"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_dualcamera"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera_dualcameraprops",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/memories/route.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -2976,17 +3112,6 @@
       "confidence_score": 1.0,
       "source": "calendar_page",
       "target": "components_eventdetail"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_dualcamera"
     },
     {
       "relation": "contains",
@@ -3460,111 +3585,6 @@
       "confidence_score": 1.0,
       "source": "scripts_create_event",
       "target": "scripts_create_event_supabaseurl"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_dualcamera"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "components_dualcamera_canvastoblob"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "components_dualcamera_capturestate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "components_dualcamera_dualcamera"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "components_dualcamera_dualcameraprops"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "components_dualcamera_fmtdate"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera_dualcameraprops",
-      "target": "lib_supabase_memory"
     },
     {
       "relation": "contains",
@@ -6787,5 +6807,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2359c9bcb3b451dcc3a2f3b443a8bd0f3e86cd11"
+  "built_at_commit": "be40e170f7ccacf4fc36a2b9cf7cf9496a90976d"
 }

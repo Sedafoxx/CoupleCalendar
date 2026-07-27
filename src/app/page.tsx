@@ -236,57 +236,67 @@ export default function MemoriesPage() {
               <div key={i} className="bg-stone-50 rounded-2xl h-64 animate-pulse" />
             ))}
           </div>
-        ) : (
-          <>
-            {/* Photo memories first */}
-            {memories.map((memory) => (
-              <MemoryCard
-                key={memory.id}
-                memory={memory}
-                onClick={() => handleMemoryClick(memory)}
-              />
-            ))}
+        ) : (() => {
+          // Merge photo memories + past events into one chronologically-sorted feed
+          const pastEventsWithoutPhotos = pastEvents.filter(ev =>
+            ev.date < new Date().toISOString().split('T')[0] &&
+            ev.category !== 'city' &&
+            !memories.some(m => m.event_id === ev.id)
+          )
 
-            {/* Past events without photos — shown as memory placeholders */}
-            {pastEvents
-              .filter(ev =>
-                ev.date < new Date().toISOString().split('T')[0] &&
-                ev.category !== 'city' &&
-                !memories.some(m => m.event_id === ev.id)
-              )
-              .map((ev) => (
+          // Build combined feed items
+          type FeedItem = { id: string; date: string; type: 'memory' | 'event'; data: Memory | Event; event_title?: string }
+          const feed: FeedItem[] = [
+            ...memories.map(m => ({ id: m.id, date: m.event_date || m.created_at.split('T')[0], type: 'memory' as const, data: m, event_title: m.event_title })),
+            ...pastEventsWithoutPhotos.map(ev => ({ id: ev.id, date: ev.date, type: 'event' as const, data: ev })),
+          ]
+
+          // Sort by date descending (newest first)
+          feed.sort((a, b) => b.date.localeCompare(a.date))
+
+          return feed.length > 0 ? (
+            feed.map(item =>
+              item.type === 'memory' ? (
+                <MemoryCard
+                  key={item.id}
+                  memory={item.data as Memory}
+                  onClick={() => handleMemoryClick(item.data as Memory)}
+                />
+              ) : (
                 <button
-                  key={ev.id}
-                  onClick={() => setSelectedEvent(ev)}
+                  key={item.id}
+                  onClick={() => setSelectedEvent(item.data as Event)}
                   className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group"
                 >
-                  {/* Gradient placeholder instead of photo */}
                   <div className="h-32 bg-gradient-to-br from-rose-100 via-pink-50 to-stone-100 flex items-center justify-center">
                     <div className="text-center">
                       <span className="text-4xl">♡</span>
                       <p className="text-rose-300 text-xs mt-1 font-medium">Memory</p>
                     </div>
                   </div>
-
-                  {/* Event info */}
                   <div className="px-4 py-3 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-semibold text-sm text-stone-800 truncate">
-                        {ev.title}
-                      </span>
-                    </div>
+                    <span className="font-semibold text-sm text-stone-800 truncate block">{(item.data as Event).title}</span>
                     <p className="text-xs text-stone-400">
-                      {new Date(ev.date + 'T00:00:00').toLocaleDateString('de-AT', {
+                      {new Date((item.data as Event).date + 'T00:00:00').toLocaleDateString('de-AT', {
                         weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
                       })}
-                      {ev.start_time && ` · ${ev.start_time}–${ev.end_time}`}
+                      {(item.data as Event).start_time && ` · ${(item.data as Event).start_time}–${(item.data as Event).end_time}`}
                     </p>
-                    <p className="text-xs text-rose-400 font-medium opacity-0 group-hover:opacity-100 transition">
-                      + Add Photos 📸
-                    </p>
+                    <p className="text-xs text-rose-400 font-medium opacity-0 group-hover:opacity-100 transition">+ Add Photos 📸</p>
                   </div>
                 </button>
-              ))}
+              )
+            )
+          ) : (
+            <div className="text-center py-16 space-y-4">
+              <p className="text-6xl">📸</p>
+              <h2 className="text-xl font-semibold text-stone-700">No memories yet</h2>
+              <p className="text-stone-400 text-sm max-w-xs mx-auto">
+                Capture your first moment together! Take a BeReal-style photo and attach it to an event.
+              </p>
+            </div>
+          )
+        })()}
 
             {/* Empty state if nothing at all */}
             {memories.length === 0 && pastEvents.filter(ev =>
@@ -300,7 +310,6 @@ export default function MemoriesPage() {
                 </p>
               </div>
             )}
-          </>
         )}
       </section>
 
