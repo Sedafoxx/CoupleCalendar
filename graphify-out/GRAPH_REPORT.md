@@ -1,16 +1,16 @@
 # Graph Report - CoupleCalendar  (2026-07-28)
 
 ## Corpus Check
-- 54 files · ~21,085 words
+- 55 files · ~21,224 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 271 nodes · 382 edges · 28 communities (20 shown, 8 thin omitted)
+- 276 nodes · 386 edges · 29 communities (22 shown, 7 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `76239662`
+- Built from commit: `215961b8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,6 +38,7 @@
 - [[_COMMUNITY_Community 22|Community 22]]
 - [[_COMMUNITY_Community 23|Community 23]]
 - [[_COMMUNITY_Community 24|Community 24]]
+- [[_COMMUNITY_Community 25|Community 25]]
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
@@ -69,7 +70,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (28 total, 8 thin omitted)
+## Communities (29 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
 Cohesion: 0.10
@@ -80,12 +81,12 @@ Cohesion: 0.07
 Nodes (26): dependencies, @auth/supabase-adapter, googleapis, next, next-auth, openai, react, react-dom (+18 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.14
-Nodes (17): POST(), utcToVienna(), GET(), BusyBlock, computeFreeSlots(), DateSlots, FreeSlot, getFreeBusySlots() (+9 more)
+Cohesion: 0.11
+Nodes (18): POST(), utcToVienna(), GET(), Ctx, BusyBlock, computeFreeSlots(), DateSlots, FreeSlot (+10 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.16
-Nodes (11): DELETE(), PATCH(), RouteParams, Who, whoIs(), authOptions, GET(), POST() (+3 more)
+Cohesion: 0.26
+Nodes (6): authOptions, GET(), POST(), uuid(), whoIs(), handler
 
 ### Community 4 - "Community 4"
 Cohesion: 0.10
@@ -135,6 +136,10 @@ Nodes (5): env, events, serviceKey, supabase, supabaseUrl
 Cohesion: 0.33
 Nodes (5): env, renames, serviceKey, supabase, supabaseUrl
 
+### Community 25 - "Community 25"
+Cohesion: 0.47
+Nodes (5): DELETE(), PATCH(), RouteParams, Who, whoIs()
+
 ### Community 26 - "Community 26"
 Cohesion: 0.33
 Nodes (5): env, fixes, key, supabase, url
@@ -143,24 +148,28 @@ Nodes (5): env, fixes, key, supabase, url
 Cohesion: 0.40
 Nodes (4): env, serviceKey, supabase, supabaseUrl
 
+### Community 28 - "Community 28"
+Cohesion: 0.40
+Nodes (4): env, key, supabase, url
+
 ## Knowledge Gaps
-- **120 isolated node(s):** `Who`, `env`, `supabaseUrl`, `serviceKey`, `supabase` (+115 more)
+- **124 isolated node(s):** `env`, `url`, `key`, `supabase`, `Who` (+119 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `supabase` connect `Community 2` to `Community 0`, `Community 3`, `Community 5`, `Community 6`, `Community 11`, `Community 28`?**
-  _High betweenness centrality (0.043) - this node is a cross-community bridge._
+- **Why does `supabase` connect `Community 2` to `Community 0`, `Community 3`, `Community 5`, `Community 6`, `Community 11`, `Community 25`?**
+  _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Why does `Event` connect `Community 0` to `Community 8`, `Community 9`, `Community 11`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Why does `getFreeBusySlots()` connect `Community 2` to `Community 6`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `POST()` (e.g. with `getFreeBusySlots()` and `getCalendarClient()`) actually correct?**
   _`POST()` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Who`, `env`, `supabaseUrl` to the rest of the system?**
-  _120 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `env`, `url`, `key` to the rest of the system?**
+  _124 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.09759759759759759 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
