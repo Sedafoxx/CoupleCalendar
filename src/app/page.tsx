@@ -297,20 +297,6 @@ export default function MemoriesPage() {
             </div>
           )
         })()}
-
-            {/* Empty state if nothing at all */}
-            {memories.length === 0 && pastEvents.filter(ev =>
-              ev.date < new Date().toISOString().split('T')[0] && ev.category !== 'city'
-            ).length === 0 && (
-              <div className="text-center py-16 space-y-4">
-                <p className="text-6xl">📸</p>
-                <h2 className="text-xl font-semibold text-stone-700">No memories yet</h2>
-                <p className="text-stone-400 text-sm max-w-xs mx-auto">
-                  Capture your first moment together! Take a BeReal-style photo and attach it to an event.
-                </p>
-              </div>
-            )}
-        )}
       </section>
 
       {/* Debug panel */}
