@@ -3,7 +3,11 @@ import { authOptions } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { isTheresaAuthed } from '@/lib/theresa-auth'
 import { NextRequest } from 'next/server'
-import { randomUUID } from 'node:crypto'
+
+/** Edge-safe UUID v4 */
+function uuid(): string {
+  return crypto.randomUUID()
+}
 
 /**
  * Identify the caller: 'dimitri' (Google OAuth), 'theresa' (PIN cookie), or null.
@@ -123,7 +127,7 @@ export async function POST(req: NextRequest) {
     // Upload front photo to Supabase Storage
     const frontBytes = await photoFront.arrayBuffer()
     const frontExt = photoFront.name.split('.').pop() || 'jpg'
-    const frontPath = `${who}/${eventId}/${randomUUID()}-front.${frontExt}`
+    const frontPath = `${who}/${eventId}/${uuid()}-front.${frontExt}`
 
     const { data: frontUpload, error: frontError } = await supabase.storage
       .from('memory-photos')
@@ -137,7 +141,7 @@ export async function POST(req: NextRequest) {
     // Upload back photo to Supabase Storage
     const backBytes = await photoBack.arrayBuffer()
     const backExt = photoBack.name.split('.').pop() || 'jpg'
-    const backPath = `${who}/${eventId}/${randomUUID()}-back.${backExt}`
+    const backPath = `${who}/${eventId}/${uuid()}-back.${backExt}`
 
     const { data: backUpload, error: backError } = await supabase.storage
       .from('memory-photos')

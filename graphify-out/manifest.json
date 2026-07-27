@@ -140,8 +140,8 @@
     "semantic_hash": ""
   },
   "src/components/DualCamera.tsx": {
-    "mtime": 1785189106.2747633,
-    "ast_hash": "889ed672fd2f5f00c076613f96842521",
+    "mtime": 1785189928.2130086,
+    "ast_hash": "c900eff77657332bf2b960c864d44b66",
     "semantic_hash": ""
   },
   "src/components/EventDetail.tsx": {
@@ -267,6 +267,11 @@
   "scripts/run-migration.mjs": {
     "mtime": 1785187605.4901364,
     "ast_hash": "e9a84171b8b051af67a706946eb9ac82",
+    "semantic_hash": ""
+  },
+  "scripts/create-event.mjs": {
+    "mtime": 1785189809.801075,
+    "ast_hash": "85f9d6e103f3a0736e9ae5195de54780",
     "semantic_hash": ""
   }
 }
