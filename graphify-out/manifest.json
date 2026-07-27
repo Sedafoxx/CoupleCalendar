@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "src/components/EventDetail.tsx": {
-    "mtime": 1785187192.3154972,
-    "ast_hash": "10423ebb64cbc62365b1acf1e838d711",
+    "mtime": 1785192774.140577,
+    "ast_hash": "a63fce1c8eea1b398452e126f295a9c7",
     "semantic_hash": ""
   },
   "src/components/MemoryCard.tsx": {
@@ -282,6 +282,16 @@
   "scripts/fix-events.mjs": {
     "mtime": 1785192581.9672318,
     "ast_hash": "5aee4b5432a497ec3e9f451ca4498445",
+    "semantic_hash": ""
+  },
+  "scripts/fix-dein.mjs": {
+    "mtime": 1785192623.5475366,
+    "ast_hash": "4000a46ebeae1e68c510ae88f450004b",
+    "semantic_hash": ""
+  },
+  "scripts/fix-titles.mjs": {
+    "mtime": 1785192658.5278623,
+    "ast_hash": "9fc4556013077a29f4d9c442bf30b588",
     "semantic_hash": ""
   }
 }

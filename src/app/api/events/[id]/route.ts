@@ -41,6 +41,12 @@ export async function PATCH(
   // Each partner may only set their own RSVP.
   if (who === 'dimitri' && 'rsvp_dimitri' in body) patch.rsvp_dimitri = body.rsvp_dimitri
   if (who === 'theresa' && 'rsvp_theresa' in body) patch.rsvp_theresa = body.rsvp_theresa
+  // Editable fields for event detail
+  if ('title' in body && body.title) patch.title = body.title
+  if ('date' in body && body.date) patch.date = body.date
+  if ('start_time' in body) patch.start_time = body.start_time || null
+  if ('end_time' in body) patch.end_time = body.end_time || null
+  if ('location' in body) patch.location = body.location || ''
 
   if (!Object.keys(patch).length) {
     return Response.json({ error: 'Nothing to update' }, { status: 400 })

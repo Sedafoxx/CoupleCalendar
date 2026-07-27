@@ -4,14 +4,184 @@
   "graph": {},
   "nodes": [
     {
+      "label": "fix-dein.mjs",
+      "file_type": "code",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_fix_dein",
+      "community": 27,
+      "norm_label": "fix-dein.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_fix_dein_env",
+      "community": 27,
+      "norm_label": "env"
+    },
+    {
+      "label": "supabaseUrl",
+      "file_type": "code",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_fix_dein_supabaseurl",
+      "community": 27,
+      "norm_label": "supabaseurl"
+    },
+    {
+      "label": "serviceKey",
+      "file_type": "code",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_fix_dein_servicekey",
+      "community": 27,
+      "norm_label": "servicekey"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_fix_dein_supabase",
+      "community": 27,
+      "norm_label": "supabase"
+    },
+    {
+      "label": "fix-titles.mjs",
+      "file_type": "code",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_fix_titles",
+      "community": 26,
+      "norm_label": "fix-titles.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_fix_titles_env",
+      "community": 26,
+      "norm_label": "env"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_fix_titles_url",
+      "community": 26,
+      "norm_label": "url"
+    },
+    {
+      "label": "key",
+      "file_type": "code",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_fix_titles_key",
+      "community": 26,
+      "norm_label": "key"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_fix_titles_supabase",
+      "community": 26,
+      "norm_label": "supabase"
+    },
+    {
+      "label": "fixes",
+      "file_type": "code",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "scripts_fix_titles_fixes",
+      "community": 26,
+      "norm_label": "fixes"
+    },
+    {
+      "label": "EventDetail.tsx",
+      "file_type": "code",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_eventdetail",
+      "community": 0,
+      "norm_label": "eventdetail.tsx"
+    },
+    {
+      "label": "fmtDate()",
+      "file_type": "code",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "components_eventdetail_fmtdate",
+      "community": 0,
+      "norm_label": "fmtdate()"
+    },
+    {
+      "label": "fmtTime()",
+      "file_type": "code",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "components_eventdetail_fmttime",
+      "community": 0,
+      "norm_label": "fmttime()"
+    },
+    {
+      "label": "timeAgo()",
+      "file_type": "code",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L17",
+      "_origin": "ast",
+      "id": "components_eventdetail_timeago",
+      "community": 0,
+      "norm_label": "timeago()"
+    },
+    {
+      "label": "EventDetailProps",
+      "file_type": "code",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "components_eventdetail_eventdetailprops",
+      "community": 0,
+      "norm_label": "eventdetailprops"
+    },
+    {
+      "label": "EventDetail()",
+      "file_type": "code",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "components_eventdetail_eventdetail",
+      "community": 0,
+      "norm_label": "eventdetail()"
+    },
+    {
       "label": "fix-events.mjs",
       "file_type": "code",
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_fix_events",
       "community": 24,
-      "norm_label": "fix-events.mjs"
+      "norm_label": "fix-events.mjs",
+      "id": "scripts_fix_events"
     },
     {
       "label": "env",
@@ -19,9 +189,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_fix_events_env",
       "community": 24,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_fix_events_env"
     },
     {
       "label": "supabaseUrl",
@@ -29,9 +199,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_fix_events_supabaseurl",
       "community": 24,
-      "norm_label": "supabaseurl"
+      "norm_label": "supabaseurl",
+      "id": "scripts_fix_events_supabaseurl"
     },
     {
       "label": "serviceKey",
@@ -39,9 +209,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "scripts_fix_events_servicekey",
       "community": 24,
-      "norm_label": "servicekey"
+      "norm_label": "servicekey",
+      "id": "scripts_fix_events_servicekey"
     },
     {
       "label": "supabase",
@@ -49,9 +219,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_fix_events_supabase",
       "community": 24,
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "scripts_fix_events_supabase"
     },
     {
       "label": "renames",
@@ -59,9 +229,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "scripts_fix_events_renames",
       "community": 24,
-      "norm_label": "renames"
+      "norm_label": "renames",
+      "id": "scripts_fix_events_renames"
     },
     {
       "label": "seed-events.mjs",
@@ -339,7 +509,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "freebusy.ts",
       "id": "lib_freebusy"
     },
@@ -349,7 +519,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "viennadate()",
       "id": "lib_freebusy_viennadate"
     },
@@ -359,7 +529,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "isodatevienna()",
       "id": "lib_freebusy_isodatevienna"
     },
@@ -369,7 +539,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "busyblock",
       "id": "lib_freebusy_busyblock"
     },
@@ -379,7 +549,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "computefreeslots()",
       "id": "lib_freebusy_computefreeslots"
     },
@@ -389,7 +559,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "freeslot",
       "id": "lib_freebusy_freeslot"
     },
@@ -399,7 +569,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "dateslots",
       "id": "lib_freebusy_dateslots"
     },
@@ -409,7 +579,7 @@
       "source_file": "src/lib/freebusy.ts",
       "source_location": "L59",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "getfreebusyslots()",
       "id": "lib_freebusy_getfreebusyslots"
     },
@@ -489,7 +659,7 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "id_route"
     },
@@ -499,7 +669,7 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "routeparams",
       "id": "id_route_routeparams"
     },
@@ -509,7 +679,7 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "whois()",
       "id": "id_route_whois"
     },
@@ -519,7 +689,7 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "delete()",
       "id": "id_route_delete"
     },
@@ -682,66 +852,6 @@
       "community": 0,
       "norm_label": "calendar()",
       "id": "components_calendar_calendar"
-    },
-    {
-      "label": "EventDetail.tsx",
-      "file_type": "code",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "eventdetail.tsx",
-      "id": "components_eventdetail"
-    },
-    {
-      "label": "fmtDate()",
-      "file_type": "code",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "fmtdate()",
-      "id": "components_eventdetail_fmtdate"
-    },
-    {
-      "label": "fmtTime()",
-      "file_type": "code",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "fmttime()",
-      "id": "components_eventdetail_fmttime"
-    },
-    {
-      "label": "timeAgo()",
-      "file_type": "code",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L17",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "timeago()",
-      "id": "components_eventdetail_timeago"
-    },
-    {
-      "label": "EventDetailProps",
-      "file_type": "code",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L30",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "eventdetailprops",
-      "id": "components_eventdetail_eventdetailprops"
-    },
-    {
-      "label": "EventDetail()",
-      "file_type": "code",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "eventdetail()",
-      "id": "components_eventdetail_eventdetail"
     },
     {
       "label": "MemoryCard.tsx",
@@ -1239,7 +1349,7 @@
       "source_file": "src/app/api/auth/[...nextauth]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "nextauth_route"
     },
@@ -1249,7 +1359,7 @@
       "source_file": "src/app/api/auth/[...nextauth]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "handler",
       "id": "nextauth_route_handler"
     },
@@ -1289,7 +1399,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 28,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -1299,7 +1409,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 28,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -1309,7 +1419,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 2,
+      "community": 28,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -1319,7 +1429,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 28,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -1529,7 +1639,7 @@
       "source_file": "src/app/api/freebusy/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "freebusy_route"
     },
@@ -1539,7 +1649,7 @@
       "source_file": "src/app/api/freebusy/route.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "get()",
       "id": "freebusy_route_get"
     },
@@ -1549,7 +1659,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "notifications_route"
     },
@@ -1559,7 +1669,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "get()",
       "id": "notifications_route_get"
     },
@@ -1569,7 +1679,7 @@
       "source_file": "src/app/api/notifications/route.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "patch()",
       "id": "notifications_route_patch"
     },
@@ -1979,7 +2089,7 @@
       "source_file": "src/lib/auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "auth.ts",
       "id": "lib_auth"
     },
@@ -1989,7 +2099,7 @@
       "source_file": "src/lib/auth.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 3,
+      "community": 2,
       "norm_label": "authoptions",
       "id": "lib_auth_authoptions"
     },
@@ -2638,12 +2748,262 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_fix_dein",
+      "target": "scripts_fix_dein_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_fix_dein",
+      "target": "scripts_fix_dein_servicekey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_fix_dein",
+      "target": "scripts_fix_dein_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-dein.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_fix_dein",
+      "target": "scripts_fix_dein_supabaseurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_fix_titles",
+      "target": "scripts_fix_titles_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "scripts_fix_titles",
+      "target": "scripts_fix_titles_fixes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_fix_titles",
+      "target": "scripts_fix_titles_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_fix_titles",
+      "target": "scripts_fix_titles_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-titles.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_fix_titles",
+      "target": "scripts_fix_titles_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_eventdetail"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/calendar/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calendar_page",
+      "target": "components_eventdetail"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_dualcamera"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L36",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_eventdetail_eventdetail"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L30",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_eventdetail_eventdetailprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_eventdetail_fmtdate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_eventdetail_fmttime"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "components_eventdetail_timeago"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L168",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail_eventdetail",
+      "target": "components_eventdetail_fmtdate"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L171",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail_eventdetail",
+      "target": "components_eventdetail_fmttime"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L112",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail_eventdetail",
+      "target": "components_eventdetail_timeago"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail_eventdetailprops",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_fix_events",
-      "target": "scripts_fix_events_env",
-      "confidence_score": 1.0
+      "target": "scripts_fix_events_env"
     },
     {
       "relation": "contains",
@@ -2651,9 +3011,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_fix_events",
-      "target": "scripts_fix_events_renames",
-      "confidence_score": 1.0
+      "target": "scripts_fix_events_renames"
     },
     {
       "relation": "contains",
@@ -2661,9 +3021,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_fix_events",
-      "target": "scripts_fix_events_servicekey",
-      "confidence_score": 1.0
+      "target": "scripts_fix_events_servicekey"
     },
     {
       "relation": "contains",
@@ -2671,9 +3031,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_fix_events",
-      "target": "scripts_fix_events_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_fix_events_supabase"
     },
     {
       "relation": "contains",
@@ -2681,9 +3041,9 @@
       "source_file": "scripts/fix-events.mjs",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_fix_events",
-      "target": "scripts_fix_events_supabaseurl",
-      "confidence_score": 1.0
+      "target": "scripts_fix_events_supabaseurl"
     },
     {
       "relation": "contains",
@@ -3020,17 +3380,6 @@
       "target": "lib_supabase_memory"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_dualcamera"
-    },
-    {
       "relation": "references",
       "context": "field",
       "confidence": "EXTRACTED",
@@ -3158,17 +3507,6 @@
       "confidence_score": 1.0,
       "source": "calendar_page",
       "target": "components_calendar"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/calendar/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "calendar_page",
-      "target": "components_eventdetail"
     },
     {
       "relation": "imports_from",
@@ -3650,17 +3988,6 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/app/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_eventdetail"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
       "source_location": "L5",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -3845,133 +4172,6 @@
       "confidence_score": 1.0,
       "source": "components_calendar_calendarprops",
       "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_eventdetail_eventdetail"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_eventdetail_eventdetailprops"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_eventdetail_fmtdate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_eventdetail_fmttime"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L17",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "components_eventdetail_timeago"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L168",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail_eventdetail",
-      "target": "components_eventdetail_fmtdate"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L171",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail_eventdetail",
-      "target": "components_eventdetail_fmttime"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L112",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail_eventdetail",
-      "target": "components_eventdetail_timeago"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail_eventdetailprops",
-      "target": "lib_supabase_event"
     },
     {
       "relation": "contains",
@@ -6635,5 +6835,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "59a13e3192b712a077f330c70805e021782b58e5"
+  "built_at_commit": "123d0cdcce493e21b7c065cf06bc437edaae03e2"
 }
