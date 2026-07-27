@@ -28,6 +28,31 @@ function canvasToBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   })
 }
 
+/** Compress an image File/Blob to max 1200px width/height, JPEG quality 0.8 */
+function compressImage(file: Blob, maxDim = 1200): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      let w = img.width, h = img.height
+      if (w > maxDim || h > maxDim) {
+        const ratio = Math.min(maxDim / w, maxDim / h)
+        w = Math.round(w * ratio)
+        h = Math.round(h * ratio)
+      }
+      const canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
+      const ctx = canvas.getContext('2d')
+      ctx?.drawImage(img, 0, 0, w, h)
+      canvas.toBlob((blob) => resolve(blob!), 'image/jpeg', 0.8)
+    }
+    img.onerror = () => reject(new Error('Image load failed'))
+    img.src = url
+  })
+}
+
 // ── Component ──────────────────────────────────────────────
 export default function DualCamera({ onSaved, onClose, preselectedEventId }: DualCameraProps) {
   const [state, setState] = useState<CaptureState>('idle')
@@ -180,8 +205,8 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
       const galleryFrontFile = (window as unknown as Record<string, unknown>).__galleryFrontFile as File | undefined
       const galleryBackFile = (window as unknown as Record<string, unknown>).__galleryBackFile as File | undefined
 
-      const frontBlob = galleryFrontFile || await (await fetch(frontPreview)).blob()
-      const backBlob = galleryBackFile || await (await fetch(backPreview)).blob()
+      const frontBlob = galleryFrontFile ? await compressImage(galleryFrontFile) : await (await fetch(frontPreview)).blob()
+      const backBlob = galleryBackFile ? await compressImage(galleryBackFile) : await (await fetch(backPreview)).blob()
 
       // Build form data
       const formData = new FormData()
@@ -196,8 +221,9 @@ export default function DualCamera({ onSaved, onClose, preselectedEventId }: Dua
       })
 
       if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.error || 'Upload failed')
+        const text = await res.text()
+        console.error('[upload]', res.status, text.slice(0, 200))
+        throw new Error(text.includes('{') ? (JSON.parse(text).error || 'Upload failed') : `Upload failed (${res.status})`)
       }
 
       const memory: Memory = await res.json()

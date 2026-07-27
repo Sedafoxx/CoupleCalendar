@@ -1,7 +1,7 @@
 # Graph Report - CoupleCalendar  (2026-07-28)
 
 ## Corpus Check
-- 55 files · ~21,224 words
+- 55 files · ~21,255 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `215961b8`
+- Built from commit: `2359c9bc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,10 +60,10 @@
   src/app/api/theresa/chat/route.ts → src/lib/freebusy.ts
 - `POST()` --calls--> `getCalendarClient()`  [INFERRED]
   src/app/api/theresa/chat/route.ts → src/lib/google-auth.ts
-- `EventDetailProps` --references--> `Event`  [EXTRACTED]
-  src/components/EventDetail.tsx → src/lib/supabase.ts
 - `whoIs()` --calls--> `isTheresaAuthed()`  [EXTRACTED]
   src/app/api/memories/route.ts → src/lib/theresa-auth.ts
+- `EventDetailProps` --references--> `Event`  [EXTRACTED]
+  src/components/EventDetail.tsx → src/lib/supabase.ts
 - `DualCameraProps` --references--> `Memory`  [EXTRACTED]
   src/components/DualCamera.tsx → src/lib/supabase.ts
 
