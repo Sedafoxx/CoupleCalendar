@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1785187247.7935555,
-    "ast_hash": "526f032c51465f5d1f14022a55f0a735",
+    "mtime": 1785192361.6182888,
+    "ast_hash": "c3d4e38b4084a654a10084c88358935a",
     "semantic_hash": ""
   },
   "src/app/plan/page.tsx": {
@@ -277,6 +277,11 @@
   "scripts/seed-events.mjs": {
     "mtime": 1785192159.223619,
     "ast_hash": "7d1d9ec516cb56c44d80114ee12ff3e4",
+    "semantic_hash": ""
+  },
+  "scripts/fix-events.mjs": {
+    "mtime": 1785192581.9672318,
+    "ast_hash": "5aee4b5432a497ec3e9f451ca4498445",
     "semantic_hash": ""
   }
 }

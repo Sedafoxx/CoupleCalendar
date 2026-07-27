@@ -4,14 +4,74 @@
   "graph": {},
   "nodes": [
     {
+      "label": "fix-events.mjs",
+      "file_type": "code",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_fix_events",
+      "community": 24,
+      "norm_label": "fix-events.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_fix_events_env",
+      "community": 24,
+      "norm_label": "env"
+    },
+    {
+      "label": "supabaseUrl",
+      "file_type": "code",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_fix_events_supabaseurl",
+      "community": 24,
+      "norm_label": "supabaseurl"
+    },
+    {
+      "label": "serviceKey",
+      "file_type": "code",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_fix_events_servicekey",
+      "community": 24,
+      "norm_label": "servicekey"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_fix_events_supabase",
+      "community": 24,
+      "norm_label": "supabase"
+    },
+    {
+      "label": "renames",
+      "file_type": "code",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "scripts_fix_events_renames",
+      "community": 24,
+      "norm_label": "renames"
+    },
+    {
       "label": "seed-events.mjs",
       "file_type": "code",
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_seed_events",
       "community": 23,
-      "norm_label": "seed-events.mjs"
+      "norm_label": "seed-events.mjs",
+      "id": "scripts_seed_events"
     },
     {
       "label": "env",
@@ -19,9 +79,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_seed_events_env",
       "community": 23,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_seed_events_env"
     },
     {
       "label": "supabaseUrl",
@@ -29,9 +89,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_seed_events_supabaseurl",
       "community": 23,
-      "norm_label": "supabaseurl"
+      "norm_label": "supabaseurl",
+      "id": "scripts_seed_events_supabaseurl"
     },
     {
       "label": "serviceKey",
@@ -39,9 +99,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "scripts_seed_events_servicekey",
       "community": 23,
-      "norm_label": "servicekey"
+      "norm_label": "servicekey",
+      "id": "scripts_seed_events_servicekey"
     },
     {
       "label": "supabase",
@@ -49,9 +109,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_seed_events_supabase",
       "community": 23,
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "scripts_seed_events_supabase"
     },
     {
       "label": "events",
@@ -59,9 +119,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "scripts_seed_events_events",
       "community": 23,
-      "norm_label": "events"
+      "norm_label": "events",
+      "id": "scripts_seed_events_events"
     },
     {
       "label": "route.ts",
@@ -2578,12 +2638,62 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_fix_events",
+      "target": "scripts_fix_events_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "scripts_fix_events",
+      "target": "scripts_fix_events_renames",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_fix_events",
+      "target": "scripts_fix_events_servicekey",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_fix_events",
+      "target": "scripts_fix_events_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/fix-events.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_fix_events",
+      "target": "scripts_fix_events_supabaseurl",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_seed_events",
-      "target": "scripts_seed_events_env",
-      "confidence_score": 1.0
+      "target": "scripts_seed_events_env"
     },
     {
       "relation": "contains",
@@ -2591,9 +2701,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_seed_events",
-      "target": "scripts_seed_events_events",
-      "confidence_score": 1.0
+      "target": "scripts_seed_events_events"
     },
     {
       "relation": "contains",
@@ -2601,9 +2711,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_seed_events",
-      "target": "scripts_seed_events_servicekey",
-      "confidence_score": 1.0
+      "target": "scripts_seed_events_servicekey"
     },
     {
       "relation": "contains",
@@ -2611,9 +2721,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_seed_events",
-      "target": "scripts_seed_events_supabase",
-      "confidence_score": 1.0
+      "target": "scripts_seed_events_supabase"
     },
     {
       "relation": "contains",
@@ -2621,9 +2731,9 @@
       "source_file": "scripts/seed-events.mjs",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_seed_events",
-      "target": "scripts_seed_events_supabaseurl",
-      "confidence_score": 1.0
+      "target": "scripts_seed_events_supabaseurl"
     },
     {
       "relation": "imports_from",
@@ -6525,5 +6635,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "98f0561950779f5afead7e595244754220f37521"
+  "built_at_commit": "59a13e3192b712a077f330c70805e021782b58e5"
 }
