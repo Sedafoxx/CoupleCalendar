@@ -4,14 +4,144 @@
   "graph": {},
   "nodes": [
     {
+      "label": "check-feed-api.mjs",
+      "file_type": "code",
+      "source_file": "scripts/check-feed-api.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_check_feed_api",
+      "community": 30,
+      "norm_label": "check-feed-api.mjs"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/check-feed-api.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_check_feed_api_main",
+      "community": 30,
+      "norm_label": "main()"
+    },
+    {
+      "label": "unarchive.mjs",
+      "file_type": "code",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_unarchive",
+      "community": 6,
+      "norm_label": "unarchive.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_unarchive_env",
+      "community": 6,
+      "norm_label": "env"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_unarchive_url",
+      "community": 6,
+      "norm_label": "url"
+    },
+    {
+      "label": "key",
+      "file_type": "code",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_unarchive_key",
+      "community": 6,
+      "norm_label": "key"
+    },
+    {
+      "label": "sup",
+      "file_type": "code",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_unarchive_sup",
+      "community": 6,
+      "norm_label": "sup"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "cleanup_route",
+      "community": 3,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "authorized()",
+      "file_type": "code",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "cleanup_route_authorized",
+      "community": 3,
+      "norm_label": "authorized()"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "cleanup_route_get",
+      "community": 3,
+      "norm_label": "get()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "events_route",
+      "community": 3,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "events_route_get",
+      "community": 3,
+      "norm_label": "get()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "events_route_post",
+      "community": 3,
+      "norm_label": "post()"
+    },
+    {
       "label": "route.ts",
       "file_type": "code",
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "debug_route",
-      "community": 2,
-      "norm_label": "route.ts"
+      "community": 25,
+      "norm_label": "route.ts",
+      "id": "debug_route"
     },
     {
       "label": "GET()",
@@ -19,9 +149,9 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "debug_route_get",
-      "community": 2,
-      "norm_label": "get()"
+      "community": 25,
+      "norm_label": "get()",
+      "id": "debug_route_get"
     },
     {
       "label": "route.ts",
@@ -29,9 +159,9 @@
       "source_file": "src/app/api/log-error/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "log_error_route",
       "community": 31,
-      "norm_label": "route.ts"
+      "norm_label": "route.ts",
+      "id": "log_error_route"
     },
     {
       "label": "POST()",
@@ -39,9 +169,9 @@
       "source_file": "src/app/api/log-error/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "log_error_route_post",
       "community": 31,
-      "norm_label": "post()"
+      "norm_label": "post()",
+      "id": "log_error_route_post"
     },
     {
       "label": "stats.mjs",
@@ -764,36 +894,6 @@
       "id": "scripts_create_event_supabase"
     },
     {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "route.ts",
-      "id": "events_route"
-    },
-    {
-      "label": "GET()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "get()",
-      "id": "events_route_get"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "post()",
-      "id": "events_route_post"
-    },
-    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src/app/calendar/page.tsx",
@@ -1179,7 +1279,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "supabase",
       "id": "lib_supabase_supabase"
     },
@@ -1659,7 +1759,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 30,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -1669,7 +1769,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 30,
+      "community": 25,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -1679,7 +1779,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 30,
+      "community": 25,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -1689,7 +1789,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 30,
+      "community": 25,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -1699,7 +1799,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "bucket_list_route"
     },
@@ -1709,7 +1809,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "get()",
       "id": "bucket_list_route_get"
     },
@@ -1719,7 +1819,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "post()",
       "id": "bucket_list_route_post"
     },
@@ -1729,7 +1829,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "src_app_api_chat_route_ts_chat_route"
     },
@@ -1739,7 +1839,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "openai",
       "id": "src_app_api_chat_route_ts_chat_route_openai"
     },
@@ -1749,7 +1849,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "getviennaoffset()",
       "id": "src_app_api_chat_route_ts_chat_route_getviennaoffset"
     },
@@ -1759,7 +1859,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "addoneday()",
       "id": "src_app_api_chat_route_ts_chat_route_addoneday"
     },
@@ -1769,7 +1869,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "buildsystemprompt()",
       "id": "src_app_api_chat_route_ts_chat_route_buildsystemprompt"
     },
@@ -1779,39 +1879,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "post()",
       "id": "src_app_api_chat_route_ts_chat_route_post"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "route.ts",
-      "id": "cleanup_route"
-    },
-    {
-      "label": "authorized()",
-      "file_type": "code",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "authorized()",
-      "id": "cleanup_route_authorized"
-    },
-    {
-      "label": "GET()",
-      "file_type": "code",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 3,
-      "norm_label": "get()",
-      "id": "cleanup_route_get"
     },
     {
       "label": "route.ts",
@@ -1929,7 +1999,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "src_app_api_theresa_chat_route_ts_chat_route"
     },
@@ -1939,7 +2009,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "openai",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_openai"
     },
@@ -1949,7 +2019,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "getviennaoffset()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
     },
@@ -1959,7 +2029,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "addoneday()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
     },
@@ -1969,7 +2039,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "hhmmss()",
       "id": "chat_route_hhmmss"
     },
@@ -1979,7 +2049,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "googlehasmatch()",
       "id": "chat_route_googlehasmatch"
     },
@@ -1989,7 +2059,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "nightsbetween()",
       "id": "chat_route_nightsbetween"
     },
@@ -1999,7 +2069,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "fmtday()",
       "id": "chat_route_fmtday"
     },
@@ -2009,7 +2079,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "sleepoverwhen()",
       "id": "chat_route_sleepoverwhen"
     },
@@ -2019,7 +2089,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L74",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "fmtslots()",
       "id": "chat_route_fmtslots"
     },
@@ -2029,7 +2099,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "plannedevent",
       "id": "chat_route_plannedevent"
     },
@@ -2039,7 +2109,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "fmtevents()",
       "id": "chat_route_fmtevents"
     },
@@ -2049,7 +2119,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "reconciletheresaevents()",
       "id": "chat_route_reconciletheresaevents"
     },
@@ -2059,7 +2129,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L200",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "buildsystemprompt()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
     },
@@ -2069,7 +2139,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L267",
       "_origin": "ast",
-      "community": 6,
+      "community": 2,
       "norm_label": "post()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_post"
     },
@@ -2958,12 +3028,245 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/check-feed-api.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_check_feed_api",
+      "target": "scripts_check_feed_api_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_unarchive",
+      "target": "scripts_unarchive_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_unarchive",
+      "target": "scripts_unarchive_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_unarchive",
+      "target": "scripts_unarchive_sup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/unarchive.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_unarchive",
+      "target": "scripts_unarchive_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "cleanup_route_authorized"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "cleanup_route_get"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "lib_event_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "lib_event_utils_viennatoday"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route_get",
+      "target": "cleanup_route_authorized"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "cleanup_route_get",
+      "target": "lib_event_utils_viennatoday"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "events_route_get"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "events_route_post"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_auth_authoptions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_event_utils"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_event_utils_viennatoday"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "events_route_get",
+      "target": "lib_event_utils_viennatoday"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "debug_route",
-      "target": "debug_route_get",
-      "confidence_score": 1.0
+      "target": "debug_route_get"
     },
     {
       "relation": "imports",
@@ -2972,9 +3275,9 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "debug_route",
-      "target": "lib_supabase_supabase",
-      "confidence_score": 1.0
+      "target": "lib_supabase_supabase"
     },
     {
       "relation": "contains",
@@ -2982,9 +3285,9 @@
       "source_file": "src/app/api/log-error/route.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "log_error_route",
-      "target": "log_error_route_post",
-      "confidence_score": 1.0
+      "target": "log_error_route_post"
     },
     {
       "relation": "contains",
@@ -4008,103 +4311,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "events_route_get"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "events_route_post"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_event_utils"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_event_utils_viennatoday"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "source": "events_route_get",
-      "target": "lib_event_utils_viennatoday"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/app/calendar/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
@@ -4770,17 +4976,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/lib/auth.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -5007,17 +5202,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "bucket_list_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
       "target": "lib_supabase_supabase"
     },
     {
@@ -5714,70 +5898,6 @@
       "weight": 1.0,
       "source": "src_app_api_chat_route_ts_chat_route_post",
       "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "cleanup_route_authorized"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "cleanup_route_get"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "lib_event_utils"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "lib_event_utils_viennatoday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route_get",
-      "target": "cleanup_route_authorized"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L16",
-      "weight": 1.0,
-      "source": "cleanup_route_get",
-      "target": "lib_event_utils_viennatoday"
     },
     {
       "relation": "contains",
@@ -7161,5 +7281,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "29d263f119d7a7dbc9cfe07e6251462aa31e4d31"
+  "built_at_commit": "810f48abac550f9c8d9b1ab6336d7216de22c231"
 }

@@ -71,5 +71,46 @@ export async function PATCH(
     })
   }
 
+  // Both RSVP 'going' → auto-create a memory placeholder + notify both.
+  if (data && data.rsvp_dimitri === 'going' && data.rsvp_theresa === 'going') {
+    // Check if a memory already exists for this event (don't double-create)
+    const { data: existingMems } = await supabase
+      .from('memories')
+      .select('id')
+      .eq('event_id', data.id)
+      .limit(1)
+
+    if (!existingMems || existingMems.length === 0) {
+      // Create a note-style memory as a placeholder
+      const emptyPixel = new Uint8Array([71,73,70,56,57,97,1,0,1,0,128,0,0,255,255,255,0,0,0,33,249,4,1,0,0,0,0,44,0,0,0,0,1,0,1,0,0,2,2,68,1,0,59])
+      const bucket = supabase.storage.from('memory-photos')
+      const placeholderPath = `system/placeholder-${data.id}.gif`
+
+      // Upload placeholder if not exists
+      const { data: existingFile } = await bucket.list('system')
+      const needsUpload = !existingFile?.some(f => f.name === `placeholder-${data.id}.gif`)
+      if (needsUpload) {
+        await bucket.upload(placeholderPath, emptyPixel, { contentType: 'image/gif', upsert: true })
+      }
+
+      const { data: { publicUrl: placeholderUrl } } = bucket.getPublicUrl(placeholderPath)
+
+      await supabase.from('memories').insert({
+        event_id: data.id,
+        captured_by: 'dimitri',
+        photo_front: placeholderUrl,
+        photo_back: placeholderUrl,
+        caption: `💕 Beide zu: ${data.title}`,
+      })
+
+      // Notify both that it's a date!
+      await supabase.from('notifications').insert({
+        message: `💕 Date bestätigt: ${data.title} ♡`,
+        kind: 'event',
+        event_id: data.id,
+      })
+    }
+  }
+
   return Response.json(data)
 }
