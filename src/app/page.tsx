@@ -237,58 +237,66 @@ export default function MemoriesPage() {
             ))}
           </div>
         ) : (() => {
-          // Merge photo memories + past events into one chronologically-sorted feed
-          // Filter out text-only notes (they show inside EventDetail, not in the feed)
-          const photoMemories = memories.filter(m => !m.photo_back.includes('note.gif'))
-          const pastEventsWithoutPhotos = pastEvents.filter(ev =>
+          // Build a clean feed: one card per past event, sorted by date
+          const past = pastEvents.filter(ev =>
             ev.date < new Date().toISOString().split('T')[0] &&
-            ev.category !== 'city' &&
-            !photoMemories.some(m => m.event_id === ev.id) &&
-            !memories.some(m => m.event_id === ev.id && m.photo_back.includes('note.gif'))
+            ev.category !== 'city'
           )
 
-          // Build combined feed items
-          type FeedItem = { id: string; date: string; type: 'memory' | 'event'; data: Memory | Event; event_title?: string }
-          const feed: FeedItem[] = [
-            ...photoMemories.map(m => ({ id: m.id, date: m.event_date || m.created_at.split('T')[0], type: 'memory' as const, data: m, event_title: m.event_title })),
-            ...pastEventsWithoutPhotos.map(ev => ({ id: ev.id, date: ev.date, type: 'event' as const, data: ev })),
-          ]
+          // Group memories by event_id
+          const memsByEvent = new Map<string, Memory[]>()
+          for (const m of memories) {
+            const list = memsByEvent.get(m.event_id) || []
+            list.push(m)
+            memsByEvent.set(m.event_id, list)
+          }
 
-          // Sort by date descending (newest first)
+          // Build one card per event
+          const feed = past.map(ev => {
+            const eventMems = memsByEvent.get(ev.id) || []
+            const hasPhoto = eventMems.some(m => !m.photo_back.includes('note.gif'))
+            const hasNote = eventMems.some(m => m.photo_back.includes('note.gif'))
+            const firstPhoto = eventMems.find(m => !m.photo_back.includes('note.gif'))
+            return { ev, hasPhoto, hasNote, firstPhoto, date: ev.date }
+          })
+
+          // Sort by date descending
           feed.sort((a, b) => b.date.localeCompare(a.date))
 
-          return feed.length > 0 ? (
-            feed.map(item =>
-              item.type === 'memory' ? (
-                <MemoryCard
-                  key={item.id}
-                  memory={item.data as Memory}
-                  onClick={() => handleMemoryClick(item.data as Memory)}
-                />
-              ) : (
-                <button
-                  key={item.id}
-                  onClick={() => setSelectedEvent(item.data as Event)}
-                  className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group"
-                >
-                  <div className="h-32 bg-gradient-to-br from-rose-100 via-pink-50 to-stone-100 flex items-center justify-center">
-                    <div className="text-center">
-                      <span className="text-4xl">♡</span>
-                      <p className="text-rose-300 text-xs mt-1 font-medium">Memory</p>
-                    </div>
-                  </div>
-                  <div className="px-4 py-3 space-y-1">
-                    <span className="font-semibold text-sm text-stone-800 truncate block">{(item.data as Event).title}</span>
-                    <p className="text-xs text-stone-400">
-                      {new Date((item.data as Event).date + 'T00:00:00').toLocaleDateString('de-AT', {
-                        weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
-                      })}
-                      {(item.data as Event).start_time && ` · ${(item.data as Event).start_time}–${(item.data as Event).end_time}`}
+          return feed.length > 0 ? feed.map(({ ev, hasPhoto, hasNote, firstPhoto }) =>
+            hasPhoto && firstPhoto ? (
+              // Event with photos → show MemoryCard
+              <MemoryCard
+                key={ev.id}
+                memory={{ ...firstPhoto, event_title: ev.title, event_date: ev.date }}
+                onClick={() => handleMemoryClick(firstPhoto)}
+              />
+            ) : (
+              // Event without photos → show placeholder card
+              <button
+                key={ev.id}
+                onClick={() => setSelectedEvent(ev)}
+                className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group"
+              >
+                <div className="h-32 bg-gradient-to-br from-rose-100 via-pink-50 to-stone-100 flex items-center justify-center relative">
+                  <div className="text-center">
+                    <span className="text-4xl">♡</span>
+                    <p className="text-rose-300 text-xs mt-1 font-medium">
+                      {hasNote ? '📝 Notiz' : 'Memory'}
                     </p>
-                    <p className="text-xs text-rose-400 font-medium opacity-0 group-hover:opacity-100 transition">+ Add Photos 📸</p>
                   </div>
-                </button>
-              )
+                </div>
+                <div className="px-4 py-3 space-y-1">
+                  <span className="font-semibold text-sm text-stone-800 truncate block">{ev.title}</span>
+                  <p className="text-xs text-stone-400">
+                    {new Date(ev.date + 'T00:00:00').toLocaleDateString('de-AT', {
+                      weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
+                    })}
+                    {ev.start_time && ` · ${ev.start_time}–${ev.end_time}`}
+                  </p>
+                  <p className="text-xs text-rose-400 font-medium opacity-0 group-hover:opacity-100 transition">+ Add Photos 📸</p>
+                </div>
+              </button>
             )
           ) : (
             <div className="text-center py-16 space-y-4">
