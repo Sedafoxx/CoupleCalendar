@@ -135,6 +135,38 @@ export default function PlanPage() {
     )
   }
 
+  // Theresa PIN login
+  const [showPinInput, setShowPinInput] = useState(false)
+  const [pinValue, setPinValue] = useState('')
+  const [pinError, setPinError] = useState(false)
+  const [isTheresa, setIsTheresa] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    fetch('/api/whoami').then(r => r.json()).then(d => {
+      setWho(d.user)
+      if (d.user === 'theresa') setIsTheresa(true)
+    })
+  }, [])
+
+  async function loginTheresa(e: React.FormEvent) {
+    e.preventDefault()
+    const res = await fetch('/api/theresa-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: pinValue }),
+    })
+    if (res.ok) {
+      setShowPinInput(false)
+      setPinValue('')
+      setPinError(false)
+      setIsTheresa(true)
+      window.location.reload()
+    } else {
+      setPinError(true)
+      setPinValue('')
+    }
+  }
+
   if (status === 'loading') return <div className="p-8 text-stone-400">Loading...</div>
 
   return (
@@ -164,10 +196,40 @@ export default function PlanPage() {
           {session?.user?.email ? (
             <button onClick={() => signOut()} className="text-sm text-stone-500 hover:text-stone-900">Sign out</button>
           ) : (
-            <button onClick={() => signIn('google')} className="text-sm text-rose-400 hover:text-rose-600">Sign in ♡</button>
+            <>
+              <button onClick={() => signIn('google')} className="text-sm text-rose-400 hover:text-rose-600">Dimi ♡</button>
+              <button onClick={() => setShowPinInput(true)} className="text-sm text-stone-400 hover:text-rose-600">Theresa 🔐</button>
+            </>
           )}
+          {isTheresa && <span className="text-xs text-rose-400">Theresa ♡</span>}
         </div>
       </header>
+
+      {/* Theresa PIN modal */}
+      {showPinInput && (
+        <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-8 w-full max-w-xs shadow-xl space-y-4 text-center">
+            <p className="text-4xl">💌</p>
+            <h2 className="font-bold text-lg">Hey Theresa!</h2>
+            <p className="text-sm text-stone-400">Gib deinen PIN ein ♡</p>
+            <form onSubmit={loginTheresa} className="space-y-3">
+              <input
+                type="password"
+                value={pinValue}
+                onChange={e => { setPinValue(e.target.value); setPinError(false) }}
+                placeholder="PIN"
+                className="w-full border border-rose-100 rounded-xl px-4 py-3 text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/50"
+                autoFocus
+              />
+              {pinError && <p className="text-red-400 text-sm">Falscher PIN. Nochmal versuchen 💕</p>}
+              <button type="submit" disabled={!pinValue} className="w-full bg-gradient-to-r from-rose-400 to-pink-500 text-white py-3 rounded-xl font-medium hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-50 shadow-sm">
+                Rein ♡
+              </button>
+              <button type="button" onClick={() => setShowPinInput(false)} className="text-sm text-stone-400 hover:text-stone-600">Vielleicht später</button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {toast && <div className="fixed top-4 right-4 z-50 bg-rose-500 text-white text-sm px-4 py-3 rounded-xl shadow-lg max-w-xs">{toast}</div>}
 
