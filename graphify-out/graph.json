@@ -4,14 +4,124 @@
   "graph": {},
   "nodes": [
     {
+      "label": "stats.mjs",
+      "file_type": "code",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_stats",
+      "community": 29,
+      "norm_label": "stats.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_stats_env",
+      "community": 29,
+      "norm_label": "env"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_stats_url",
+      "community": 29,
+      "norm_label": "url"
+    },
+    {
+      "label": "key",
+      "file_type": "code",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_stats_key",
+      "community": 29,
+      "norm_label": "key"
+    },
+    {
+      "label": "sup",
+      "file_type": "code",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_stats_sup",
+      "community": 29,
+      "norm_label": "sup"
+    },
+    {
+      "label": "months",
+      "file_type": "code",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "scripts_stats_months",
+      "community": 29,
+      "norm_label": "months"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_page",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "MemoriesPage()",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_page_memoriespage",
+      "community": 0,
+      "norm_label": "memoriespage()"
+    },
+    {
+      "label": "FeedCards.tsx",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_feedcards",
+      "community": 0,
+      "norm_label": "feedcards.tsx"
+    },
+    {
+      "label": "FeedCardsProps",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "components_feedcards_feedcardsprops",
+      "community": 0,
+      "norm_label": "feedcardsprops"
+    },
+    {
+      "label": "FeedCards()",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "components_feedcards_feedcards",
+      "community": 0,
+      "norm_label": "feedcards()"
+    },
+    {
       "label": "merge-rathaus.mjs",
       "file_type": "code",
       "source_file": "scripts/merge-rathaus.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_merge_rathaus",
       "community": 11,
-      "norm_label": "merge-rathaus.mjs"
+      "norm_label": "merge-rathaus.mjs",
+      "id": "scripts_merge_rathaus"
     },
     {
       "label": "env",
@@ -19,9 +129,9 @@
       "source_file": "scripts/merge-rathaus.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_merge_rathaus_env",
       "community": 11,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_merge_rathaus_env"
     },
     {
       "label": "url",
@@ -29,9 +139,9 @@
       "source_file": "scripts/merge-rathaus.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_merge_rathaus_url",
       "community": 11,
-      "norm_label": "url"
+      "norm_label": "url",
+      "id": "scripts_merge_rathaus_url"
     },
     {
       "label": "key",
@@ -39,9 +149,9 @@
       "source_file": "scripts/merge-rathaus.mjs",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "scripts_merge_rathaus_key",
       "community": 11,
-      "norm_label": "key"
+      "norm_label": "key",
+      "id": "scripts_merge_rathaus_key"
     },
     {
       "label": "supabase",
@@ -49,9 +159,9 @@
       "source_file": "scripts/merge-rathaus.mjs",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_merge_rathaus_supabase",
       "community": 11,
-      "norm_label": "supabase"
+      "norm_label": "supabase",
+      "id": "scripts_merge_rathaus_supabase"
     },
     {
       "label": "DualCamera.tsx",
@@ -864,26 +974,6 @@
       "id": "app_layout_rootlayout"
     },
     {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "page.tsx",
-      "id": "app_page"
-    },
-    {
-      "label": "MemoriesPage()",
-      "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "memoriespage()",
-      "id": "app_page_memoriespage"
-    },
-    {
       "label": "BottomNav.tsx",
       "file_type": "code",
       "source_file": "src/components/BottomNav.tsx",
@@ -1529,7 +1619,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 30,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -1539,7 +1629,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 30,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -1549,7 +1639,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 2,
+      "community": 30,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -1559,7 +1649,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 30,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -2828,42 +2918,62 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "scripts/merge-rathaus.mjs",
+      "source_file": "scripts/stats.mjs",
       "source_location": "L4",
       "weight": 1.0,
-      "source": "scripts_merge_rathaus",
-      "target": "scripts_merge_rathaus_env",
+      "source": "scripts_stats",
+      "target": "scripts_stats_env",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "scripts/merge-rathaus.mjs",
+      "source_file": "scripts/stats.mjs",
       "source_location": "L6",
       "weight": 1.0,
-      "source": "scripts_merge_rathaus",
-      "target": "scripts_merge_rathaus_key",
+      "source": "scripts_stats",
+      "target": "scripts_stats_key",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "scripts/merge-rathaus.mjs",
+      "source_file": "scripts/stats.mjs",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "scripts_stats",
+      "target": "scripts_stats_months",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/stats.mjs",
       "source_location": "L7",
       "weight": 1.0,
-      "source": "scripts_merge_rathaus",
-      "target": "scripts_merge_rathaus_supabase",
+      "source": "scripts_stats",
+      "target": "scripts_stats_sup",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "scripts/merge-rathaus.mjs",
+      "source_file": "scripts/stats.mjs",
       "source_location": "L5",
       "weight": 1.0,
-      "source": "scripts_merge_rathaus",
-      "target": "scripts_merge_rathaus_url",
+      "source": "scripts_stats",
+      "target": "scripts_stats_url",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_memoriespage"
     },
     {
       "relation": "imports_from",
@@ -2875,6 +2985,165 @@
       "confidence_score": 1.0,
       "source": "app_page",
       "target": "components_dualcamera"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_eventdetail"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "app_page",
+      "target": "components_feedcards",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_memorycard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_notification"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "components_feedcards",
+      "target": "components_feedcards_feedcards",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_feedcards",
+      "target": "components_feedcards_feedcardsprops",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_feedcards",
+      "target": "lib_supabase_event",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "components_feedcards",
+      "target": "lib_supabase_memory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/merge-rathaus.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_merge_rathaus",
+      "target": "scripts_merge_rathaus_env"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/merge-rathaus.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_merge_rathaus",
+      "target": "scripts_merge_rathaus_key"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/merge-rathaus.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_merge_rathaus",
+      "target": "scripts_merge_rathaus_supabase"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/merge-rathaus.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "scripts_merge_rathaus",
+      "target": "scripts_merge_rathaus_url"
     },
     {
       "relation": "contains",
@@ -3180,17 +3449,6 @@
       "confidence_score": 1.0,
       "source": "scripts_delete_july15",
       "target": "scripts_delete_july15_url"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_eventdetail"
     },
     {
       "relation": "imports_from",
@@ -4173,71 +4431,6 @@
       "confidence_score": 1.0,
       "source": "app_layout",
       "target": "components_bottomnav_bottomnav"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "app_page_memoriespage"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_memorycard"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_notification"
     },
     {
       "relation": "contains",
@@ -6897,5 +7090,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "a82dd8ebad9babb6c2c0ede0443f0d10f4b5ab84"
+  "built_at_commit": "04ed49a1a4014d1042b06ab4fc97d82ca3d08dfb"
 }
