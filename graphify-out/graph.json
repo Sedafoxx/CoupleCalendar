@@ -4,14 +4,114 @@
   "graph": {},
   "nodes": [
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/whoami/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "whoami_route",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/whoami/route.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "whoami_route_get",
+      "community": 25,
+      "norm_label": "get()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_page",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "MemoriesPage()",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_page_memoriespage",
+      "community": 0,
+      "norm_label": "memoriespage()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "theresa_page",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "TheresaRedirect()",
+      "file_type": "code",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "theresa_page_theresaredirect",
+      "community": 0,
+      "norm_label": "theresaredirect()"
+    },
+    {
+      "label": "FeedCards.tsx",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_feedcards",
+      "community": 0,
+      "norm_label": "feedcards.tsx"
+    },
+    {
+      "label": "FeedCardsProps",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "components_feedcards_feedcardsprops",
+      "community": 0,
+      "norm_label": "feedcardsprops"
+    },
+    {
+      "label": "RsvpValue",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "components_feedcards_rsvpvalue",
+      "community": 0,
+      "norm_label": "rsvpvalue"
+    },
+    {
+      "label": "FeedCards()",
+      "file_type": "code",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "components_feedcards_feedcards",
+      "community": 0,
+      "norm_label": "feedcards()"
+    },
+    {
       "label": "check-feed-api.mjs",
       "file_type": "code",
       "source_file": "scripts/check-feed-api.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_check_feed_api",
       "community": 30,
-      "norm_label": "check-feed-api.mjs"
+      "norm_label": "check-feed-api.mjs",
+      "id": "scripts_check_feed_api"
     },
     {
       "label": "main()",
@@ -19,9 +119,9 @@
       "source_file": "scripts/check-feed-api.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_check_feed_api_main",
       "community": 30,
-      "norm_label": "main()"
+      "norm_label": "main()",
+      "id": "scripts_check_feed_api_main"
     },
     {
       "label": "unarchive.mjs",
@@ -29,9 +129,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_unarchive",
       "community": 6,
-      "norm_label": "unarchive.mjs"
+      "norm_label": "unarchive.mjs",
+      "id": "scripts_unarchive"
     },
     {
       "label": "env",
@@ -39,9 +139,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_unarchive_env",
       "community": 6,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_unarchive_env"
     },
     {
       "label": "url",
@@ -49,9 +149,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_unarchive_url",
       "community": 6,
-      "norm_label": "url"
+      "norm_label": "url",
+      "id": "scripts_unarchive_url"
     },
     {
       "label": "key",
@@ -59,9 +159,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "scripts_unarchive_key",
       "community": 6,
-      "norm_label": "key"
+      "norm_label": "key",
+      "id": "scripts_unarchive_key"
     },
     {
       "label": "sup",
@@ -69,9 +169,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_unarchive_sup",
       "community": 6,
-      "norm_label": "sup"
+      "norm_label": "sup",
+      "id": "scripts_unarchive_sup"
     },
     {
       "label": "route.ts",
@@ -79,9 +179,9 @@
       "source_file": "src/app/api/cron/cleanup/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "cleanup_route",
       "community": 3,
-      "norm_label": "route.ts"
+      "norm_label": "route.ts",
+      "id": "cleanup_route"
     },
     {
       "label": "authorized()",
@@ -89,9 +189,9 @@
       "source_file": "src/app/api/cron/cleanup/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "cleanup_route_authorized",
       "community": 3,
-      "norm_label": "authorized()"
+      "norm_label": "authorized()",
+      "id": "cleanup_route_authorized"
     },
     {
       "label": "GET()",
@@ -99,9 +199,9 @@
       "source_file": "src/app/api/cron/cleanup/route.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "cleanup_route_get",
       "community": 3,
-      "norm_label": "get()"
+      "norm_label": "get()",
+      "id": "cleanup_route_get"
     },
     {
       "label": "route.ts",
@@ -109,9 +209,9 @@
       "source_file": "src/app/api/events/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "events_route",
       "community": 3,
-      "norm_label": "route.ts"
+      "norm_label": "route.ts",
+      "id": "events_route"
     },
     {
       "label": "GET()",
@@ -119,9 +219,9 @@
       "source_file": "src/app/api/events/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "events_route_get",
       "community": 3,
-      "norm_label": "get()"
+      "norm_label": "get()",
+      "id": "events_route_get"
     },
     {
       "label": "POST()",
@@ -129,9 +229,9 @@
       "source_file": "src/app/api/events/route.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "events_route_post",
       "community": 3,
-      "norm_label": "post()"
+      "norm_label": "post()",
+      "id": "events_route_post"
     },
     {
       "label": "route.ts",
@@ -139,7 +239,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "debug_route"
     },
@@ -149,7 +249,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "get()",
       "id": "debug_route_get"
     },
@@ -232,56 +332,6 @@
       "community": 29,
       "norm_label": "months",
       "id": "scripts_stats_months"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "page.tsx",
-      "id": "app_page"
-    },
-    {
-      "label": "MemoriesPage()",
-      "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "memoriespage()",
-      "id": "app_page_memoriespage"
-    },
-    {
-      "label": "FeedCards.tsx",
-      "file_type": "code",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "feedcards.tsx",
-      "id": "components_feedcards"
-    },
-    {
-      "label": "FeedCardsProps",
-      "file_type": "code",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "feedcardsprops",
-      "id": "components_feedcards_feedcardsprops"
-    },
-    {
-      "label": "FeedCards()",
-      "file_type": "code",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L12",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "feedcards()",
-      "id": "components_feedcards_feedcards"
     },
     {
       "label": "merge-rathaus.mjs",
@@ -1279,7 +1329,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "supabase",
       "id": "lib_supabase_supabase"
     },
@@ -1339,7 +1389,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 9,
+      "community": 0,
       "norm_label": "bucketlistitem",
       "id": "lib_supabase_bucketlistitem"
     },
@@ -1759,7 +1809,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -1769,7 +1819,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -1779,7 +1829,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -1789,7 +1839,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -1799,7 +1849,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "bucket_list_route"
     },
@@ -1809,7 +1859,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "get()",
       "id": "bucket_list_route_get"
     },
@@ -1819,7 +1869,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "post()",
       "id": "bucket_list_route_post"
     },
@@ -1829,7 +1879,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "src_app_api_chat_route_ts_chat_route"
     },
@@ -1839,7 +1889,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "openai",
       "id": "src_app_api_chat_route_ts_chat_route_openai"
     },
@@ -1849,7 +1899,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "getviennaoffset()",
       "id": "src_app_api_chat_route_ts_chat_route_getviennaoffset"
     },
@@ -1859,7 +1909,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "addoneday()",
       "id": "src_app_api_chat_route_ts_chat_route_addoneday"
     },
@@ -1869,7 +1919,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "buildsystemprompt()",
       "id": "src_app_api_chat_route_ts_chat_route_buildsystemprompt"
     },
@@ -1879,7 +1929,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "post()",
       "id": "src_app_api_chat_route_ts_chat_route_post"
     },
@@ -1999,7 +2049,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "route.ts",
       "id": "src_app_api_theresa_chat_route_ts_chat_route"
     },
@@ -2009,7 +2059,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "openai",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_openai"
     },
@@ -2019,7 +2069,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "getviennaoffset()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
     },
@@ -2029,7 +2079,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "addoneday()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
     },
@@ -2039,7 +2089,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "hhmmss()",
       "id": "chat_route_hhmmss"
     },
@@ -2049,7 +2099,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "googlehasmatch()",
       "id": "chat_route_googlehasmatch"
     },
@@ -2059,7 +2109,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "nightsbetween()",
       "id": "chat_route_nightsbetween"
     },
@@ -2069,7 +2119,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "fmtday()",
       "id": "chat_route_fmtday"
     },
@@ -2079,7 +2129,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "sleepoverwhen()",
       "id": "chat_route_sleepoverwhen"
     },
@@ -2089,7 +2139,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L74",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "fmtslots()",
       "id": "chat_route_fmtslots"
     },
@@ -2099,7 +2149,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "plannedevent",
       "id": "chat_route_plannedevent"
     },
@@ -2109,7 +2159,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "fmtevents()",
       "id": "chat_route_fmtevents"
     },
@@ -2119,7 +2169,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "reconciletheresaevents()",
       "id": "chat_route_reconciletheresaevents"
     },
@@ -2129,7 +2179,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L200",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "buildsystemprompt()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
     },
@@ -2139,7 +2189,7 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L267",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "post()",
       "id": "src_app_api_theresa_chat_route_ts_chat_route_post"
     },
@@ -2272,96 +2322,6 @@
       "community": 10,
       "norm_label": "providers()",
       "id": "app_providers_providers"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "page.tsx",
-      "id": "theresa_page"
-    },
-    {
-      "label": "TAG_COLORS",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "tag_colors",
-      "id": "theresa_page_tag_colors"
-    },
-    {
-      "label": "HEARTS",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "hearts",
-      "id": "theresa_page_hearts"
-    },
-    {
-      "label": "FloatingHearts()",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L27",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "floatinghearts()",
-      "id": "theresa_page_floatinghearts"
-    },
-    {
-      "label": "fmtDate()",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L43",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "fmtdate()",
-      "id": "theresa_page_fmtdate"
-    },
-    {
-      "label": "nextOccurrenceLabel()",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L49",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "nextoccurrencelabel()",
-      "id": "theresa_page_nextoccurrencelabel"
-    },
-    {
-      "label": "ChatMsg",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L59",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "chatmsg",
-      "id": "theresa_page_chatmsg"
-    },
-    {
-      "label": "PinGate()",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L68",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "pingate()",
-      "id": "theresa_page_pingate"
-    },
-    {
-      "label": "TheresaPage()",
-      "file_type": "code",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L123",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "theresapage()",
-      "id": "theresa_page_theresapage"
     },
     {
       "label": "auth.ts",
@@ -3026,14 +2986,239 @@
   ],
   "links": [
     {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/whoami/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "whoami_route",
+      "target": "lib_auth_authoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/whoami/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "whoami_route",
+      "target": "lib_theresa_auth_istheresaauthed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/whoami/route.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "whoami_route",
+      "target": "whoami_route_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_memoriespage"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_dualcamera"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_eventdetail"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_feedcards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_memorycard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_notification"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "theresa_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "theresa_page",
+      "target": "lib_supabase_bucketlistitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "theresa_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "theresa_page",
+      "target": "theresa_page_theresaredirect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_feedcards",
+      "target": "components_feedcards_feedcards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_feedcards",
+      "target": "components_feedcards_feedcardsprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "components_feedcards",
+      "target": "components_feedcards_rsvpvalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_feedcards",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_feedcards",
+      "target": "lib_supabase_memory"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/check-feed-api.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_feed_api",
-      "target": "scripts_check_feed_api_main",
-      "confidence_score": 1.0
+      "target": "scripts_check_feed_api_main"
     },
     {
       "relation": "contains",
@@ -3041,9 +3226,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_unarchive",
-      "target": "scripts_unarchive_env",
-      "confidence_score": 1.0
+      "target": "scripts_unarchive_env"
     },
     {
       "relation": "contains",
@@ -3051,9 +3236,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_unarchive",
-      "target": "scripts_unarchive_key",
-      "confidence_score": 1.0
+      "target": "scripts_unarchive_key"
     },
     {
       "relation": "contains",
@@ -3061,9 +3246,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_unarchive",
-      "target": "scripts_unarchive_sup",
-      "confidence_score": 1.0
+      "target": "scripts_unarchive_sup"
     },
     {
       "relation": "contains",
@@ -3071,9 +3256,9 @@
       "source_file": "scripts/unarchive.mjs",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_unarchive",
-      "target": "scripts_unarchive_url",
-      "confidence_score": 1.0
+      "target": "scripts_unarchive_url"
     },
     {
       "relation": "contains",
@@ -3338,146 +3523,6 @@
       "confidence_score": 1.0,
       "source": "scripts_stats",
       "target": "scripts_stats_url"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "app_page_memoriespage"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_dualcamera"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_eventdetail"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_feedcards"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_memorycard"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_notification"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_feedcards",
-      "target": "components_feedcards_feedcards"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_feedcards",
-      "target": "components_feedcards_feedcardsprops"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_feedcards",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_feedcards",
-      "target": "lib_supabase_memory"
     },
     {
       "relation": "contains",
@@ -5172,17 +5217,6 @@
       "target": "lib_supabase"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "lib_supabase"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5302,28 +5336,6 @@
       "confidence_score": 1.0,
       "source": "plan_page",
       "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "lib_supabase_bucketlistitem"
     },
     {
       "relation": "contains",
@@ -6585,86 +6597,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_chatmsg"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_floatinghearts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L43",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_fmtdate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_hearts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_nextoccurrencelabel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L68",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_pingate"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_tag_colors"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "theresa_page_theresapage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/lib/auth.ts",
       "source_location": "L5",
       "weight": 1.0,
@@ -7281,5 +7213,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "810f48abac550f9c8d9b1ab6336d7216de22c231"
+  "built_at_commit": "bcba83e7193fbf5a8c76f4bdb0c51922a704a01f"
 }

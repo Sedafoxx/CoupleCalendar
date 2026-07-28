@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "src/app/page.tsx": {
-    "mtime": 1785262920.5548253,
-    "ast_hash": "7eadf6cace76dbaa84664746e4705759",
+    "mtime": 1785269512.786952,
+    "ast_hash": "4f162ad5474ef54ec2582fdb8cfcc828",
     "semantic_hash": ""
   },
   "src/app/plan/page.tsx": {
@@ -125,8 +125,8 @@
     "semantic_hash": ""
   },
   "src/app/theresa/page.tsx": {
-    "mtime": 1782055893.3645315,
-    "ast_hash": "074b78712ee3816e6a0c172bf394cdfc",
+    "mtime": 1785269462.992483,
+    "ast_hash": "0ddadf8e40a43c6aa961ddf850bdd444",
     "semantic_hash": ""
   },
   "src/components/BottomNav.tsx": {
@@ -310,8 +310,8 @@
     "semantic_hash": ""
   },
   "src/components/FeedCards.tsx": {
-    "mtime": 1785262914.5035052,
-    "ast_hash": "0a2c4a44a52f8342e5a8a48b0005a361",
+    "mtime": 1785269403.3397644,
+    "ast_hash": "93b47793a292db54af2771423df3ccc5",
     "semantic_hash": ""
   },
   "src/app/api/debug/route.ts": {
@@ -332,6 +332,11 @@
   "scripts/unarchive.mjs": {
     "mtime": 1785266690.5099733,
     "ast_hash": "86db002ae23803b1c67a37e50c812c45",
+    "semantic_hash": ""
+  },
+  "src/app/api/whoami/route.ts": {
+    "mtime": 1785269331.2198992,
+    "ast_hash": "53620400978265dd146e9721cec0196b",
     "semantic_hash": ""
   }
 }

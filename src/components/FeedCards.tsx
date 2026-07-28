@@ -128,10 +128,10 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
         }
 
         return (
-          <button
+          <div
             key={ev.id}
             onClick={() => onSelectEvent(ev)}
-            className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group"
+            className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group cursor-pointer"
           >
             <div className="h-28 bg-gradient-to-br from-rose-100 via-pink-50 to-stone-100 flex items-center justify-center">
               <div className="text-center">
@@ -149,7 +149,7 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
               </p>
               <RsvpButton ev={ev} />
             </div>
-          </button>
+          </div>
         )
       })}
     </div>
