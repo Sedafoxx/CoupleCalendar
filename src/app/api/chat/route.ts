@@ -72,6 +72,7 @@ Rules:
 - Bucket list tags pick from: romantic, adventure, food, culture, outdoor, sport
 - location: empty string if unknown
 - When event/item saved, confirm clearly in reply
+- PAST DATES are allowed — if the user wants to add a past event (e.g. "vintage shopping on 20.07."), create it normally. Past events are used as "things we did" / memories.
 - Set action to "none" if user is just chatting or asking questions`
 }
 

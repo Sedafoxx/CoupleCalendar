@@ -1,16 +1,16 @@
 # Graph Report - CoupleCalendar  (2026-07-28)
 
 ## Corpus Check
-- 63 files · ~21,198 words
+- 64 files · ~21,730 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 298 nodes · 406 edges · 32 communities (25 shown, 7 thin omitted)
+- 300 nodes · 411 edges · 32 communities (25 shown, 7 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bcba83e7`
+- Built from commit: `2378b118`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -48,8 +48,8 @@
 1. `supabase` - 16 edges
 2. `compilerOptions` - 16 edges
 3. `POST()` - 15 edges
-4. `Event` - 13 edges
-5. `Memory` - 11 edges
+4. `Event` - 14 edges
+5. `Memory` - 12 edges
 6. `getCalendarClient()` - 10 edges
 7. `CoupleCalendar` - 10 edges
 8. `getFreeBusySlots()` - 9 edges
@@ -57,8 +57,6 @@
 10. `reconcileTheresaEvents()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `POST()` --calls--> `getFreeBusySlots()`  [INFERRED]
-  src/app/api/theresa/chat/route.ts → src/lib/freebusy.ts
 - `POST()` --calls--> `getCalendarClient()`  [INFERRED]
   src/app/api/theresa/chat/route.ts → src/lib/google-auth.ts
 - `POST()` --calls--> `isTheresaAuthed()`  [INFERRED]
@@ -67,6 +65,8 @@
   src/app/api/events/route.ts → src/lib/event-utils.ts
 - `DualCameraProps` --references--> `Memory`  [EXTRACTED]
   src/components/DualCamera.tsx → src/lib/supabase.ts
+- `EventDetailProps` --references--> `Event`  [EXTRACTED]
+  src/components/EventDetail.tsx → src/lib/supabase.ts
 
 ## Import Cycles
 - None detected.
@@ -82,8 +82,8 @@ Cohesion: 0.07
 Nodes (26): dependencies, @auth/supabase-adapter, googleapis, next, next-auth, openai, react, react-dom (+18 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.10
-Nodes (18): POST(), utcToVienna(), GET(), Ctx, BusyBlock, computeFreeSlots(), DateSlots, FreeSlot (+10 more)
+Cohesion: 0.14
+Nodes (10): POST(), utcToVienna(), Ctx, getCalendarClient(), supabase, addOneDay(), buildSystemPrompt(), getViennaOffset() (+2 more)
 
 ### Community 3 - "Community 3"
 Cohesion: 0.36
@@ -110,8 +110,8 @@ Cohesion: 0.22
 Nodes (8): DateSlots, DEFAULTS, eventOverlapsSlot(), fmtDate(), FreeSlot, HEARTS, PlanPage(), toViennaHHMM()
 
 ### Community 9 - "Community 9"
-Cohesion: 0.30
-Nodes (14): fmtDay(), fmtEvents(), fmtSlots(), googleHasMatch(), hhmmss(), nightsBetween(), PlannedEvent, reconcileTheresaEvents() (+6 more)
+Cohesion: 0.16
+Nodes (22): fmtDay(), fmtEvents(), fmtSlots(), googleHasMatch(), hhmmss(), nightsBetween(), PlannedEvent, reconcileTheresaEvents() (+14 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.28
@@ -158,7 +158,7 @@ Cohesion: 0.33
 Nodes (5): env, key, months, sup, url
 
 ## Knowledge Gaps
-- **136 isolated node(s):** `FeedCardsProps`, `RsvpValue`, `env`, `url`, `key` (+131 more)
+- **136 isolated node(s):** `NAV_ITEMS`, `FeedCardsProps`, `RsvpValue`, `env`, `url` (+131 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -168,14 +168,14 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `supabase` connect `Community 2` to `Community 0`, `Community 3`, `Community 5`, `Community 9`, `Community 25`?**
   _High betweenness centrality (0.043) - this node is a cross-community bridge._
 - **Why does `Event` connect `Community 0` to `Community 8`, `Community 3`?**
-  _High betweenness centrality (0.015) - this node is a cross-community bridge._
+  _High betweenness centrality (0.018) - this node is a cross-community bridge._
 - **Are the 3 inferred relationships involving `POST()` (e.g. with `getFreeBusySlots()` and `getCalendarClient()`) actually correct?**
   _`POST()` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `FeedCardsProps`, `RsvpValue`, `env` to the rest of the system?**
+- **What connects `NAV_ITEMS`, `FeedCardsProps`, `RsvpValue` to the rest of the system?**
   _136 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.07777777777777778 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07585568917668825 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
 - **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.1032258064516129 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._

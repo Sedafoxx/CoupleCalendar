@@ -48,6 +48,7 @@ export type BucketListItem = {
   duration_days: number | null
   added_by: string
   created_at: string
+  resolved?: boolean
 }
 
 export type NotificationKind = 'event' | 'sleepover' | 'bucket_list'

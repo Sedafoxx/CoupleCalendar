@@ -5,6 +5,7 @@ const NAV_ITEMS = [
   { href: '/', label: 'Plan', icon: '💬' },
   { href: '/memories', label: 'Memories', icon: '♡' },
   { href: '/calendar', label: 'Calendar', icon: '📅' },
+  { href: '/bucket-list', label: 'Bucket List', icon: '✨' },
 ] as const
 
 export default function BottomNav() {

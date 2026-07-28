@@ -171,20 +171,38 @@ export default function PlanPage() {
 
       {toast && <div className="fixed top-4 right-4 z-50 bg-rose-500 text-white text-sm px-4 py-3 rounded-xl shadow-lg max-w-xs">{toast}</div>}
 
-      {/* Chat */}
-      <section className="bg-white border border-stone-200 rounded-2xl p-4 space-y-3">
-        <h3 className="font-semibold text-stone-700">💬 Plan our next date</h3>
+      {/* Chat — richtige Chat-UI mit Sprechblasen */}
+      <section className="space-y-3">
+        <h3 className="font-semibold text-stone-700">💬 Chat</h3>
+        <div className="bg-white border border-stone-200 rounded-2xl p-4 h-64 overflow-y-auto flex flex-col gap-3">
+          {messages.length === 0 && (
+            <p className="text-stone-400 text-sm text-center m-auto">
+              Schreib was wir machen sollen! Z.B. "Kino morgen um 19 Uhr" ♡
+            </p>
+          )}
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div className={`max-w-xs rounded-2xl px-4 py-2 text-sm leading-relaxed ${
+                msg.role === 'user'
+                  ? 'bg-stone-900 text-white rounded-tr-sm'
+                  : 'bg-rose-50 border border-rose-100 rounded-tl-sm text-stone-700'
+              }`}>
+                <p className="whitespace-pre-wrap">{msg.text}</p>
+              </div>
+            </div>
+          ))}
+          {sending && (
+            <div className="flex justify-start">
+              <div className="bg-rose-50 border border-rose-100 rounded-2xl rounded-tl-sm px-4 py-2 text-sm text-rose-400">
+                Denkt nach...
+              </div>
+            </div>
+          )}
+        </div>
         <form onSubmit={sendMessage} className="flex gap-2">
-          <input value={input} onChange={e => setInput(e.target.value)} placeholder='z.B. "Kaffee morgen um 15 Uhr"' className="flex-1 border border-stone-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-200" />
+          <input value={input} onChange={e => setInput(e.target.value)} placeholder='Was machen wir? ♡' className="flex-1 border border-stone-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-200" />
           <button type="submit" disabled={!input.trim() || sending} className="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-40 shadow-sm">{sending ? '...' : 'Send'}</button>
         </form>
-        {messages.length > 0 && (
-          <div className="max-h-32 overflow-y-auto space-y-1 text-sm">
-            {messages.slice(-4).map((msg, i) => (
-              <p key={i} className={msg.role === 'assistant' ? 'text-rose-600' : 'text-stone-600'}><span className="font-medium">{msg.role === 'assistant' ? '🤖' : '👤'}</span> {msg.text}</p>
-            ))}
-          </div>
-        )}
       </section>
 
       {/* Upcoming events with RSVP */}
