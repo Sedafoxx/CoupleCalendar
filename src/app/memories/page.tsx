@@ -16,6 +16,7 @@ export default function MemoriesPage() {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [showDebug, setShowDebug] = useState(false)
   const [pastEvents, setPastEvents] = useState<Event[]>([])
+  const [who, setWho] = useState<'dimitri' | 'theresa' | null>(null)
 
   const [notifications, setNotifications] = useState<Notification[]>([])
   const [showNotif, setShowNotif] = useState(false)
@@ -43,14 +44,15 @@ export default function MemoriesPage() {
   }, [])
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    fetch('/api/whoami').then(r => r.json()).then(d => setWho(d.user))
+    if (status === 'authenticated' || who) {
       fetchAll()
       fetchNotifications()
       if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission()
       const id = setInterval(fetchNotifications, 20000)
       return () => clearInterval(id)
     }
-  }, [status, fetchAll])
+  }, [status, who, fetchAll])
 
   async function fetchNotifications() {
     const res = await fetch('/api/notifications')
@@ -105,7 +107,7 @@ export default function MemoriesPage() {
     }
   }
 
-  if (!session) {
+  if (!session && !who) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
@@ -181,8 +183,14 @@ export default function MemoriesPage() {
               </div>
             )}
           </div>
-          <span className="text-sm text-stone-500">{session.user?.email}</span>
-          <button onClick={() => signOut()} className="text-sm text-stone-500 hover:text-stone-900 transition">Sign out</button>
+          {session?.user?.email ? <span className="text-sm text-stone-500">{session.user.email}</span> : who === 'theresa' && <span className="text-xs text-rose-400">Theresa ♡</span>}
+          {session?.user?.email ? (
+            <button onClick={() => signOut()} className="text-sm text-stone-500 hover:text-stone-900 transition">Sign out</button>
+          ) : who === 'theresa' ? (
+            <button onClick={() => signOut()} className="text-sm text-stone-400 hover:text-stone-600 transition">Logout</button>
+          ) : (
+            <button onClick={() => signIn('google')} className="text-sm text-rose-400 hover:text-rose-600 transition">Sign in ♡</button>
+          )}
           <button onClick={() => setShowDebug(!showDebug)} className="text-xs text-stone-300 hover:text-stone-500 transition">⚙</button>
         </div>
       </header>
