@@ -155,7 +155,7 @@ export default function MemoriesPage() {
         {loading ? (
           <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-stone-50 rounded-2xl h-64 animate-pulse" />)}</div>
         ) : null}
-        {!loading && <FeedCards pastEvents={pastEvents} memories={memories} onSelectEvent={setSelectedEvent} onSelectMemory={handleMemoryClick} />}
+        {!loading && <FeedCards pastEvents={pastEvents} memories={memories} onSelectEvent={setSelectedEvent} onSelectMemory={handleMemoryClick} showRsvp={false} />}
       </section>
 
       {showDebug && (

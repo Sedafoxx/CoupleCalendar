@@ -9,11 +9,12 @@ interface FeedCardsProps {
   memories: (Memory & { event_title?: string; event_date?: string })[]
   onSelectEvent: (ev: Event) => void
   onSelectMemory: (mem: Memory) => void
+  showRsvp?: boolean
 }
 
 type RsvpValue = 'going' | 'interested' | 'maybe' | null
 
-export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelectMemory }: FeedCardsProps) {
+export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelectMemory, showRsvp = true }: FeedCardsProps) {
   const [who, setWho] = useState<'dimitri' | 'theresa' | null>(null)
   const [rsvpUpdating, setRsvpUpdating] = useState<string | null>(null)
 
@@ -121,9 +122,7 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
                 memory={{ ...photoMem, event_title: ev.title, event_date: ev.date }}
                 onClick={() => onSelectMemory(photoMem)}
               />
-              <div className="px-1">
-                <RsvpButton ev={ev} />
-              </div>
+              {showRsvp && <div className="px-1"><RsvpButton ev={ev} /></div>}
             </div>
           )
         }
@@ -148,7 +147,7 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
                 })}
                 {ev.start_time && ` · ${ev.start_time}–${ev.end_time}`}
               </p>
-              <RsvpButton ev={ev} />
+              {showRsvp && <RsvpButton ev={ev} />}
             </div>
           </div>
         )
