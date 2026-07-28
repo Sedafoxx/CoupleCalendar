@@ -73,6 +73,8 @@ Rules:
 - location: empty string if unknown
 - When event/item saved, confirm clearly in reply
 - PAST DATES are allowed — if the user wants to add a past event (e.g. "vintage shopping on 20.07."), create it normally. Past events are used as "things we did" / memories.
+- BUCKET LIST MATCHING: If the event the user is describing matches a bucket list item (same title or clearly the same activity), add "bucket-list" to the event's tags array AND include a field "bucket_list_item_title" with the matching title. This will auto-resolve the bucket list item.
+- The events array supports an extra field: "tags": ["bucket-list"] when it matches a bucket list item. Also add "bucket_list_item_title": "Exact title from bucket list".
 - Set action to "none" if user is just chatting or asking questions`
 }
 
@@ -140,6 +142,8 @@ export async function POST(req: NextRequest) {
     end_time: string
     end_date: string
     recurrence_rule: string
+    tags?: string[]
+    bucket_list_item_title?: string
   }
   type AiBucketItem = {
     title: string
@@ -173,27 +177,42 @@ export async function POST(req: NextRequest) {
     for (const ev of eventList) {
       const type = ev.type ?? 'single'
 
+      const insertData: Record<string, unknown> = {
+        title: ev.title,
+        location: ev.location || '',
+        date: ev.date,
+        start_time: ev.start_time || '00:00',
+        end_time: ev.end_time || ev.start_time || '00:00',
+        type,
+        end_date: ev.end_date || null,
+        recurrence_rule: ev.recurrence_rule || null,
+        added_by: 'dimitri',
+        category: 'personal',
+        status: 'confirmed',
+        rsvp_dimitri: 'going',
+      }
+
+      // If the AI flagged this as a bucket list item, tag it
+      if (ev.tags?.includes('bucket-list')) {
+        insertData.tags = ['bucket-list']
+      }
+
       const { data, error } = await supabase
         .from('events')
-        .insert({
-          title: ev.title,
-          location: ev.location || '',
-          date: ev.date,
-          start_time: ev.start_time || '00:00',
-          end_time: ev.end_time || ev.start_time || '00:00',
-          type,
-          end_date: ev.end_date || null,
-          recurrence_rule: ev.recurrence_rule || null,
-          added_by: 'dimitri',
-          category: 'personal',
-          status: 'confirmed',
-          rsvp_dimitri: 'going',
-        })
+        .insert(insertData)
         .select()
         .single()
 
       if (error) continue
       savedEvents.push(data)
+
+      // Auto-resolve matching bucket list item
+      if (ev.bucket_list_item_title) {
+        await supabase
+          .from('bucket_list')
+          .update({ resolved: true })
+          .ilike('title', `%${ev.bucket_list_item_title.substring(0, 40)}%`)
+      }
 
       // Write to Google Cal for single and window events
       if (type === 'single' || type === 'window') {

@@ -4,24 +4,234 @@
   "graph": {},
   "nodes": [
     {
-      "label": "page.tsx",
+      "label": "add-column.mjs",
       "file_type": "code",
-      "source_file": "src/app/memories/page.tsx",
+      "source_file": "scripts/add-column.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "memories_page",
+      "id": "scripts_add_column",
+      "community": 32,
+      "norm_label": "add-column.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_add_column_env",
+      "community": 32,
+      "norm_label": "env"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_add_column_url",
+      "community": 32,
+      "norm_label": "url"
+    },
+    {
+      "label": "key",
+      "file_type": "code",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_add_column_key",
+      "community": 32,
+      "norm_label": "key"
+    },
+    {
+      "label": "sup",
+      "file_type": "code",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_add_column_sup",
+      "community": 32,
+      "norm_label": "sup"
+    },
+    {
+      "label": "add-resolved-v2.mjs",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_v2",
+      "community": 34,
+      "norm_label": "add-resolved-v2.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_v2_env",
+      "community": 34,
+      "norm_label": "env"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_v2_url",
+      "community": 34,
+      "norm_label": "url"
+    },
+    {
+      "label": "key",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_v2_key",
+      "community": 34,
+      "norm_label": "key"
+    },
+    {
+      "label": "sup",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_v2_sup",
+      "community": 34,
+      "norm_label": "sup"
+    },
+    {
+      "label": "add-resolved.mjs",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_add_resolved",
+      "community": 33,
+      "norm_label": "add-resolved.mjs"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_env",
+      "community": 33,
+      "norm_label": "env"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_url",
+      "community": 33,
+      "norm_label": "url"
+    },
+    {
+      "label": "key",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_key",
+      "community": 33,
+      "norm_label": "key"
+    },
+    {
+      "label": "sup",
+      "file_type": "code",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "scripts_add_resolved_sup",
+      "community": 33,
+      "norm_label": "sup"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "chat_route",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "openai",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "chat_route_openai",
+      "community": 25,
+      "norm_label": "openai"
+    },
+    {
+      "label": "getViennaOffset()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "chat_route_getviennaoffset",
+      "community": 25,
+      "norm_label": "getviennaoffset()"
+    },
+    {
+      "label": "addOneDay()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L19",
+      "_origin": "ast",
+      "id": "chat_route_addoneday",
+      "community": 25,
+      "norm_label": "addoneday()"
+    },
+    {
+      "label": "buildSystemPrompt()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "chat_route_buildsystemprompt",
+      "community": 25,
+      "norm_label": "buildsystemprompt()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "chat_route_post",
+      "community": 25,
+      "norm_label": "post()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/bucket-list/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bucket_list_page",
       "community": 0,
       "norm_label": "page.tsx"
     },
     {
-      "label": "MemoriesPage()",
+      "label": "BucketListPage()",
       "file_type": "code",
-      "source_file": "src/app/memories/page.tsx",
-      "source_location": "L9",
+      "source_file": "src/app/bucket-list/page.tsx",
+      "source_location": "L6",
       "_origin": "ast",
-      "id": "memories_page_memoriespage",
+      "id": "bucket_list_page_bucketlistpage",
       "community": 0,
-      "norm_label": "memoriespage()"
+      "norm_label": "bucketlistpage()"
     },
     {
       "label": "page.tsx",
@@ -67,11 +277,141 @@
       "label": "BottomNav()",
       "file_type": "code",
       "source_file": "src/components/BottomNav.tsx",
-      "source_location": "L10",
+      "source_location": "L11",
       "_origin": "ast",
       "id": "components_bottomnav_bottomnav",
       "community": 10,
       "norm_label": "bottomnav()"
+    },
+    {
+      "label": "supabase.ts",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_supabase",
+      "community": 0,
+      "norm_label": "supabase.ts"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "lib_supabase_supabase",
+      "community": 9,
+      "norm_label": "supabase"
+    },
+    {
+      "label": "EventType",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "lib_supabase_eventtype",
+      "community": 0,
+      "norm_label": "eventtype"
+    },
+    {
+      "label": "EventCategory",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "lib_supabase_eventcategory",
+      "community": 0,
+      "norm_label": "eventcategory"
+    },
+    {
+      "label": "EventStatus",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "lib_supabase_eventstatus",
+      "community": 0,
+      "norm_label": "eventstatus"
+    },
+    {
+      "label": "Rsvp",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "lib_supabase_rsvp",
+      "community": 0,
+      "norm_label": "rsvp"
+    },
+    {
+      "label": "Event",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "lib_supabase_event",
+      "community": 0,
+      "norm_label": "event"
+    },
+    {
+      "label": "BucketListItem",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "lib_supabase_bucketlistitem",
+      "community": 0,
+      "norm_label": "bucketlistitem"
+    },
+    {
+      "label": "NotificationKind",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "lib_supabase_notificationkind",
+      "community": 0,
+      "norm_label": "notificationkind"
+    },
+    {
+      "label": "Notification",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "lib_supabase_notification",
+      "community": 0,
+      "norm_label": "notification"
+    },
+    {
+      "label": "Memory",
+      "file_type": "code",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "lib_supabase_memory",
+      "community": 0,
+      "norm_label": "memory"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "page.tsx",
+      "id": "memories_page"
+    },
+    {
+      "label": "MemoriesPage()",
+      "file_type": "code",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "community": 0,
+      "norm_label": "memoriespage()",
+      "id": "memories_page_memoriespage"
     },
     {
       "label": "FeedCards.tsx",
@@ -79,9 +419,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_feedcards",
       "community": 0,
-      "norm_label": "feedcards.tsx"
+      "norm_label": "feedcards.tsx",
+      "id": "components_feedcards"
     },
     {
       "label": "FeedCardsProps",
@@ -89,9 +429,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "components_feedcards_feedcardsprops",
       "community": 0,
-      "norm_label": "feedcardsprops"
+      "norm_label": "feedcardsprops",
+      "id": "components_feedcards_feedcardsprops"
     },
     {
       "label": "RsvpValue",
@@ -99,9 +439,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "components_feedcards_rsvpvalue",
       "community": 0,
-      "norm_label": "rsvpvalue"
+      "norm_label": "rsvpvalue",
+      "id": "components_feedcards_rsvpvalue"
     },
     {
       "label": "FeedCards()",
@@ -109,9 +449,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "components_feedcards_feedcards",
       "community": 0,
-      "norm_label": "feedcards()"
+      "norm_label": "feedcards()",
+      "id": "components_feedcards_feedcards"
     },
     {
       "label": "route.ts",
@@ -289,7 +629,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "route.ts",
       "id": "debug_route"
     },
@@ -299,7 +639,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "get()",
       "id": "debug_route_get"
     },
@@ -1334,116 +1674,6 @@
       "id": "components_memorycard_memorycard"
     },
     {
-      "label": "supabase.ts",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "supabase.ts",
-      "id": "lib_supabase"
-    },
-    {
-      "label": "supabase",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L3",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "supabase",
-      "id": "lib_supabase_supabase"
-    },
-    {
-      "label": "EventType",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "eventtype",
-      "id": "lib_supabase_eventtype"
-    },
-    {
-      "label": "EventCategory",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "eventcategory",
-      "id": "lib_supabase_eventcategory"
-    },
-    {
-      "label": "EventStatus",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L11",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "eventstatus",
-      "id": "lib_supabase_eventstatus"
-    },
-    {
-      "label": "Rsvp",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L12",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "rsvp",
-      "id": "lib_supabase_rsvp"
-    },
-    {
-      "label": "Event",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "event",
-      "id": "lib_supabase_event"
-    },
-    {
-      "label": "BucketListItem",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L43",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "bucketlistitem",
-      "id": "lib_supabase_bucketlistitem"
-    },
-    {
-      "label": "NotificationKind",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L53",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "notificationkind",
-      "id": "lib_supabase_notificationkind"
-    },
-    {
-      "label": "Notification",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L55",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "notification",
-      "id": "lib_supabase_notification"
-    },
-    {
-      "label": "Memory",
-      "file_type": "code",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L64",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "memory",
-      "id": "lib_supabase_memory"
-    },
-    {
       "label": "eslint.config.mjs",
       "file_type": "code",
       "source_file": "eslint.config.mjs",
@@ -1799,7 +2029,7 @@
       "source_file": "src/app/api/book/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "route.ts",
       "id": "book_route"
     },
@@ -1809,7 +2039,7 @@
       "source_file": "src/app/api/book/route.ts",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "utctovienna()",
       "id": "book_route_utctovienna"
     },
@@ -1819,7 +2049,7 @@
       "source_file": "src/app/api/book/route.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "post()",
       "id": "book_route_post"
     },
@@ -1829,7 +2059,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -1839,7 +2069,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -1849,7 +2079,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -1859,7 +2089,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -1892,66 +2122,6 @@
       "community": 2,
       "norm_label": "post()",
       "id": "bucket_list_route_post"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "route.ts",
-      "id": "src_app_api_chat_route_ts_chat_route"
-    },
-    {
-      "label": "openai",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "openai",
-      "id": "src_app_api_chat_route_ts_chat_route_openai"
-    },
-    {
-      "label": "getViennaOffset()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "getviennaoffset()",
-      "id": "src_app_api_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "label": "addOneDay()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "addoneday()",
-      "id": "src_app_api_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "label": "buildSystemPrompt()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "buildsystemprompt()",
-      "id": "src_app_api_chat_route_ts_chat_route_buildsystemprompt"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L78",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "post()",
-      "id": "src_app_api_chat_route_ts_chat_route_post"
     },
     {
       "label": "route.ts",
@@ -2529,7 +2699,7 @@
       "source_file": "src/lib/google-auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "google-auth.ts",
       "id": "lib_google_auth"
     },
@@ -2539,7 +2709,7 @@
       "source_file": "src/lib/google-auth.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 9,
       "norm_label": "getcalendarclient()",
       "id": "lib_google_auth_getcalendarclient"
     },
@@ -3006,57 +3176,282 @@
   ],
   "links": [
     {
-      "relation": "imports_from",
-      "context": "import",
+      "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/memories/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "source": "memories_page",
-      "target": "components_feedcards",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/memories/page.tsx",
+      "source_file": "scripts/add-column.mjs",
       "source_location": "L4",
       "weight": 1.0,
-      "source": "memories_page",
-      "target": "lib_supabase_event",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/memories/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "memories_page",
-      "target": "lib_supabase_memory",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/memories/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "source": "memories_page",
-      "target": "lib_supabase_notification",
+      "source": "scripts_add_column",
+      "target": "scripts_add_column_env",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/memories/page.tsx",
-      "source_location": "L9",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L6",
       "weight": 1.0,
-      "source": "memories_page",
-      "target": "memories_page_memoriespage",
+      "source": "scripts_add_column",
+      "target": "scripts_add_column_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_add_column",
+      "target": "scripts_add_column_sup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-column.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_add_column",
+      "target": "scripts_add_column_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_add_resolved_v2",
+      "target": "scripts_add_resolved_v2_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_add_resolved_v2",
+      "target": "scripts_add_resolved_v2_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_add_resolved_v2",
+      "target": "scripts_add_resolved_v2_sup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved-v2.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_add_resolved_v2",
+      "target": "scripts_add_resolved_v2_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "scripts_add_resolved",
+      "target": "scripts_add_resolved_env",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "scripts_add_resolved",
+      "target": "scripts_add_resolved_key",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "scripts_add_resolved",
+      "target": "scripts_add_resolved_sup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/add-resolved.mjs",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "scripts_add_resolved",
+      "target": "scripts_add_resolved_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "chat_route_addoneday",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "chat_route_buildsystemprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "chat_route_getviennaoffset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "chat_route_openai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "chat_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "lib_auth_authoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "lib_google_auth_getcalendarclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "lib_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "chat_route",
+      "target": "lib_supabase_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "chat_route_post",
+      "target": "chat_route_getviennaoffset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "chat_route_post",
+      "target": "chat_route_addoneday",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L124",
+      "weight": 1.0,
+      "source": "chat_route_post",
+      "target": "chat_route_buildsystemprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/bucket-list/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "bucket_list_page",
+      "target": "bucket_list_page_bucketlistpage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/bucket-list/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "bucket_list_page",
+      "target": "lib_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/bucket-list/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "bucket_list_page",
+      "target": "lib_supabase_bucketlistitem",
       "confidence_score": 1.0
     },
     {
@@ -3065,9 +3460,9 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "app_page_planpage",
-      "confidence_score": 1.0
+      "target": "app_page_planpage"
     },
     {
       "relation": "imports_from",
@@ -3200,6 +3595,765 @@
       "target": "components_bottomnav_bottomnav"
     },
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/book/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "book_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/bucket-list/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "bucket_list_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/calendar/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calendar_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Calendar.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_calendar",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryCard.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memorycard",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/auth.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_auth",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/discovery.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_discovery",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/event-utils.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_event_utils",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/google-auth.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_google_auth",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_bucketlistitem"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_eventcategory"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_eventstatus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_eventtype"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L64",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_notification"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_notificationkind"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_rsvp"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/supabase.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_supabase",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/notifications/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notifications_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/plan/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "plan_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/bucket-list/[id]/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_bucket_list_id_route_ts_id_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "theresa_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/book/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "book_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/bucket-list/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "bucket_list_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/cron/cleanup/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "cleanup_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/debug/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "debug_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "events_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/auth.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_auth",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/discovery.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_discovery",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/freebusy.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_freebusy",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/google-auth.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_google_auth",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/notifications/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notifications_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/bucket-list/[id]/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_bucket_list_id_route_ts_id_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/calendar/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calendar_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Calendar.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_calendar",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Calendar.tsx",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_calendar_calendarprops",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail_eventdetailprops",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_feedcards",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryCard.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memorycard",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/event-utils.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "lib_event_utils",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/plan/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "plan_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "theresa_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/theresa/page.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "theresa_page",
+      "target": "lib_supabase_bucketlistitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_page",
+      "target": "lib_supabase_notification"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/calendar/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "calendar_page",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Calendar.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_calendar",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/Calendar.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_calendar_calendarprops",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/DualCamera.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_dualcamera_dualcameraprops",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/EventDetail.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_eventdetail",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/FeedCards.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_feedcards",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryCard.tsx",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memorycard",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "references",
+      "context": "field",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryCard.tsx",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memorycard_memorycardprops",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_page",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_page",
+      "target": "components_feedcards"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_page",
+      "target": "memories_page_memoriespage"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/FeedCards.tsx",
@@ -3233,28 +4387,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_feedcards",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/FeedCards.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_feedcards",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/app/api/whoami/route.ts",
       "source_location": "L2",
       "weight": 1.0,
@@ -3282,39 +4414,6 @@
       "confidence_score": 1.0,
       "source": "whoami_route",
       "target": "whoami_route_get"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "lib_supabase_bucketlistitem"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/theresa/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "theresa_page",
-      "target": "lib_supabase_event"
     },
     {
       "relation": "contains",
@@ -3419,28 +4518,6 @@
       "target": "lib_event_utils_viennatoday"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/cron/cleanup/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "cleanup_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -3527,28 +4604,6 @@
       "target": "lib_event_utils_viennatoday"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "events_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -3568,17 +4623,6 @@
       "confidence_score": 1.0,
       "source": "debug_route",
       "target": "debug_route_get"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/debug/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "debug_route",
-      "target": "lib_supabase_supabase"
     },
     {
       "relation": "contains",
@@ -3744,56 +4788,12 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/components/EventDetail.tsx",
       "source_location": "L4",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "components_eventdetail",
       "target": "components_dualcamera"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/DualCamera.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_dualcamera_dualcameraprops",
-      "target": "lib_supabase_memory"
     },
     {
       "relation": "imports_from",
@@ -3816,28 +4816,6 @@
       "confidence_score": 1.0,
       "source": "memories_route",
       "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_route",
-      "target": "lib_supabase_supabase"
     },
     {
       "relation": "imports_from",
@@ -4047,39 +5025,6 @@
       "target": "components_eventdetail_timeago"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail",
-      "target": "lib_supabase_memory"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -4111,17 +5056,6 @@
       "confidence_score": 1.0,
       "source": "components_eventdetail_eventdetail",
       "target": "components_eventdetail_timeago"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/EventDetail.tsx",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_eventdetail_eventdetailprops",
-      "target": "lib_supabase_event"
     },
     {
       "relation": "contains",
@@ -4183,28 +5117,6 @@
       "confidence_score": 1.0,
       "source": "id_route",
       "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_supabase_supabase"
     },
     {
       "relation": "imports",
@@ -4494,39 +5406,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/calendar/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "calendar_page",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/calendar/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "calendar_page",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/calendar/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "calendar_page",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/app/api/freebusy/route.ts",
       "source_location": "L1",
       "weight": 1.0,
@@ -4625,17 +5504,6 @@
       "confidence_score": 1.0,
       "source": "lib_freebusy",
       "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/freebusy.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_freebusy",
-      "target": "lib_supabase_supabase"
     },
     {
       "relation": "imports_from",
@@ -4909,61 +5777,6 @@
       "target": "components_calendar_weekdays"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/Calendar.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_calendar",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/Calendar.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_calendar",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/Calendar.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_calendar",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/Calendar.tsx",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_calendar_calendarprops",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/Calendar.tsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_calendar_calendarprops",
-      "target": "lib_supabase_memory"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/MemoryCard.tsx",
@@ -5004,39 +5817,6 @@
       "target": "components_memorycard_timeago"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryCard.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memorycard",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryCard.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memorycard",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryCard.tsx",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memorycard",
-      "target": "lib_supabase_memory"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -5057,359 +5837,6 @@
       "confidence_score": 1.0,
       "source": "components_memorycard_memorycard",
       "target": "components_memorycard_timeago"
-    },
-    {
-      "relation": "references",
-      "context": "field",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryCard.tsx",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memorycard_memorycardprops",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/book/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "book_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/bucket-list/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "bucket_list_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/auth.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_auth",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/discovery.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_discovery",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/event-utils.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_event_utils",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/google-auth.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_google_auth",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L43",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_bucketlistitem"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_eventcategory"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_eventstatus"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_eventtype"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L64",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_notification"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_notificationkind"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_rsvp"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/supabase.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_supabase",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/notifications/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "notifications_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/plan/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "plan_page",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/bucket-list/[id]/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_bucket_list_id_route_ts_id_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/book/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "book_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/bucket-list/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "bucket_list_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/auth.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_auth",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/discovery.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_discovery",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/google-auth.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_google_auth",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/notifications/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "notifications_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/bucket-list/[id]/route.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_bucket_list_id_route_ts_id_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/lib/event-utils.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "lib_event_utils",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/plan/page.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "plan_page",
-      "target": "lib_supabase_event"
     },
     {
       "relation": "contains",
@@ -5846,144 +6273,6 @@
       "confidence_score": 1.0,
       "source": "bucket_list_route",
       "target": "bucket_list_route_post"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_google_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "src_app_api_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "src_app_api_chat_route_ts_chat_route_buildsystemprompt"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "src_app_api_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "src_app_api_chat_route_ts_chat_route_openai"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L78",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "src_app_api_chat_route_ts_chat_route_post"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L202",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route_post",
-      "target": "src_app_api_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L219",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route_post",
-      "target": "src_app_api_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route_post",
-      "target": "src_app_api_chat_route_ts_chat_route_buildsystemprompt"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L200",
-      "weight": 1.0,
-      "source": "src_app_api_chat_route_ts_chat_route_post",
-      "target": "lib_google_auth_getcalendarclient"
     },
     {
       "relation": "contains",
@@ -7287,5 +7576,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "2378b118cb83f8aeeca5f930a8db72c65be4ddb7"
+  "built_at_commit": "5b0077653756393f26e368f0645bf032773f7b89"
 }

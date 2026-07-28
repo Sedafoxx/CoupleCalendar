@@ -216,7 +216,10 @@ export default function PlanPage() {
               <div key={ev.id} className="bg-white border border-stone-200 rounded-xl p-4 space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <p className="font-medium text-stone-800 text-sm">{ev.title}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-medium text-stone-800 text-sm">{ev.title}</p>
+                      {ev.tags?.includes('bucket-list') && <span className="text-xs text-amber-500">✨</span>}
+                    </div>
                     <p className="text-xs text-stone-400">{ev.date}{ev.start_time ? ` · ${ev.start_time}–${ev.end_time}` : ''}</p>
                   </div>
                   <button onClick={() => setSelectedEvent(ev)} className="text-xs text-stone-400 hover:text-rose-500 transition shrink-0">Details</button>
@@ -236,6 +239,7 @@ export default function PlanPage() {
             {past.slice(0, 5).map(ev => (
               <button key={ev.id} onClick={() => setSelectedEvent(ev)} className="w-full text-left bg-stone-50 border border-stone-100 rounded-xl px-4 py-2.5 text-sm text-stone-500 hover:bg-stone-100 transition">
                 <span className="font-medium">{ev.title}</span>
+                {ev.tags?.includes('bucket-list') && <span className="text-amber-500 ml-1">✨</span>}
                 <span className="text-xs ml-2 text-stone-400">{ev.date}</span>
               </button>
             ))}
