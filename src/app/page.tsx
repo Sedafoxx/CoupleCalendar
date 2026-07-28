@@ -5,6 +5,7 @@ import type { Memory, Event, Notification } from '@/lib/supabase'
 import MemoryCard from '@/components/MemoryCard'
 import DualCamera from '@/components/DualCamera'
 import EventDetail from '@/components/EventDetail'
+import FeedCards from '@/components/FeedCards'
 
 export default function MemoriesPage() {
   const { data: session, status } = useSession()
@@ -228,7 +229,7 @@ export default function MemoriesPage() {
         </div>
       )}
 
-      {/* Memories feed — combine photo memories + past events without photos */}
+      {/* Memories feed — each past event appears exactly once */}
       <section className="space-y-4">
         {loading ? (
           <div className="space-y-4">
@@ -236,78 +237,8 @@ export default function MemoriesPage() {
               <div key={i} className="bg-stone-50 rounded-2xl h-64 animate-pulse" />
             ))}
           </div>
-        ) : (() => {
-          // Build a clean feed: one card per past event, sorted by date
-          const past = pastEvents.filter(ev =>
-            ev.date < new Date().toISOString().split('T')[0] &&
-            ev.category !== 'city'
-          )
-
-          // Group memories by event_id
-          const memsByEvent = new Map<string, Memory[]>()
-          for (const m of memories) {
-            const list = memsByEvent.get(m.event_id) || []
-            list.push(m)
-            memsByEvent.set(m.event_id, list)
-          }
-
-          // Build one card per event
-          const feed = past.map(ev => {
-            const eventMems = memsByEvent.get(ev.id) || []
-            const hasPhoto = eventMems.some(m => !m.photo_back.includes('note.gif'))
-            const hasNote = eventMems.some(m => m.photo_back.includes('note.gif'))
-            const firstPhoto = eventMems.find(m => !m.photo_back.includes('note.gif'))
-            return { ev, hasPhoto, hasNote, firstPhoto, date: ev.date }
-          })
-
-          // Sort by date descending
-          feed.sort((a, b) => b.date.localeCompare(a.date))
-
-          return feed.length > 0 ? feed.map(({ ev, hasPhoto, hasNote, firstPhoto }) =>
-            hasPhoto && firstPhoto ? (
-              // Event with photos → show MemoryCard
-              <MemoryCard
-                key={ev.id}
-                memory={{ ...firstPhoto, event_title: ev.title, event_date: ev.date }}
-                onClick={() => handleMemoryClick(firstPhoto)}
-              />
-            ) : (
-              // Event without photos → show placeholder card
-              <button
-                key={ev.id}
-                onClick={() => setSelectedEvent(ev)}
-                className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-rose-200 transition group"
-              >
-                <div className="h-32 bg-gradient-to-br from-rose-100 via-pink-50 to-stone-100 flex items-center justify-center relative">
-                  <div className="text-center">
-                    <span className="text-4xl">♡</span>
-                    <p className="text-rose-300 text-xs mt-1 font-medium">
-                      {hasNote ? '📝 Notiz' : 'Memory'}
-                    </p>
-                  </div>
-                </div>
-                <div className="px-4 py-3 space-y-1">
-                  <span className="font-semibold text-sm text-stone-800 truncate block">{ev.title}</span>
-                  <p className="text-xs text-stone-400">
-                    {new Date(ev.date + 'T00:00:00').toLocaleDateString('de-AT', {
-                      weekday: 'short', day: 'numeric', month: 'short', year: 'numeric',
-                    })}
-                    {ev.start_time && ` · ${ev.start_time}–${ev.end_time}`}
-                  </p>
-                  <p className="text-xs text-rose-400 font-medium opacity-0 group-hover:opacity-100 transition">+ Add Photos 📸</p>
-                </div>
-              </button>
-            )
-          ) : (
-            <div className="text-center py-16 space-y-4">
-              <p className="text-6xl">📸</p>
-              <h2 className="text-xl font-semibold text-stone-700">No memories yet</h2>
-              <p className="text-stone-400 text-sm max-w-xs mx-auto">
-                Capture your first moment together! Take a BeReal-style photo and attach it to an event.
-              </p>
-            </div>
-          )
-        })()}
+        ) : null}
+        {!loading && <FeedCards pastEvents={pastEvents} memories={memories} onSelectEvent={setSelectedEvent} onSelectMemory={handleMemoryClick} />}
       </section>
 
       {/* Debug panel */}
