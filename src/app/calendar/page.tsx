@@ -12,9 +12,25 @@ export default function CalendarPage() {
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
+  const [who, setWho] = useState<'dimitri' | 'theresa' | null>(null)
+  const [showPinInput, setShowPinInput] = useState(false)
+  const [pinValue, setPinValue] = useState('')
+  const [pinError, setPinError] = useState(false)
+
+  async function loginTheresa(e: React.FormEvent) {
+    e.preventDefault()
+    const res = await fetch('/api/theresa-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: pinValue }),
+    })
+    if (res.ok) { setShowPinInput(false); setPinValue(''); window.location.reload() }
+    else { setPinError(true); setPinValue('') }
+  }
 
   useEffect(() => {
-    if (status === 'authenticated') {
+    fetch('/api/whoami').then(r => r.json()).then(d => setWho(d.user))
+    if (status === 'authenticated' || who) {
       Promise.all([
         fetch('/api/events?past=true').then((r) => r.json()),
         fetch('/api/memories?recent=true&limit=100').then((r) => r.json()),
@@ -24,25 +40,33 @@ export default function CalendarPage() {
         setLoading(false)
       }).catch(() => setLoading(false))
     }
-  }, [status])
+  }, [status, who])
 
-  if (status === 'loading') {
-    return <div className="p-8 text-stone-400">Loading...</div>
-  }
+  if (status === 'loading') return <div className="p-8 text-stone-400">Loading...</div>
 
-  if (!session) {
+  if (!session && !who) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
           <p className="text-4xl">♡</p>
           <h1 className="text-3xl font-bold">Dimi Time</h1>
-          <button
-            onClick={() => signIn('google')}
-            className="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition"
-          >
-            Sign in with Google
-          </button>
+          <button onClick={() => signIn('google')} className="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition">Dimi ♡</button>
+          <button onClick={() => setShowPinInput(true)} className="text-rose-400 hover:text-rose-600 underline text-sm block mx-auto">Theresa 🔐</button>
         </div>
+        {showPinInput && (
+          <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-8 w-full max-w-xs shadow-xl space-y-4 text-center">
+              <p className="text-4xl">💌</p>
+              <h2 className="font-bold text-lg">Hey Theresa!</h2>
+              <form onSubmit={loginTheresa} className="space-y-3">
+                <input type="password" value={pinValue} onChange={e => { setPinValue(e.target.value); setPinError(false) }} placeholder="PIN" className="w-full border border-rose-100 rounded-xl px-4 py-3 text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/50" autoFocus />
+                {pinError && <p className="text-red-400 text-sm">Falscher PIN 💕</p>}
+                <button type="submit" disabled={!pinValue} className="w-full bg-gradient-to-r from-rose-400 to-pink-500 text-white py-3 rounded-xl font-medium disabled:opacity-50">Rein ♡</button>
+                <button type="button" onClick={() => setShowPinInput(false)} className="text-sm text-stone-400">Vielleicht später</button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
