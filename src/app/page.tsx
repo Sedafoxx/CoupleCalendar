@@ -12,9 +12,12 @@ export default function PlanPage() {
   const [rsvpUpdating, setRsvpUpdating] = useState<string | null>(null)
 
   // Chat
-  const [messages, setMessages] = useState<{ role: string; text: string }[]>([])
+  const [messages, setMessages] = useState<{ role: string; text: string; imageUrl?: string }[]>([])
   const [input, setInput] = useState('')
   const [sending, setSending] = useState(false)
+  const [imageFile, setImageFile] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -70,14 +73,18 @@ export default function PlanPage() {
 
   async function sendMessage(e: React.FormEvent) {
     e.preventDefault()
-    if (!input.trim() || sending) return
+    if ((!input.trim() && !imageFile) || sending) return
     setSending(true)
     const text = input.trim()
-    setMessages(prev => [...prev, { role: 'user', text }])
+    setMessages(prev => [...prev, { role: 'user', text, imageUrl: imagePreview ?? undefined }])
     setInput('')
+    const currentImage = imageFile
+    setImageFile(null)
+    setImagePreview(null)
     try {
       const formData = new FormData()
-      formData.append('message', text)
+      if (text) formData.append('message', text)
+      if (currentImage) formData.append('image', currentImage)
       const res = await fetch('/api/chat', { method: 'POST', body: formData })
       const data = await res.json()
       setMessages(prev => [...prev, { role: 'assistant', text: data.reply || 'Done! ♡' }])
@@ -86,6 +93,20 @@ export default function PlanPage() {
       setMessages(prev => [...prev, { role: 'assistant', text: 'Failed. Try again?' }])
     }
     setSending(false)
+  }
+
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setImageFile(file)
+    setImagePreview(URL.createObjectURL(file))
+    e.target.value = ''
+  }
+
+  function removeImage() {
+    setImageFile(null)
+    if (imagePreview) URL.revokeObjectURL(imagePreview)
+    setImagePreview(null)
   }
 
   async function setRsvp(eventId: string, value: 'going' | null) {
@@ -249,7 +270,10 @@ export default function PlanPage() {
                   ? 'bg-stone-900 text-white rounded-tr-sm'
                   : 'bg-rose-50 border border-rose-100 rounded-tl-sm text-stone-700'
               }`}>
-                <p className="whitespace-pre-wrap">{msg.text}</p>
+                {msg.imageUrl && (
+                  <img src={msg.imageUrl} alt="Upload" className="rounded-lg max-h-32 object-cover w-full mb-1" />
+                )}
+                {msg.text && <p className="whitespace-pre-wrap">{msg.text}</p>}
               </div>
             </div>
           ))}
@@ -261,9 +285,17 @@ export default function PlanPage() {
             </div>
           )}
         </div>
+        {imagePreview && (
+          <div className="relative inline-flex">
+            <img src={imagePreview} alt="Preview" className="h-16 w-16 rounded-lg object-cover border border-stone-200" />
+            <button onClick={removeImage} className="absolute -top-1.5 -right-1.5 bg-stone-900 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center hover:bg-stone-700 transition">×</button>
+          </div>
+        )}
         <form onSubmit={sendMessage} className="flex gap-2">
+          <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+          <button type="button" onClick={() => fileInputRef.current?.click()} className="p-2 text-stone-400 hover:text-stone-700 transition text-lg shrink-0">📎</button>
           <input value={input} onChange={e => setInput(e.target.value)} placeholder='Was machen wir? ♡' className="flex-1 border border-stone-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-200" />
-          <button type="submit" disabled={!input.trim() || sending} className="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-40 shadow-sm">{sending ? '...' : 'Send'}</button>
+          <button type="submit" disabled={(!input.trim() && !imageFile) || sending} className="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-40 shadow-sm">{sending ? '...' : 'Send'}</button>
         </form>
       </section>
 
