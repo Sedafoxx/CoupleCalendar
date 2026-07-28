@@ -17,6 +17,9 @@ export default function MemoriesPage() {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [showDebug, setShowDebug] = useState(false)
   const [pastEvents, setPastEvents] = useState<Event[]>([])
+  const [messages, setMessages] = useState<{ role: string; text: string }[]>([])
+  const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -100,6 +103,29 @@ export default function MemoriesPage() {
     setSelectedMemory(memory)
   }
 
+  async function sendMessage(e: React.FormEvent | React.KeyboardEvent) {
+    e.preventDefault()
+    if (!input.trim() || sending) return
+    setSending(true)
+
+    const userMsg = { role: 'user', text: input.trim() }
+    setMessages(prev => [...prev, userMsg])
+    const text = input.trim()
+    setInput('')
+
+    try {
+      const formData = new FormData()
+      formData.append('message', text)
+      const res = await fetch('/api/chat', { method: 'POST', body: formData })
+      const data = await res.json()
+      setMessages(prev => [...prev, { role: 'assistant', text: data.reply || 'Done! ♡' }])
+      if (data.events?.length || data.event) fetchAll()
+    } catch {
+      setMessages(prev => [...prev, { role: 'assistant', text: 'Failed. Try again?' }])
+    }
+    setSending(false)
+  }
+
   // Loading state
   if (status === 'loading') {
     return <div className="p-8 text-stone-400">Loading...</div>
@@ -181,7 +207,7 @@ export default function MemoriesPage() {
       {/* Header */}
       <header className="flex items-center justify-between pt-2">
         <div>
-          <h1 className="text-2xl font-bold">♡ Memories</h1>
+          <h1 className="text-2xl font-bold">♡ Dimi & Theresa</h1>
           <p className="text-sm text-stone-400 mt-0.5">Our moments together</p>
         </div>
         <div className="flex items-center gap-3">
@@ -217,7 +243,11 @@ export default function MemoriesPage() {
             )}
           </div>
           <span className="text-sm text-stone-500">{session.user?.email}</span>
-          <button onClick={() => signOut()} className="text-sm text-stone-500 hover:text-stone-900 transition">Sign out</button>
+          {session?.user?.email ? (
+            <button onClick={() => signOut()} className="text-sm text-stone-500 hover:text-stone-900 transition">Sign out</button>
+          ) : (
+            <button onClick={() => signIn('google')} className="text-sm text-rose-400 hover:text-rose-600 transition">Sign in ♡</button>
+          )}
           <button onClick={() => setShowDebug(!showDebug)} className="text-xs text-stone-300 hover:text-stone-500 transition">⚙</button>
         </div>
       </header>
@@ -239,6 +269,36 @@ export default function MemoriesPage() {
           </div>
         ) : null}
         {!loading && <FeedCards pastEvents={pastEvents} memories={memories} onSelectEvent={setSelectedEvent} onSelectMemory={handleMemoryClick} />}
+      </section>
+
+      {/* Quick chat — both can add events */}
+      <section className="bg-white border border-stone-200 rounded-2xl p-4 space-y-3">
+        <h3 className="font-semibold text-stone-700 text-sm">💬 Plan our next date</h3>
+        <div className="flex gap-2">
+          <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && sendMessage(e)}
+            placeholder='z.B. "Kaffee morgen um 15 Uhr" oder "Weinabend am Freitag"'
+            className="flex-1 border border-stone-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-200"
+          />
+          <button
+            onClick={(e) => sendMessage(e)}
+            disabled={!input.trim() || sending}
+            className="bg-gradient-to-r from-rose-400 to-pink-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:from-rose-500 hover:to-pink-600 transition disabled:opacity-40 shadow-sm"
+          >
+            {sending ? '...' : 'Send'}
+          </button>
+        </div>
+        {messages.length > 0 && (
+          <div className="max-h-40 overflow-y-auto space-y-1 text-sm">
+            {messages.slice(-5).map((msg, i) => (
+              <p key={i} className={`${msg.role === 'assistant' ? 'text-rose-600' : 'text-stone-600'}`}>
+                <span className="font-medium">{msg.role === 'assistant' ? '🤖' : '👤'}</span> {msg.text}
+              </p>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Debug panel */}
