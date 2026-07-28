@@ -26,14 +26,14 @@ export default function PlanPage() {
 
   useEffect(() => {
     fetch('/api/whoami').then(r => r.json()).then(d => setWho(d.user))
-    if (status === 'authenticated') {
+    if (status === 'authenticated' || who) {
       fetchEvents()
       fetchNotifications()
       if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission()
       const id = setInterval(fetchNotifications, 20000)
       return () => clearInterval(id)
     }
-  }, [status])
+  }, [status, who])
 
   async function fetchEvents() {
     const res = await fetch('/api/events')
