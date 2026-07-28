@@ -84,6 +84,27 @@ export default function MemoriesPage() {
 
   if (status === 'loading') return <div className="p-8 text-stone-400">Loading...</div>
 
+  const [showPinInput, setShowPinInput] = useState(false)
+  const [pinValue, setPinValue] = useState('')
+  const [pinError, setPinError] = useState(false)
+
+  async function loginTheresa(e: React.FormEvent) {
+    e.preventDefault()
+    const res = await fetch('/api/theresa-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pin: pinValue }),
+    })
+    if (res.ok) {
+      setShowPinInput(false)
+      setPinValue('')
+      window.location.reload()
+    } else {
+      setPinError(true)
+      setPinValue('')
+    }
+  }
+
   if (!session) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -92,9 +113,26 @@ export default function MemoriesPage() {
           <h1 className="text-3xl font-bold">Dimi Time</h1>
           <p className="text-stone-500">Time together, planned with love.</p>
           <button onClick={() => signIn('google')} className="bg-stone-900 text-white px-6 py-3 rounded-lg hover:bg-stone-700 transition">
-            Sign in with Google
+            Dimi ♡
+          </button>
+          <button onClick={() => setShowPinInput(true)} className="text-rose-400 hover:text-rose-600 underline text-sm">
+            Theresa 🔐
           </button>
         </div>
+        {showPinInput && (
+          <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl p-8 w-full max-w-xs shadow-xl space-y-4 text-center">
+              <p className="text-4xl">💌</p>
+              <h2 className="font-bold text-lg">Hey Theresa!</h2>
+              <form onSubmit={loginTheresa} className="space-y-3">
+                <input type="password" value={pinValue} onChange={e => { setPinValue(e.target.value); setPinError(false) }} placeholder="PIN" className="w-full border border-rose-100 rounded-xl px-4 py-3 text-center text-lg tracking-widest focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/50" autoFocus />
+                {pinError && <p className="text-red-400 text-sm">Falscher PIN 💕</p>}
+                <button type="submit" disabled={!pinValue} className="w-full bg-gradient-to-r from-rose-400 to-pink-500 text-white py-3 rounded-xl font-medium disabled:opacity-50">Rein ♡</button>
+                <button type="button" onClick={() => setShowPinInput(false)} className="text-sm text-stone-400">Vielleicht später</button>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
