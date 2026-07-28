@@ -15,27 +15,18 @@ export async function GET(req: NextRequest) {
   if (!authorized(req)) return Response.json({ error: 'Unauthorized' }, { status: 401 })
   const today = viennaToday()
 
-  // Single/city events: past once their date < today.
+  // Only archive city-discovery events that are past their date.
+  // Personal events (category = 'personal') stay visible forever as memories.
   const { data, error } = await supabase
     .from('events')
     .update({ archived: true })
     .eq('archived', false)
-    .neq('type', 'recurring')
+    .eq('category', 'city')
     .lt('date', today)
-    .is('end_date', null)
     .select('id')
 
-  // Window/sleepover with an end_date: past once end_date < today.
-  const { data: ranged, error: err2 } = await supabase
-    .from('events')
-    .update({ archived: true })
-    .eq('archived', false)
-    .neq('type', 'recurring')
-    .lt('end_date', today)
-    .select('id')
-
-  if (error || err2) {
-    return Response.json({ ok: false, error: (error ?? err2)?.message }, { status: 500 })
+  if (error) {
+    return Response.json({ ok: false, error: error.message }, { status: 500 })
   }
-  return Response.json({ ok: true, archived: (data?.length ?? 0) + (ranged?.length ?? 0) })
+  return Response.json({ ok: true, archived: data?.length ?? 0 })
 }

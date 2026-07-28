@@ -4,14 +4,54 @@
   "graph": {},
   "nodes": [
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/debug/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "debug_route",
+      "community": 2,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "GET()",
+      "file_type": "code",
+      "source_file": "src/app/api/debug/route.ts",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "debug_route_get",
+      "community": 2,
+      "norm_label": "get()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/log-error/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "log_error_route",
+      "community": 31,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/log-error/route.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "log_error_route_post",
+      "community": 31,
+      "norm_label": "post()"
+    },
+    {
       "label": "stats.mjs",
       "file_type": "code",
       "source_file": "scripts/stats.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_stats",
       "community": 29,
-      "norm_label": "stats.mjs"
+      "norm_label": "stats.mjs",
+      "id": "scripts_stats"
     },
     {
       "label": "env",
@@ -19,9 +59,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "scripts_stats_env",
       "community": 29,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_stats_env"
     },
     {
       "label": "url",
@@ -29,9 +69,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "scripts_stats_url",
       "community": 29,
-      "norm_label": "url"
+      "norm_label": "url",
+      "id": "scripts_stats_url"
     },
     {
       "label": "key",
@@ -39,9 +79,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "scripts_stats_key",
       "community": 29,
-      "norm_label": "key"
+      "norm_label": "key",
+      "id": "scripts_stats_key"
     },
     {
       "label": "sup",
@@ -49,9 +89,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_stats_sup",
       "community": 29,
-      "norm_label": "sup"
+      "norm_label": "sup",
+      "id": "scripts_stats_sup"
     },
     {
       "label": "months",
@@ -59,9 +99,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "scripts_stats_months",
       "community": 29,
-      "norm_label": "months"
+      "norm_label": "months",
+      "id": "scripts_stats_months"
     },
     {
       "label": "page.tsx",
@@ -69,9 +109,9 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_page",
       "community": 0,
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "app_page"
     },
     {
       "label": "MemoriesPage()",
@@ -79,9 +119,9 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "app_page_memoriespage",
       "community": 0,
-      "norm_label": "memoriespage()"
+      "norm_label": "memoriespage()",
+      "id": "app_page_memoriespage"
     },
     {
       "label": "FeedCards.tsx",
@@ -89,9 +129,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_feedcards",
       "community": 0,
-      "norm_label": "feedcards.tsx"
+      "norm_label": "feedcards.tsx",
+      "id": "components_feedcards"
     },
     {
       "label": "FeedCardsProps",
@@ -99,9 +139,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "components_feedcards_feedcardsprops",
       "community": 0,
-      "norm_label": "feedcardsprops"
+      "norm_label": "feedcardsprops",
+      "id": "components_feedcards_feedcardsprops"
     },
     {
       "label": "FeedCards()",
@@ -109,9 +149,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "components_feedcards_feedcards",
       "community": 0,
-      "norm_label": "feedcards()"
+      "norm_label": "feedcards()",
+      "id": "components_feedcards_feedcards"
     },
     {
       "label": "merge-rathaus.mjs",
@@ -2918,12 +2958,43 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/debug/route.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "debug_route",
+      "target": "debug_route_get",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/debug/route.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "debug_route",
+      "target": "lib_supabase_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/log-error/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "log_error_route",
+      "target": "log_error_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/stats.mjs",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_stats",
-      "target": "scripts_stats_env",
-      "confidence_score": 1.0
+      "target": "scripts_stats_env"
     },
     {
       "relation": "contains",
@@ -2931,9 +3002,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_stats",
-      "target": "scripts_stats_key",
-      "confidence_score": 1.0
+      "target": "scripts_stats_key"
     },
     {
       "relation": "contains",
@@ -2941,9 +3012,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_stats",
-      "target": "scripts_stats_months",
-      "confidence_score": 1.0
+      "target": "scripts_stats_months"
     },
     {
       "relation": "contains",
@@ -2951,9 +3022,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_stats",
-      "target": "scripts_stats_sup",
-      "confidence_score": 1.0
+      "target": "scripts_stats_sup"
     },
     {
       "relation": "contains",
@@ -2961,9 +3032,9 @@
       "source_file": "scripts/stats.mjs",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_stats",
-      "target": "scripts_stats_url",
-      "confidence_score": 1.0
+      "target": "scripts_stats_url"
     },
     {
       "relation": "contains",
@@ -3004,9 +3075,9 @@
       "source_file": "src/app/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_page",
-      "target": "components_feedcards",
-      "confidence_score": 1.0
+      "target": "components_feedcards"
     },
     {
       "relation": "imports_from",
@@ -3069,9 +3140,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_feedcards",
-      "target": "components_feedcards_feedcards",
-      "confidence_score": 1.0
+      "target": "components_feedcards_feedcards"
     },
     {
       "relation": "contains",
@@ -3079,9 +3150,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_feedcards",
-      "target": "components_feedcards_feedcardsprops",
-      "confidence_score": 1.0
+      "target": "components_feedcards_feedcardsprops"
     },
     {
       "relation": "imports",
@@ -3090,9 +3161,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_feedcards",
-      "target": "lib_supabase_event",
-      "confidence_score": 1.0
+      "target": "lib_supabase_event"
     },
     {
       "relation": "imports",
@@ -3101,9 +3172,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_feedcards",
-      "target": "lib_supabase_memory",
-      "confidence_score": 1.0
+      "target": "lib_supabase_memory"
     },
     {
       "relation": "contains",
@@ -7090,5 +7161,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "04ed49a1a4014d1042b06ab4fc97d82ca3d08dfb"
+  "built_at_commit": "29d263f119d7a7dbc9cfe07e6251462aa31e4d31"
 }

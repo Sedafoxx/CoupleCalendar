@@ -12,11 +12,13 @@ export async function GET(req: NextRequest) {
   let query = supabase
     .from('events')
     .select('*')
-    .eq('archived', false)
 
-  if (!includePast) {
-    // Default: only today-or-future events
-    query = query.or(`date.gte.${today},end_date.gte.${today}`)
+  if (includePast) {
+    // Show all events including archived ones for the memories timeline
+    // (no date filter, no archived filter)
+  } else {
+    // Default: only non-archived, today-or-future events
+    query = query.eq('archived', false).or(`date.gte.${today},end_date.gte.${today}`)
   }
 
   const { data, error } = await query.order('date', { ascending: true })

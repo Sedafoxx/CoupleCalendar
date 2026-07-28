@@ -313,5 +313,15 @@
     "mtime": 1785262914.5035052,
     "ast_hash": "0a2c4a44a52f8342e5a8a48b0005a361",
     "semantic_hash": ""
+  },
+  "src/app/api/debug/route.ts": {
+    "mtime": 1785266203.4759333,
+    "ast_hash": "b3f50f130e4e3573f781d38422b0b6d0",
+    "semantic_hash": ""
+  },
+  "src/app/api/log-error/route.ts": {
+    "mtime": 1785266211.3359635,
+    "ast_hash": "2e987d4b56ecff92969e8b0fe7da3d6b",
+    "semantic_hash": ""
   }
 }
