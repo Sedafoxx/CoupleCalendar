@@ -35,8 +35,8 @@ export default function MemoryCard({ memory, onClick }: MemoryCardProps) {
     >
       {/* BeReal-style split photo */}
       <div className="flex h-48 sm:h-64">
-        {/* Back camera (main scene) */}
-        <div className="flex-1 relative">
+        {/* Back camera (main scene) — 66% */}
+        <div className="flex-[2] relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={memory.photo_back}
@@ -45,8 +45,8 @@ export default function MemoryCard({ memory, onClick }: MemoryCardProps) {
           />
         </div>
 
-        {/* Front camera (selfie) — smaller strip on the right */}
-        <div className="w-24 sm:w-32 relative">
+        {/* Front camera (selfie) — 34% */}
+        <div className="flex-[1] relative">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={memory.photo_front}
