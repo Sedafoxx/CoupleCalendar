@@ -62,9 +62,9 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
 
   return (
     <div className="fixed inset-0 z-50 bg-black overflow-y-auto">
-      <div className="min-h-full flex flex-col">
-        {/* Back camera photo */}
-        <div className="flex-1 bg-stone-900 min-h-[50vh] flex items-center justify-center relative">
+      <div className="h-dvh flex flex-col">
+        {/* Back camera photo — 66% */}
+        <div className="flex-[2] bg-stone-900 flex items-center justify-center relative min-h-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={backPreview || memory.photo_back} alt="" className="w-full h-full object-cover" />
           {!isEditing && (
@@ -77,8 +77,8 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
           )}
         </div>
 
-        {/* Front camera photo */}
-        <div className="relative h-[28vh] bg-stone-800">
+        {/* Front camera photo — 34% */}
+        <div className="flex-[1] bg-stone-800 relative min-h-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={frontPreview || memory.photo_front} alt="" className="w-full h-full object-cover opacity-90" />
           {!isEditing && (
@@ -102,7 +102,7 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
         }} />
 
         {/* Bottom panel */}
-        <div className="bg-white rounded-t-3xl p-6 -mt-4 relative z-10 space-y-3">
+        <div className="bg-white rounded-t-3xl p-6 relative z-10 space-y-3 shrink-0">
           {memory.caption && <p className="text-stone-700 text-sm">&ldquo;{memory.caption}&rdquo;</p>}
 
           {isEditing ? (

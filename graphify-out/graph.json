@@ -4,6 +4,56 @@
   "graph": {},
   "nodes": [
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "id_route",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "RouteParams",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "id_route_routeparams",
+      "community": 25,
+      "norm_label": "routeparams"
+    },
+    {
+      "label": "whoIs()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "id_route_whois",
+      "community": 25,
+      "norm_label": "whois()"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "id_route_delete",
+      "community": 25,
+      "norm_label": "delete()"
+    },
+    {
+      "label": "PATCH()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "id_route_patch",
+      "community": 25,
+      "norm_label": "patch()"
+    },
+    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src/app/memories/page.tsx",
@@ -17,11 +67,41 @@
       "label": "MemoriesPage()",
       "file_type": "code",
       "source_file": "src/app/memories/page.tsx",
-      "source_location": "L9",
+      "source_location": "L10",
       "_origin": "ast",
       "id": "memories_page_memoriespage",
       "community": 0,
       "norm_label": "memoriespage()"
+    },
+    {
+      "label": "MemoryEditor.tsx",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_memoryeditor",
+      "community": 0,
+      "norm_label": "memoryeditor.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "components_memoryeditor_props",
+      "community": 0,
+      "norm_label": "props"
+    },
+    {
+      "label": "MemoryEditor()",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "components_memoryeditor_memoryeditor",
+      "community": 0,
+      "norm_label": "memoryeditor()"
     },
     {
       "label": "FeedCards.tsx",
@@ -29,9 +109,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_feedcards",
       "community": 0,
-      "norm_label": "feedcards.tsx"
+      "norm_label": "feedcards.tsx",
+      "id": "components_feedcards"
     },
     {
       "label": "FeedCardsProps",
@@ -39,9 +119,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "components_feedcards_feedcardsprops",
       "community": 0,
-      "norm_label": "feedcardsprops"
+      "norm_label": "feedcardsprops",
+      "id": "components_feedcards_feedcardsprops"
     },
     {
       "label": "RsvpValue",
@@ -49,9 +129,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "components_feedcards_rsvpvalue",
       "community": 0,
-      "norm_label": "rsvpvalue"
+      "norm_label": "rsvpvalue",
+      "id": "components_feedcards_rsvpvalue"
     },
     {
       "label": "FeedCards()",
@@ -59,9 +139,9 @@
       "source_file": "src/components/FeedCards.tsx",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "components_feedcards_feedcards",
       "community": 0,
-      "norm_label": "feedcards()"
+      "norm_label": "feedcards()",
+      "id": "components_feedcards_feedcards"
     },
     {
       "label": "route.ts",
@@ -69,7 +149,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "route.ts",
       "id": "chat_route"
     },
@@ -79,7 +159,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "openai",
       "id": "chat_route_openai"
     },
@@ -89,7 +169,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "getviennaoffset()",
       "id": "chat_route_getviennaoffset"
     },
@@ -99,7 +179,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "addoneday()",
       "id": "chat_route_addoneday"
     },
@@ -109,7 +189,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "buildsystemprompt()",
       "id": "chat_route_buildsystemprompt"
     },
@@ -119,7 +199,7 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 25,
+      "community": 2,
       "norm_label": "post()",
       "id": "chat_route_post"
     },
@@ -359,7 +439,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "supabase",
       "id": "lib_supabase_supabase"
     },
@@ -629,7 +709,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "debug_route"
     },
@@ -639,7 +719,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "get()",
       "id": "debug_route_get"
     },
@@ -1004,16 +1084,6 @@
       "id": "components_eventdetail_eventdetail"
     },
     {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "route.ts",
-      "id": "id_route"
-    },
-    {
       "label": "Who",
       "file_type": "code",
       "source_file": "src/app/api/events/[id]/route.ts",
@@ -1022,36 +1092,6 @@
       "community": 25,
       "norm_label": "who",
       "id": "id_route_who"
-    },
-    {
-      "label": "whoIs()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "whois()",
-      "id": "id_route_whois"
-    },
-    {
-      "label": "DELETE()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L16",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "delete()",
-      "id": "id_route_delete"
-    },
-    {
-      "label": "PATCH()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "patch()",
-      "id": "id_route_patch"
     },
     {
       "label": "fix-dein.mjs",
@@ -1502,16 +1542,6 @@
       "community": 12,
       "norm_label": "sql",
       "id": "scripts_run_migration_sql"
-    },
-    {
-      "label": "RouteParams",
-      "file_type": "code",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "routeparams",
-      "id": "id_route_routeparams"
     },
     {
       "label": "layout.tsx",
@@ -2059,7 +2089,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -2069,7 +2099,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -2079,7 +2109,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -2089,7 +2119,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -2099,7 +2129,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "route.ts",
       "id": "bucket_list_route"
     },
@@ -2109,7 +2139,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "get()",
       "id": "bucket_list_route_get"
     },
@@ -2119,7 +2149,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 2,
+      "community": 25,
       "norm_label": "post()",
       "id": "bucket_list_route_post"
     },
@@ -2719,7 +2749,7 @@
       "source_file": "src/lib/theresa-auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "theresa-auth.ts",
       "id": "lib_theresa_auth"
     },
@@ -2729,7 +2759,7 @@
       "source_file": "src/lib/theresa-auth.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "istheresaauthed()",
       "id": "lib_theresa_auth_istheresaauthed"
     },
@@ -3176,6 +3206,122 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_delete"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/[id]/route.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_patch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_routeparams"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/[id]/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_who"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_whois"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_auth_authoptions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_theresa_auth_istheresaauthed"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route_delete",
+      "target": "id_route_whois"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/[id]/route.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route_patch",
+      "target": "id_route_whois"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -3185,6 +3331,17 @@
       "confidence_score": 1.0,
       "source": "memories_page",
       "target": "components_feedcards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "memories_page",
+      "target": "components_memoryeditor",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -3228,6 +3385,37 @@
       "confidence_score": 1.0,
       "source": "memories_page",
       "target": "memories_page_memoriespage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "components_memoryeditor",
+      "target": "components_memoryeditor_memoryeditor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "components_memoryeditor",
+      "target": "components_memoryeditor_props",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "components_memoryeditor",
+      "target": "lib_supabase_memory",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -3803,17 +3991,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/lib/auth.ts",
       "source_location": "L3",
       "weight": 1.0,
@@ -4073,17 +4250,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "events_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
       "target": "lib_supabase_supabase"
     },
     {
@@ -5056,100 +5222,6 @@
       "confidence_score": 1.0,
       "source": "components_eventdetail_eventdetail",
       "target": "components_eventdetail_timeago"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_patch"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_routeparams"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_who"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_whois"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_theresa_auth_istheresaauthed"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route_delete",
-      "target": "id_route_whois"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route_patch",
-      "target": "id_route_whois"
     },
     {
       "relation": "contains",
@@ -7576,5 +7648,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "345bd9304acb0f0d5095b2e6423fa332addbd1c3"
+  "built_at_commit": "e241a098016b45f1969481b04ea04b1bf536e72e"
 }
