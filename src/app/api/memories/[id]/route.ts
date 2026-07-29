@@ -69,3 +69,102 @@ export async function DELETE(req: NextRequest, ctx: RouteParams) {
 
   return new Response(null, { status: 204 })
 }
+
+/**
+ * PATCH /api/memories/:id
+ *
+ * Updates a memory's photo_front, photo_back, and/or caption.
+ * Body: FormData with optional photo_front (File), photo_back (File), caption (string)
+ */
+export async function PATCH(req: NextRequest, ctx: RouteParams) {
+  const who = await whoIs(req)
+  if (!who) return Response.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { id } = await ctx.params
+
+  // Fetch existing memory
+  const { data: memory, error: fetchError } = await supabase
+    .from('memories')
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (fetchError || !memory) {
+    return Response.json({ error: 'Memory not found' }, { status: 404 })
+  }
+
+  // Allow edit by either the original capturer or Dimitri
+  if (who !== 'dimitri' && memory.captured_by !== who) {
+    return Response.json({ error: 'Not authorized to edit this memory' }, { status: 403 })
+  }
+
+  const formData = await req.formData()
+  const photoFront = formData.get('photo_front') as File | null
+  const photoBack = formData.get('photo_back') as File | null
+  const caption = formData.get('caption') as string | null
+
+  const updates: Record<string, string> = {}
+  const oldPhotos: string[] = []
+
+  // Upload new front photo if provided
+  if (photoFront) {
+    const frontBytes = await photoFront.arrayBuffer()
+    const frontExt = photoFront.name.split('.').pop() || 'jpg'
+    const frontPath = `${who}/${memory.event_id}/${Math.random().toString(36).slice(2, 10)}-front.${frontExt}`
+
+    const { data: frontUpload } = await supabase.storage
+      .from('memory-photos')
+      .upload(frontPath, frontBytes, { contentType: photoFront.type || 'image/jpeg', upsert: false })
+
+    if (frontUpload) {
+      const { data: { publicUrl } } = supabase.storage.from('memory-photos').getPublicUrl(frontUpload.path)
+      updates.photo_front = publicUrl
+      oldPhotos.push(memory.photo_front)
+    }
+  }
+
+  // Upload new back photo if provided
+  if (photoBack) {
+    const backBytes = await photoBack.arrayBuffer()
+    const backExt = photoBack.name.split('.').pop() || 'jpg'
+    const backPath = `${who}/${memory.event_id}/${Math.random().toString(36).slice(2, 10)}-back.${backExt}`
+
+    const { data: backUpload } = await supabase.storage
+      .from('memory-photos')
+      .upload(backPath, backBytes, { contentType: photoBack.type || 'image/jpeg', upsert: false })
+
+    if (backUpload) {
+      const { data: { publicUrl } } = supabase.storage.from('memory-photos').getPublicUrl(backUpload.path)
+      updates.photo_back = publicUrl
+      oldPhotos.push(memory.photo_back)
+    }
+  }
+
+  // Update caption if provided
+  if (caption !== null) updates.caption = caption
+
+  if (!Object.keys(updates).length) {
+    return Response.json({ error: 'Nothing to update' }, { status: 400 })
+  }
+
+  const { data: updated, error: updateError } = await supabase
+    .from('memories')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single()
+
+  if (updateError) return Response.json({ error: updateError.message }, { status: 500 })
+
+  // Clean up old photos in background
+  for (const oldUrl of oldPhotos) {
+    const prefix = '/storage/v1/object/public/memory-photos/'
+    const idx = oldUrl.indexOf(prefix)
+    if (idx !== -1) {
+      const path = oldUrl.substring(idx + prefix.length)
+      supabase.storage.from('memory-photos').remove([path]).catch(() => {})
+    }
+  }
+
+  return Response.json(updated)
+}

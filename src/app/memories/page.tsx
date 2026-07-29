@@ -5,6 +5,7 @@ import type { Memory, Event, Notification } from '@/lib/supabase'
 import DualCamera from '@/components/DualCamera'
 import EventDetail from '@/components/EventDetail'
 import FeedCards from '@/components/FeedCards'
+import MemoryEditor from '@/components/MemoryEditor'
 
 export default function MemoriesPage() {
   const { data: session, status } = useSession()
@@ -143,20 +144,11 @@ export default function MemoriesPage() {
 
   if (selectedMemory) {
     return (
-      <div className="fixed inset-0 z-50 bg-black overflow-y-auto">
-        <div className="min-h-full flex flex-col">
-          <div className="flex-1 bg-stone-900 min-h-[50vh] flex items-center justify-center">
-            <img src={selectedMemory.photo_back} alt="" className="w-full h-full object-cover" />
-          </div>
-          <div className="relative h-[28vh] bg-stone-800">
-            <img src={selectedMemory.photo_front} alt="" className="w-full h-full object-cover opacity-90" />
-          </div>
-          <div className="bg-white rounded-t-3xl p-6 -mt-4 relative z-10 space-y-3">
-            {selectedMemory.caption && <p className="text-stone-700 text-sm">&ldquo;{selectedMemory.caption}&rdquo;</p>}
-            <button onClick={() => setSelectedMemory(null)} className="w-full border border-stone-200 py-2.5 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Back</button>
-          </div>
-        </div>
-      </div>
+      <MemoryEditor
+        memory={selectedMemory}
+        onClose={() => setSelectedMemory(null)}
+        onUpdated={() => { setSelectedMemory(null); fetchAll() }}
+      />
     )
   }
 
