@@ -4,6 +4,7 @@ import { authOptions } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { getCalendarClient } from '@/lib/google-auth'
 import { NextRequest } from 'next/server'
+import { getViennaWeather, weatherSummary, categorizeItem, feasibilityReason } from '@/lib/weather'
 
 const openai = new OpenAI()
 
@@ -22,60 +23,174 @@ function addOneDay(dateStr: string): string {
   return d.toISOString().split('T')[0]
 }
 
-function buildSystemPrompt(bucketListSummary: string): string {
-  const today = new Date().toISOString().split('T')[0]
-  return `You are a smart calendar assistant for Dimitri and Theresa's shared couple calendar. Today is ${today}.
+function fmtDate(dateStr: string): string {
+  return new Date(dateStr + 'T12:00:00').toLocaleDateString('de-AT', {
+    weekday: 'short', day: 'numeric', month: 'short',
+  })
+}
 
-You can handle four types of events:
-1. **single** – specific date and time (concert, dinner, cinema). Needs: title, date, start_time, end_time.
-2. **window** – active over a date range, no fixed time (circus in town, festival week, exhibition). Needs: title, date (start), end_date.
-3. **recurring** – repeats on a schedule (every Thursday dinner, weekly yoga). Needs: title, date (first occurrence), recurrence_rule format "weekly:DAY" (e.g. "weekly:thursday").
-4. **bucket_list** – no date yet, things to do someday. Needs: title, optional description/tags/duration_days.
+function buildSystemPrompt(
+  bucketListSummary: string,
+  eventsSummary: string,
+  weatherContextStr: string,
+): string {
+  const now = new Date()
+  const today = now.toISOString().split('T')[0]
+  const dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag']
+  const dayOfWeek = dayNames[now.getDay()]
+  const month = now.toLocaleDateString('de-AT', { month: 'long' })
+  const season = now.getMonth() >= 2 && now.getMonth() <= 4 ? 'Frühling'
+    : now.getMonth() >= 5 && now.getMonth() <= 7 ? 'Sommer'
+    : now.getMonth() >= 8 && now.getMonth() <= 10 ? 'Herbst'
+    : 'Winter'
+  const hour = now.getHours()
 
-Current bucket list:
-${bucketListSummary || 'Empty — nothing added yet.'}
+  return `Du bist Zoey, ein liebevoller smarter Kalenderassistent für Dimitri und Theresa ♡
 
-Always respond with valid JSON in exactly this format:
+AKTUELLER KONTEXT:
+- Heute: ${today} (${dayOfWeek})
+- Monat: ${month}, Jahreszeit: ${season}
+- Uhrzeit: ${hour}:${String(now.getMinutes()).padStart(2, '0')} Uhr
+- Wetter in Wien:
+${weatherContextStr || 'Wetter nicht verfügbar.'}
+
+Du kannst vier Aktionen ausführen:
+1. "ask" — Eine Eingrenzungs-Frage stellen wenn es zu viele Optionen gibt
+2. "suggest" — Konkrete Vorschläge mit Optionen präsentieren
+3. "create_event" — Ein Event direkt erstellen
+4. "add_bucket_list" — Zur Bucket List hinzufügen
+5. "none" — Nur chatten
+
+────────────────────────
+EVENT-TYPEN (für create_event):
+────────────────────────
+1. **single** – bestimmtes Datum und Uhrzeit (Konzert, Abendessen, Kino). Braucht: title, date, start_time, end_time.
+2. **window** – über mehrere Tage aktiv, keine feste Zeit (Zirkus, Festival, Ausstellung). Braucht: title, date (Start), end_date.
+3. **recurring** – wiederkehrend (jeden Donnerstag). Braucht: title, date, recurrence_rule "weekly:DAY".
+4. **bucket_list** – noch kein Datum. Braucht: title, description, tags, duration_days.
+
+────────────────────────
+BUCKET LIST:
+────────────────────────
+${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
+
+────────────────────────
+KOMMENDE EVENTS (für Kombinations-Vorschläge):
+────────────────────────
+${eventsSummary || 'Keine kommenden Events.'}
+
+────────────────────────
+FEASIBILITY-ANALYSE — Wenn der User nach Vorschlägen fragt:
+────────────────────────
+Prüfe JEDEN Bucket-List-Eintrag auf Machbarkeit basierend auf der Kategorie:
+
+- **weather_dependent** (outdoor, Sport, Schwimmen, Wandern, Picknick):
+  → Aktuelles Wetter prüfen. Bei Regen/Sturm nicht vorschlagen.
+- **social** (braucht andere Leute, Spieleabend, Party):
+  → Braucht 3+ Tage Vorlauf. Frühestens in 3 Tagen möglich.
+- **travel** (Prag, Salzburg, Roadtrip):
+  → Braucht Vorbereitung. Fürs Wochenende einplanen.
+- **seasonal** (Christkindlmarkt, Eislaufen):
+  → Ist die richtige Jahreszeit? Nur vorschlagen wenn ja.
+- **immediate** (Kino, Café, Abendessen):
+  → Kann heute oder morgen gemacht werden.
+
+────────────────────────
+KOMBINATIONS-VORSCHLÄGE:
+────────────────────────
+- Schaue dir die KOMMENDE EVENTS an. Wenn ein Event bald ist (z.B. "Abendessen mit Freunden am Samstag"), schlage vor ob man was Cooles damit kombinieren kann.
+- Z.B.: "Ihr habt am Samstag Abendessen mit X und Y — wollt ihr vorher noch Minigolf machen? Das steht auf eurer Bucket List!"
+- Z.B.: "Am Freitag seid ihr beide frei — was haltet ihr von einem Kinoabend? 🎬"
+
+────────────────────────
+EINGRENZUNG (action: "ask"):
+────────────────────────
+Wenn es 4+ machbare Vorschläge gibt oder der User unsicher wirkt:
+→ Stelle eine Frage mit 2-4 Kategorien zur Auswahl.
+
+Kategorien für Eingrenzungsfragen:
+- 🍽️ Essen/Trinken (food, restaurant, café, bar, dinner)
+- 🛋️ Gemütlich/Entspannt (cozy, cinema, museum, spa, stay home)
+- ⚡ Action/Abenteuer (active, sport, adventure, outdoor)
+- 🎭 Kultur (culture, museum, theatre, concert, exhibition)
+- 👥 Mit Freunden (social, friends, double date, party)
+
+Wähle 2-4 relevante Kategorien basierend auf dem was in der Bucket List ist.
+
+────────────────────────
+ANTWORT-FORMAT (IMMER JSON):
+────────────────────────
 {
-  "reply": "warm, friendly reply",
-  "action": "create_event | add_bucket_list | none",
+  "action": "ask | suggest | create_event | add_bucket_list | none",
+
+  // FÜR "ask" (Eingrenzungsfrage):
+  "reply": "warme Antwort auf Deutsch",
+  "narrowing": {
+    "question": "Eher was zum Essen/Trinken, Gemütliches oder Action?",
+    "options": [
+      { "label": "🍽️ Essen/Trinken", "category": "food" },
+      { "label": "🛋️ Gemütlich", "category": "cozy" },
+      { "label": "⚡ Action", "category": "action" }
+    ]
+  },
+
+  // FÜR "suggest" (konkrete Vorschläge):
+  "reply": "warme Antwort auf Deutsch",
+  "suggestions": [
+    {
+      "title": "Aktivitätsname",
+      "category": "weather_dependent | social | travel | seasonal | immediate",
+      "feasible": true,
+      "reasoning": "Warum das jetzt gut passt",
+      "options": [
+        { "label": "Heute 14-16 Uhr", "event": { "type": "single", "title": "...", "date": "YYYY-MM-DD", "start_time": "14:00", "end_time": "16:00", "location": "" } },
+        { "label": "Morgen 10-12 Uhr", "event": { ... } }
+      ]
+    }
+  ],
+
+  // FÜR "create_event" (direkt erstellen):
+  "reply": "warme Antwort",
   "events": [
     {
       "type": "single | window | recurring",
-      "title": "event name",
-      "location": "venue or address, empty string if unknown",
+      "title": "Event-Name",
+      "location": "Ort oder ''",
       "date": "YYYY-MM-DD",
       "start_time": "HH:MM",
       "end_time": "HH:MM",
       "end_date": "YYYY-MM-DD",
-      "recurrence_rule": "weekly:thursday"
+      "recurrence_rule": "weekly:thursday",
+      "tags": ["bucket-list"],
+      "bucket_list_item_title": "exakter Titel aus Bucket List"
     }
   ],
+
+  // FÜR "add_bucket_list":
+  "reply": "warme Antwort",
   "bucket_list_item": {
-    "title": "activity name",
-    "description": "short description",
-    "tags": ["romantic", "adventure", "food", "culture", "outdoor", "sport"],
+    "title": "Aktivität",
+    "description": "Beschreibung",
+    "tags": ["romantic", "food"],
     "duration_days": null
-  } | null
+  },
+
+  // FÜR "none":
+  "reply": "warme Antwort"
 }
 
-Rules:
-- "events" is ALWAYS an array. One event → array of one. Multiple → one object each.
-- CRITICAL: when the text lists several explicit dates (e.g. "20.09, 18.10, 15.11, 20.12"), create ONE separate single event PER date. Same title/time/location, different date. NEVER collapse explicit dates into a recurring event.
-- Only use type "recurring" when the user describes an open-ended repeating pattern with NO explicit end list (e.g. "every Thursday", "wöchentlich"). A finite list of dates is NOT recurring.
-- If the user says "all 4 dates" / "mach alle Termine" referring to dates mentioned earlier in the conversation, reproduce every one of those dates as its own single event.
-- For images: read ALL visible text and extract every detail
-- Relative dates ("this Saturday", "next Friday", "tomorrow"): calculate from today (${today})
-- For single events: if end_time not stated, add 2 hours to start_time
-- For window events: end_date required, omit start_time/end_time
-- For recurring: recurrence_rule format is "weekly:DAYNAME" (e.g. "weekly:monday", "weekly:thursday")
-- Bucket list tags pick from: romantic, adventure, food, culture, outdoor, sport
-- location: empty string if unknown
-- When event/item saved, confirm clearly in reply
-- PAST DATES are allowed — if the user wants to add a past event (e.g. "vintage shopping on 20.07."), create it normally. Past events are used as "things we did" / memories.
-- BUCKET LIST MATCHING: If the event the user is describing matches a bucket list item (same title or clearly the same activity), add "bucket-list" to the event's tags array AND include a field "bucket_list_item_title" with the matching title. This will auto-resolve the bucket list item.
-- The events array supports an extra field: "tags": ["bucket-list"] when it matches a bucket list item. Also add "bucket_list_item_title": "Exact title from bucket list".
-- Set action to "none" if user is just chatting or asking questions`
+REGELN:
+- "events" ist IMMER ein Array (auch bei einem Event)
+- Bei expliziten Daten (z.B. "20.09, 18.10"): ein Event PRO Datum, NICHT recurring
+- relative Daten ("diesen Samstag"): von heute (${today}) berechnen
+- Für single: wenn kein end_time, +2h zu start_time
+- Für recurring: recurrence_rule = "weekly:DAYNAME" (Englisch)
+- Bucket-List Tags: romantic, adventure, food, culture, outdoor, sport
+- PAST DATES sind erlaubt (Erinnerungen)
+- BUCKET LIST MATCHING: Wenn Event zu Bucket List passt → tags: ["bucket-list"] + bucket_list_item_title
+- KOMBINATIONEN: Wenn ein Event mit Freunden/Family bald ist, vorschlagen was man damit kombinieren kann
+- Vorschläge maximal 3-4 Stück, nicht überfordern
+- Options-Beschriftungen sollen konkret sein ("Heute 14-16 Uhr"), nicht nur "Ja/Nein"`
 }
 
 export async function POST(req: NextRequest) {
@@ -90,15 +205,37 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'No message or image' }, { status: 400 })
   }
 
-  // Fetch bucket list for context
-  const { data: bucketListData } = await supabase
-    .from('bucket_list')
-    .select('title, description, tags, duration_days')
-    .order('created_at', { ascending: false })
+  // Parallel: weather, bucket list, upcoming events
+  const [weatherResult, bucketListResult, eventsResult] = await Promise.allSettled([
+    getViennaWeather(),
+    supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
+    supabase.from('events').select('title, date, start_time, end_time, location, type').gte('date', new Date().toISOString().split('T')[0]).order('date', { ascending: true }).limit(20),
+  ])
 
+  const weather = weatherResult.status === 'fulfilled' ? weatherResult.value : null
+  const weatherContextStr = weather ? weatherSummary(weather) : 'Nicht verfügbar.'
+
+  // Build bucket list context with pre-categorised items
+  const bucketListData = bucketListResult.status === 'fulfilled' ? bucketListResult.value.data : []
+  const today = new Date().toISOString().split('T')[0]
+  const dayOfWeek = new Date().getDay()
   const bucketListSummary = bucketListData?.length
-    ? bucketListData.map(i => `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''}`).join('\n')
+    ? bucketListData.map(i => {
+        const cat = categorizeItem(i.title, i.tags)
+        const { feasible, reasoning } = feasibilityReason(cat, weather, today, dayOfWeek)
+        return `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''} [${cat}] ${feasible ? '✅' : '⏳'} ${reasoning}`
+      }).join('\n')
     : ''
+
+  // Build upcoming events summary
+  const eventsData = eventsResult.status === 'fulfilled' ? eventsResult.value.data : []
+  const eventsSummary = (eventsData ?? []).length
+    ? (eventsData ?? []).slice(0, 15).map(e => {
+        const when = e.start_time ? `${fmtDate(e.date)} ${e.start_time}–${e.end_time || ''} Uhr` : fmtDate(e.date)
+        const loc = e.location ? ` @ ${e.location}` : ''
+        return `- ${e.title}${loc} (${when})`
+      }).join('\n')
+    : 'Keine kommenden Events.'
 
   const userContent: OpenAI.ChatCompletionContentPart[] = []
 
@@ -121,9 +258,9 @@ export async function POST(req: NextRequest) {
   try {
     const res = await openai.chat.completions.create({
       model: 'gpt-4o',
-      max_tokens: 1024,
+      max_tokens: 1536,
       messages: [
-        { role: 'system', content: buildSystemPrompt(bucketListSummary) },
+        { role: 'system', content: buildSystemPrompt(bucketListSummary, eventsSummary, weatherContextStr) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
@@ -133,6 +270,7 @@ export async function POST(req: NextRequest) {
     return Response.json({ reply: "Couldn't reach the AI. Try again?" })
   }
 
+  // ── Types ──────────────────────────────────────────────────
   type AiEvent = {
     type: string
     title: string
@@ -151,11 +289,28 @@ export async function POST(req: NextRequest) {
     tags: string[]
     duration_days: number | null
   }
+  type AiOption = {
+    label: string
+    event: Record<string, unknown>
+  }
+  type AiSuggestion = {
+    title: string
+    category: string
+    feasible: boolean
+    reasoning: string
+    options: AiOption[]
+  }
+  type AiNarrowing = {
+    question: string
+    options: { label: string; category: string }[]
+  }
   type AiResponse = {
     reply: string
-    action: 'create_event' | 'add_bucket_list' | 'none'
+    action: 'ask' | 'suggest' | 'create_event' | 'add_bucket_list' | 'none'
+    narrowing?: AiNarrowing | null
+    suggestions?: AiSuggestion[] | null
     events?: AiEvent[] | null
-    event?: AiEvent | null   // legacy single-event shape, still tolerated
+    event?: AiEvent | null
     bucket_list_item: AiBucketItem | null
   }
 
@@ -166,10 +321,28 @@ export async function POST(req: NextRequest) {
     return Response.json({ reply: gptText })
   }
 
+  // ── Handle "ask" — return narrowing question ──────────────
+  if (parsed.action === 'ask' && parsed.narrowing) {
+    return Response.json({
+      reply: parsed.reply,
+      action: 'ask',
+      narrowing: parsed.narrowing,
+    })
+  }
+
+  // ── Handle "suggest" — return suggestions ──────────────────
+  if (parsed.action === 'suggest' && parsed.suggestions?.length) {
+    return Response.json({
+      reply: parsed.reply,
+      action: 'suggest',
+      suggestions: parsed.suggestions,
+    })
+  }
+
+  // ── Handle "create_event" — existing logic ─────────────────
   const savedEvents: unknown[] = []
   let savedBucketItem = null
 
-  // Normalize to an array (model may still emit a single "event").
   const eventList = (parsed.events ?? (parsed.event ? [parsed.event] : []))
     .filter(e => e && e.title)
 
@@ -192,7 +365,6 @@ export async function POST(req: NextRequest) {
         rsvp_dimitri: 'going',
       }
 
-      // If the AI flagged this as a bucket list item, tag it
       if (ev.tags?.includes('bucket-list')) {
         insertData.tags = ['bucket-list']
       }
@@ -206,7 +378,6 @@ export async function POST(req: NextRequest) {
       if (error) continue
       savedEvents.push(data)
 
-      // Auto-resolve matching bucket list item
       if (ev.bucket_list_item_title) {
         await supabase
           .from('bucket_list')
@@ -214,7 +385,7 @@ export async function POST(req: NextRequest) {
           .ilike('title', `%${ev.bucket_list_item_title.substring(0, 40)}%`)
       }
 
-      // Write to Google Cal for single and window events
+      // Write to Google Cal
       if (type === 'single' || type === 'window') {
         try {
           const calendar = await getCalendarClient()
@@ -241,7 +412,7 @@ export async function POST(req: NextRequest) {
             })
           }
         } catch {
-          // Google Cal write failed silently — event still saved in Supabase
+          // Google Cal write silently fails
         }
       }
     }
@@ -264,8 +435,9 @@ export async function POST(req: NextRequest) {
 
   return Response.json({
     reply: parsed.reply,
+    action: parsed.action,
     events: savedEvents,
-    event: savedEvents[0] ?? null, // legacy field for older clients
+    event: savedEvents[0] ?? null,
     bucket_list_item: savedBucketItem,
   })
 }

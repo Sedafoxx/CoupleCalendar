@@ -4,6 +4,23 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 import type { Event, Notification } from '@/lib/supabase'
 import EventDetail from '@/components/EventDetail'
 
+type NarrowingOpt = { label: string; category: string }
+type SuggestionOpt = { label: string; event: Record<string, unknown> }
+type Suggestion = {
+  title: string
+  category: string
+  feasible: boolean
+  reasoning: string
+  options: SuggestionOpt[]
+}
+type ChatMessage = {
+  role: string
+  text: string
+  imageUrl?: string
+  narrowing?: { question: string; options: NarrowingOpt[] } | null
+  suggestions?: Suggestion[] | null
+}
+
 export default function PlanPage() {
   const { data: session, status } = useSession()
   const [events, setEvents] = useState<Event[]>([])
@@ -12,12 +29,13 @@ export default function PlanPage() {
   const [rsvpUpdating, setRsvpUpdating] = useState<string | null>(null)
 
   // Chat
-  const [messages, setMessages] = useState<{ role: string; text: string; imageUrl?: string }[]>([])
+  const [messages, setMessages] = useState<ChatMessage[]>([])
   const [input, setInput] = useState('')
   const [sending, setSending] = useState(false)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const chatEndRef = useRef<HTMLDivElement>(null)
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -71,6 +89,30 @@ export default function PlanPage() {
     }
   }
 
+  // Auto-scroll when messages change
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  async function quickSend(text: string) {
+    setMessages(prev => [...prev, { role: 'user', text, imageUrl: undefined }])
+    setSending(true)
+    try {
+      const formData = new FormData()
+      formData.append('message', text)
+      const res = await fetch('/api/chat', { method: 'POST', body: formData })
+      const data = await res.json()
+      const msg: ChatMessage = { role: 'assistant', text: data.reply || 'Done! ♡' }
+      if (data.action === 'ask' && data.narrowing) msg.narrowing = data.narrowing
+      if (data.action === 'suggest' && data.suggestions) msg.suggestions = data.suggestions
+      setMessages(prev => [...prev, msg])
+      if (data.events?.length || data.event) fetchEvents()
+    } catch {
+      setMessages(prev => [...prev, { role: 'assistant', text: 'Failed. Try again?' }])
+    }
+    setSending(false)
+  }
+
   async function sendMessage(e: React.FormEvent) {
     e.preventDefault()
     if ((!input.trim() && !imageFile) || sending) return
@@ -87,7 +129,10 @@ export default function PlanPage() {
       if (currentImage) formData.append('image', currentImage)
       const res = await fetch('/api/chat', { method: 'POST', body: formData })
       const data = await res.json()
-      setMessages(prev => [...prev, { role: 'assistant', text: data.reply || 'Done! ♡' }])
+      const msg: ChatMessage = { role: 'assistant', text: data.reply || 'Done! ♡' }
+      if (data.action === 'ask' && data.narrowing) msg.narrowing = data.narrowing
+      if (data.action === 'suggest' && data.suggestions) msg.suggestions = data.suggestions
+      setMessages(prev => [...prev, msg])
       if (data.events?.length || data.event) fetchEvents()
     } catch {
       setMessages(prev => [...prev, { role: 'assistant', text: 'Failed. Try again?' }])
@@ -254,27 +299,81 @@ export default function PlanPage() {
 
       {toast && <div className="fixed top-4 right-4 z-50 bg-rose-500 text-white text-sm px-4 py-3 rounded-xl shadow-lg max-w-xs">{toast}</div>}
 
-      {/* Chat — richtige Chat-UI mit Sprechblasen */}
+      {/* Chat — richtige Chat-UI mit Sprechblasen & interaktiven Vorschlägen */}
       <section className="space-y-3">
         <h3 className="font-semibold text-stone-700">💬 Chat</h3>
-        <div className="bg-white border border-stone-200 rounded-2xl p-4 h-64 overflow-y-auto flex flex-col gap-3">
+        <div className="bg-white border border-stone-200 rounded-2xl p-4 h-80 overflow-y-auto flex flex-col gap-3">
           {messages.length === 0 && (
             <p className="text-stone-400 text-sm text-center m-auto">
               Schreib was wir machen sollen! Z.B. "Kino morgen um 19 Uhr" ♡
             </p>
           )}
           {messages.map((msg, i) => (
-            <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs rounded-2xl px-4 py-2 text-sm leading-relaxed ${
-                msg.role === 'user'
-                  ? 'bg-stone-900 text-white rounded-tr-sm'
-                  : 'bg-rose-50 border border-rose-100 rounded-tl-sm text-stone-700'
-              }`}>
-                {msg.imageUrl && (
-                  <img src={msg.imageUrl} alt="Upload" className="rounded-lg max-h-32 object-cover w-full mb-1" />
-                )}
-                {msg.text && <p className="whitespace-pre-wrap">{msg.text}</p>}
+            <div key={i}>
+              {/* Text bubble */}
+              <div className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-xs rounded-2xl px-4 py-2 text-sm leading-relaxed ${
+                  msg.role === 'user'
+                    ? 'bg-stone-900 text-white rounded-tr-sm'
+                    : 'bg-rose-50 border border-rose-100 rounded-tl-sm text-stone-700'
+                }`}>
+                  {msg.imageUrl && (
+                    <img src={msg.imageUrl} alt="Upload" className="rounded-lg max-h-32 object-cover w-full mb-1" />
+                  )}
+                  {msg.text && <p className="whitespace-pre-wrap">{msg.text}</p>}
+                </div>
               </div>
+
+              {/* Narrowing question buttons */}
+              {msg.narrowing && (
+                <div className="mt-2 space-y-2">
+                  <p className="text-xs text-stone-500">{msg.narrowing.question}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {msg.narrowing.options.map((opt, oi) => (
+                      <button
+                        key={oi}
+                        onClick={() => quickSend(opt.label)}
+                        disabled={sending}
+                        className="bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 text-sm px-3 py-1.5 rounded-full transition disabled:opacity-40"
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Suggestion cards */}
+              {msg.suggestions && msg.suggestions.length > 0 && (
+                <div className="mt-2 space-y-2">
+                  {msg.suggestions.map((sug, si) => (
+                    <div key={si} className="bg-rose-50/50 border border-rose-100 rounded-xl p-3 space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="font-medium text-sm text-stone-800">{sug.title}</p>
+                        {sug.feasible
+                          ? <span className="text-xs text-emerald-500 shrink-0">✅</span>
+                          : <span className="text-xs text-stone-400 shrink-0">⏳</span>
+                        }
+                      </div>
+                      <p className="text-xs text-stone-500">{sug.reasoning}</p>
+                      {sug.options.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {sug.options.map((opt, oi) => (
+                            <button
+                              key={oi}
+                              onClick={() => quickSend(opt.label)}
+                              disabled={sending || !sug.feasible}
+                              className="bg-white hover:bg-rose-100 border border-rose-200 text-rose-600 text-xs px-2.5 py-1 rounded-full transition disabled:opacity-40 disabled:cursor-not-allowed"
+                            >
+                              {opt.label}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
           {sending && (
@@ -284,6 +383,7 @@ export default function PlanPage() {
               </div>
             </div>
           )}
+          <div ref={chatEndRef} />
         </div>
         {imagePreview && (
           <div className="relative inline-flex">

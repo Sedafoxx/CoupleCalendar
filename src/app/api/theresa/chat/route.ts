@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { getCalendarClient } from '@/lib/google-auth'
 import { getFreeBusySlots } from '@/lib/freebusy'
 import { NextRequest } from 'next/server'
+import { getViennaWeather, weatherSummary, categorizeItem, feasibilityReason } from '@/lib/weather'
 
 const openai = new OpenAI()
 
@@ -197,7 +198,7 @@ async function reconcileTheresaEvents(events: PlannedEvent[], today: string): Pr
   }
 }
 
-function buildSystemPrompt(freeBusySummary: string, plannedEventsSummary: string, bucketListSummary: string, calendarConnected: boolean): string {
+function buildSystemPrompt(freeBusySummary: string, plannedEventsSummary: string, bucketListSummary: string, calendarConnected: boolean, weatherContextStr: string): string {
   const today = new Date().toISOString().split('T')[0]
 
   const availabilitySection = calendarConnected
@@ -207,7 +208,24 @@ ${freeBusySummary}`
 Sage Theresa in dieser Antwort liebevoll, dass sie Dimitri Bescheid geben soll: der Zugriff auf seinen Google-Kalender muss repariert werden (neu verbinden / einloggen).
 Behaupte KEINE freien Zeiten, schlage KEINE konkreten Slots vor und erstelle KEINE zeitgebundenen Events (kein single). Bucket-List-Einträge und Notizen sind weiterhin ok.`
 
-  return `Du bist ein liebevoller Kalenderassistent für Dimitri und Theresa. Heute ist ${today}.
+  const now = new Date()
+  const dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag']
+  const dayOfWeek = dayNames[now.getDay()]
+  const month = now.toLocaleDateString('de-AT', { month: 'long' })
+  const season = now.getMonth() >= 2 && now.getMonth() <= 4 ? 'Frühling'
+    : now.getMonth() >= 5 && now.getMonth() <= 7 ? 'Sommer'
+    : now.getMonth() >= 8 && now.getMonth() <= 10 ? 'Herbst'
+    : 'Winter'
+  const hour = now.getHours()
+
+  return `Du bist Zoey, ein liebevoller smarter Kalenderassistent für Dimitri und Theresa. Heute ist ${today}.
+
+AKTUELLER KONTEXT:
+- Heute: ${today} (${dayOfWeek})
+- Monat: ${month}, Jahreszeit: ${season}
+- Uhrzeit: ${hour}:${String(now.getMinutes()).padStart(2, '0')} Uhr
+- Wetter in Wien:
+${weatherContextStr || 'Wetter nicht verfügbar.'}
 
 Du hilfst Theresa dabei, gemeinsame Zeit mit Dimitri zu planen. Theresa kann Events direkt erstellen — keine Bestätigung nötig.
 
@@ -219,6 +237,13 @@ ${plannedEventsSummary}
 Eure Bucket-List (Dinge die ihr noch tun wollt):
 ${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
 
+Du kannst vier Aktionen ausführen:
+1. "ask" — Eine Eingrenzungs-Frage stellen wenn es zu viele Optionen gibt
+2. "suggest" — Konkrete Vorschläge mit Optionen präsentieren
+3. "create_event" — Ein Event direkt erstellen
+4. "add_bucket_list" — Zur Bucket List hinzufügen
+5. "none" — Nur chatten
+
 Du kannst fünf Arten von Events erstellen:
 1. **single** – bestimmtes Datum und Uhrzeit (Konzert, Abendessen, Kino). Braucht: title, date, start_time, end_time.
 2. **window** – über mehrere Tage aktiv, keine feste Zeit (Zirkus, Festival, Ausstellung). Braucht: title, date (Start), end_date.
@@ -229,7 +254,7 @@ Du kannst fünf Arten von Events erstellen:
 Antworte immer auf Deutsch in exakt diesem JSON-Format:
 {
   "reply": "liebevolle, warme Antwort auf Deutsch",
-  "action": "create_event | add_bucket_list | none",
+  "action": "ask | suggest | create_event | add_bucket_list | none",
   "event": {
     "type": "single | window | recurring | sleepover",
     "title": "Name des Events",
@@ -240,6 +265,29 @@ Antworte immer auf Deutsch in exakt diesem JSON-Format:
     "end_date": "YYYY-MM-DD",
     "recurrence_rule": "weekly:thursday"
   } | null,
+  // FÜR "ask" (Eingrenzungsfrage):
+  "narrowing": {
+    "question": "Eher was zum Essen/Trinken, Gemütliches oder Action?",
+    "options": [
+      { "label": "🍽️ Essen/Trinken", "category": "food" },
+      { "label": "🛋️ Gemütlich", "category": "cozy" },
+      { "label": "⚡ Action", "category": "action" }
+    ]
+  } | null,
+
+  // FÜR "suggest" (konkrete Vorschläge):
+  "suggestions": [
+    {
+      "title": "Aktivitätsname",
+      "category": "weather_dependent | social | travel | seasonal | immediate",
+      "feasible": true,
+      "reasoning": "Warum das jetzt gut passt",
+      "options": [
+        { "label": "Heute 14-16 Uhr", "event": { "type": "single", "title": "...", "date": "YYYY-MM-DD", "start_time": "14:00", "end_time": "16:00", "location": "" } }
+      ]
+    }
+  ] | null,
+
   "bucket_list_item": {
     "title": "Aktivität",
     "description": "kurze Beschreibung",
@@ -261,7 +309,30 @@ Regeln:
 - Bucket-List Tags nur aus: romantic, adventure, food, culture, outdoor, sport
 - location: leerer String wenn unbekannt
 - Wenn gespeichert, freundlich bestätigen
-- Bei action "none" nur chatten oder Fragen beantworten`
+- Bei action "none" nur chatten oder Fragen beantworten
+
+────────────────────────
+FEASIBILITY-ANALYSE — Wenn der User nach Vorschlägen fragt:
+────────────────────────
+Prüfe JEDEN Bucket-List-Eintrag auf Machbarkeit:
+- **weather_dependent** (outdoor/Sport/Schwimmen): Wetter prüfen
+- **social** (mit Freunden): 3+ Tage Vorlauf nötig
+- **travel** (Prag, Roadtrip): Wochenende einplanen
+- **seasonal** (Christkindlmarkt): Richtige Jahreszeit?
+- **immediate** (Kino, Café): Immer möglich
+
+────────────────────────
+EINGRENZUNG (action: "ask"):
+────────────────────────
+Wenn 4+ machbare Vorschläge → Frage mit 2-4 Kategorien:
+🍽️ Essen/Trinken · 🛋️ Gemütlich · ⚡ Action · 🎭 Kultur · 👥 Mit Freunden
+
+────────────────────────
+KOMBINATIONS-VORSCHLÄGE:
+────────────────────────
+Schau dir die KOMMENDE EVENTS an. Wenn ein Event bald ist (z.B. "Abendessen mit Freunden"), schlage vor ob man was kombinieren kann.
+Z.B.: "Ihr habt am Samstag Abendessen mit X — wollt ihr vorher Minigolf machen?"
+Z.B.: "Am Freitag seid ihr frei — Kinoabend?"`
 }
 
 export async function POST(req: NextRequest) {
@@ -278,10 +349,11 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch freebusy, bucket list, and already-planned events for context
-  const [freeBusyResult, bucketListResult, eventsResult] = await Promise.allSettled([
+  const [freeBusyResult, bucketListResult, eventsResult, weatherResult] = await Promise.allSettled([
     getFreeBusySlots(),
     supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
     supabase.from('events').select('title, location, date, start_time, end_time, type, end_date, recurrence_rule, added_by').order('date', { ascending: true }),
+    getViennaWeather(),
   ])
 
   // A rejected freebusy result means we genuinely couldn't reach Dimitri's
@@ -293,12 +365,21 @@ export async function POST(req: NextRequest) {
     console.error('[theresa/chat] freebusy unavailable:', freeBusyResult.reason)
   }
   const freeSlots = calendarConnected ? freeBusyResult.value : []
+  const weather = weatherResult.status === 'fulfilled' ? weatherResult.value : null
+  const weatherContextStr = weather ? weatherSummary(weather) : 'Nicht verfügbar.'
   const bucketListData = bucketListResult.status === 'fulfilled' ? bucketListResult.value.data : []
 
   const freeBusySummary = calendarConnected ? fmtSlots(freeSlots) : ''
-  const bucketListSummary = bucketListData?.length
-    ? bucketListData.map(i => `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''}`).join('\n')
+  // Build pre-categorised bucket list with feasibility analysis
+  const dayOfWeekNum = new Date().getDay()
+  const enrichedBucketList = bucketListData?.length
+    ? bucketListData.map(i => {
+        const cat = categorizeItem(i.title, i.tags)
+        const { feasible, reasoning } = feasibilityReason(cat, weather, today, dayOfWeekNum)
+        return `- ${i.title}${i.description ? ': ' + i.description : ''}${i.tags?.length ? ' [' + i.tags.join(', ') + ']' : ''} [${cat}] ${feasible ? '✅' : '⏳'} ${reasoning}`
+      }).join('\n')
     : ''
+  const bucketListSummary = enrichedBucketList || ''
 
   // Show only current/upcoming events: future-dated, or multi-day windows still ongoing.
   const today = new Date().toISOString().split('T')[0]
@@ -339,9 +420,9 @@ export async function POST(req: NextRequest) {
   try {
     const res = await openai.chat.completions.create({
       model: 'gpt-4o',
-      max_tokens: 1024,
+      max_tokens: 1536,
       messages: [
-        { role: 'system', content: buildSystemPrompt(freeBusySummary, plannedEventsSummary, bucketListSummary, calendarConnected) },
+        { role: 'system', content: buildSystemPrompt(freeBusySummary, plannedEventsSummary, bucketListSummary, calendarConnected, weatherContextStr) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
