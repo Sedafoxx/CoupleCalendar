@@ -45,8 +45,8 @@
     "semantic_hash": ""
   },
   "src/app/api/chat/route.ts": {
-    "mtime": 1785614924.2202165,
-    "ast_hash": "29c777ade43e5f3bcb4183dc44bee75d",
+    "mtime": 1785615803.4681194,
+    "ast_hash": "c6eb53d59c7026044df22e83e944bb39",
     "semantic_hash": ""
   },
   "src/app/api/cron/cleanup/route.ts": {
@@ -95,8 +95,8 @@
     "semantic_hash": ""
   },
   "src/app/api/theresa/chat/route.ts": {
-    "mtime": 1785614943.3249428,
-    "ast_hash": "5dc6430e83417c4d946d14f2b4681dfa",
+    "mtime": 1785615973.5694683,
+    "ast_hash": "d902dc1cc83aac2b09c277aae6be567c",
     "semantic_hash": ""
   },
   "src/app/calendar/page.tsx": {
@@ -377,6 +377,21 @@
   "src/lib/weather.ts": {
     "mtime": 1785445023.1538038,
     "ast_hash": "2ab7e3cd7278c698f98b38b0a8113441",
+    "semantic_hash": ""
+  },
+  "scripts/run-migration-0005.mjs": {
+    "mtime": 1785616004.7120411,
+    "ast_hash": "e304818ab979363a01cb71c44853138d",
+    "semantic_hash": ""
+  },
+  "src/lib/fetch-page.ts": {
+    "mtime": 1785615694.8090937,
+    "ast_hash": "19eb516194716a7d78b12df1f5abb81f",
+    "semantic_hash": ""
+  },
+  "supabase/migrations/0005_known_links.sql": {
+    "mtime": 1785615625.8361764,
+    "ast_hash": "23fdb43ac548af3444e71a93fd45d753",
     "semantic_hash": ""
   }
 }

@@ -112,9 +112,14 @@ export async function PATCH(req: NextRequest, ctx: RouteParams) {
     const frontExt = photoFront.name.split('.').pop() || 'jpg'
     const frontPath = `${who}/${memory.event_id}/${Math.random().toString(36).slice(2, 10)}-front.${frontExt}`
 
-    const { data: frontUpload } = await supabase.storage
+    const { data: frontUpload, error: frontError } = await supabase.storage
       .from('memory-photos')
       .upload(frontPath, frontBytes, { contentType: photoFront.type || 'image/jpeg', upsert: false })
+
+    if (frontError) {
+      console.error('[memories PATCH] front upload failed:', frontError.message)
+      return Response.json({ error: `Front photo upload failed: ${frontError.message}` }, { status: 500 })
+    }
 
     if (frontUpload) {
       const { data: { publicUrl } } = supabase.storage.from('memory-photos').getPublicUrl(frontUpload.path)
@@ -129,9 +134,14 @@ export async function PATCH(req: NextRequest, ctx: RouteParams) {
     const backExt = photoBack.name.split('.').pop() || 'jpg'
     const backPath = `${who}/${memory.event_id}/${Math.random().toString(36).slice(2, 10)}-back.${backExt}`
 
-    const { data: backUpload } = await supabase.storage
+    const { data: backUpload, error: backError } = await supabase.storage
       .from('memory-photos')
       .upload(backPath, backBytes, { contentType: photoBack.type || 'image/jpeg', upsert: false })
+
+    if (backError) {
+      console.error('[memories PATCH] back upload failed:', backError.message)
+      return Response.json({ error: `Photo upload failed: ${backError.message}` }, { status: 500 })
+    }
 
     if (backUpload) {
       const { data: { publicUrl } } = supabase.storage.from('memory-photos').getPublicUrl(backUpload.path)

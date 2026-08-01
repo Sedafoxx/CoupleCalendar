@@ -8,46 +8,91 @@ interface Props {
   onUpdated?: () => void
 }
 
+/** Compress an image File/Blob to max 1200px, JPEG quality 0.8 */
+function compressImage(file: Blob, maxDim = 1200): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
+    const url = URL.createObjectURL(file)
+    img.onload = () => {
+      URL.revokeObjectURL(url)
+      let w = img.width, h = img.height
+      if (w > maxDim || h > maxDim) {
+        const ratio = Math.min(maxDim / w, maxDim / h)
+        w = Math.round(w * ratio)
+        h = Math.round(h * ratio)
+      }
+      const canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
+      const ctx = canvas.getContext('2d')
+      ctx?.drawImage(img, 0, 0, w, h)
+      canvas.toBlob((blob) => resolve(blob!), 'image/jpeg', 0.8)
+    }
+    img.onerror = () => reject(new Error('Image load failed'))
+    img.src = url
+  })
+}
+
 export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
   const [isEditing, setIsEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [frontPreview, setFrontPreview] = useState<string | null>(null)
   const [backPreview, setBackPreview] = useState<string | null>(null)
+  const [frontFile, setFrontFile] = useState<File | null>(null)
+  const [backFile, setBackFile] = useState<File | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const frontRef = useRef<HTMLInputElement>(null)
   const backRef = useRef<HTMLInputElement>(null)
 
   const isNote = memory.photo_back.includes('note.gif')
 
-  async function handleReplace(type: 'front' | 'back', file: File) {
+  function handleReplace(type: 'front' | 'back', file: File) {
     const url = URL.createObjectURL(file)
-    if (type === 'front') setFrontPreview(url)
-    else setBackPreview(url)
+    if (type === 'front') {
+      setFrontPreview(url)
+      setFrontFile(file)
+    } else {
+      setBackPreview(url)
+      setBackFile(file)
+    }
   }
 
   async function saveChanges() {
-    setSaving(true)
-    const formData = new FormData()
-    const frontFile = frontRef.current?.files?.[0]
-    const backFile = backRef.current?.files?.[0]
-    if (frontFile) formData.append('photo_front', frontFile)
-    if (backFile) formData.append('photo_back', backFile)
-
     if (!frontFile && !backFile) {
       setIsEditing(false)
-      setSaving(false)
       return
     }
+    setSaving(true)
+    setError(null)
+    try {
+      const formData = new FormData()
+      if (frontFile) {
+        const compressed = await compressImage(frontFile)
+        formData.append('photo_front', compressed, frontFile.name)
+      }
+      if (backFile) {
+        const compressed = await compressImage(backFile)
+        formData.append('photo_back', compressed, backFile.name)
+      }
 
-    const res = await fetch(`/api/memories/${memory.id}`, {
-      method: 'PATCH',
-      body: formData,
-    })
+      const res = await fetch(`/api/memories/${memory.id}`, {
+        method: 'PATCH',
+        body: formData,
+      })
 
-    if (res.ok) {
+      if (!res.ok) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || `Upload failed (${res.status})`)
+      }
+
       setIsEditing(false)
       setFrontPreview(null)
       setBackPreview(null)
+      setFrontFile(null)
+      setBackFile(null)
       onUpdated?.()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Upload failed — try again')
     }
     setSaving(false)
   }
@@ -56,6 +101,9 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
     setIsEditing(false)
     setFrontPreview(null)
     setBackPreview(null)
+    setFrontFile(null)
+    setBackFile(null)
+    setError(null)
   }
 
   if (isNote) return null // Don't show editor for text notes
@@ -104,6 +152,7 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
         {/* Bottom panel */}
         <div className="bg-white rounded-t-3xl p-6 relative z-10 space-y-3 shrink-0">
           {memory.caption && <p className="text-stone-700 text-sm">&ldquo;{memory.caption}&rdquo;</p>}
+          {error && <p className="text-red-400 text-sm">{error}</p>}
 
           {isEditing ? (
             <div className="flex gap-2">
