@@ -5,6 +5,7 @@ import { getCalendarClient } from '@/lib/google-auth'
 import { getFreeBusySlots } from '@/lib/freebusy'
 import { NextRequest } from 'next/server'
 import { getViennaWeather, weatherSummary, categorizeItem, feasibilityReason } from '@/lib/weather'
+import { fetchPage } from '@/lib/fetch-page'
 
 const openai = new OpenAI()
 
@@ -198,7 +199,7 @@ async function reconcileTheresaEvents(events: PlannedEvent[], today: string): Pr
   }
 }
 
-function buildSystemPrompt(freeBusySummary: string, plannedEventsSummary: string, bucketListSummary: string, calendarConnected: boolean, weatherContextStr: string): string {
+function buildSystemPrompt(freeBusySummary: string, plannedEventsSummary: string, bucketListSummary: string, calendarConnected: boolean, weatherContextStr: string, standingPlansSummary: string, fetchedContent: string): string {
   const today = new Date().toISOString().split('T')[0]
 
   const availabilitySection = calendarConnected
@@ -237,12 +238,25 @@ ${plannedEventsSummary}
 Eure Bucket-List (Dinge die ihr noch tun wollt):
 ${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
 
-Du kannst vier Aktionen ausführen:
+Du kannst sechs Aktionen ausführen:
 1. "ask" — Eine Eingrenzungs-Frage stellen wenn es zu viele Optionen gibt
 2. "suggest" — Konkrete Vorschläge mit Optionen präsentieren
 3. "create_event" — Ein Event direkt erstellen
 4. "add_bucket_list" — Zur Bucket List hinzufügen
-5. "none" — Nur chatten
+5. "add_known_link" — Eine URL als bekannte Quelle speichern (z.B. Show-Termine)
+6. "none" — Nur chatten
+
+────────────────────────
+WIEDERKEHRENDE PLÄNE (STANDING PLANS):
+────────────────────────
+${standingPlansSummary || 'Keine wiederkehrenden Pläne bekannt.'}
+Diese sind feste wöchentliche Termine. Plane KEINE Konflikte damit und erwähne sie natürlich wenn relevant.
+
+────────────────────────
+AKTUELL ABGERUFENE WEBSITE-INHALTE (Verfügbarkeits-Check):
+────────────────────────
+${fetchedContent || 'Keine Website abgerufen.'}
+Nutze diese Infos um konkrete Termine/Verfügbarkeiten zu nennen (z.B. Improtheater-Show-Daten).
 
 Du kannst fünf Arten von Events erstellen:
 1. **single** – bestimmtes Datum und Uhrzeit (Konzert, Abendessen, Kino). Braucht: title, date, start_time, end_time.
@@ -254,7 +268,7 @@ Du kannst fünf Arten von Events erstellen:
 Antworte immer auf Deutsch in exakt diesem JSON-Format:
 {
   "reply": "liebevolle, warme Antwort auf Deutsch",
-  "action": "ask | suggest | create_event | add_bucket_list | none",
+  "action": "ask | suggest | create_event | add_bucket_list | add_known_link | none",
   "event": {
     "type": "single | window | recurring | sleepover",
     "title": "Name des Events",
@@ -293,6 +307,14 @@ Antworte immer auf Deutsch in exakt diesem JSON-Format:
     "description": "kurze Beschreibung",
     "tags": ["romantic", "adventure", "food", "culture", "outdoor", "sport"],
     "duration_days": null
+  } | null,
+
+  // FÜR "add_known_link" (User gibt eine URL als Quelle an):
+  "known_link": {
+    "title": "Kurzbezeichnung",
+    "url": "https://...",
+    "purpose": "Wofür ist die Seite gut",
+    "keywords": ["impro", "improtheater"]
   } | null
 }
 
@@ -348,12 +370,14 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'No message or image' }, { status: 400 })
   }
 
-  // Fetch freebusy, bucket list, and already-planned events for context
-  const [freeBusyResult, bucketListResult, eventsResult, weatherResult] = await Promise.allSettled([
+  // Fetch freebusy, bucket list, already-planned events, weather, known links, standing plans
+  const [freeBusyResult, bucketListResult, eventsResult, weatherResult, linksResult, plansResult] = await Promise.allSettled([
     getFreeBusySlots(),
     supabase.from('bucket_list').select('title, description, tags, duration_days').eq('resolved', false).order('created_at', { ascending: false }),
     supabase.from('events').select('title, location, date, start_time, end_time, type, end_date, recurrence_rule, added_by').order('date', { ascending: true }),
     getViennaWeather(),
+    supabase.from('known_links').select('title, url, purpose, keywords'),
+    supabase.from('events').select('title, recurrence_rule').not('recurrence_rule', 'is', null).limit(20),
   ])
 
   // A rejected freebusy result means we genuinely couldn't reach Dimitri's
@@ -389,6 +413,29 @@ export async function POST(req: NextRequest) {
     .slice(0, 40)
   const plannedEventsSummary = fmtEvents(upcomingEvents)
 
+  // Standing plans = recurring events (e.g. Neubau tanzt every Thursday)
+  const plansData = plansResult.status === 'fulfilled' ? plansResult.value.data : []
+  const standingPlansSummary = (plansData ?? []).length
+    ? (plansData ?? []).map((p: { title: string; recurrence_rule: string | null }) => `- ${p.title} (${p.recurrence_rule})`).join('\n')
+    : ''
+
+  // Known links: if the user's message mentions a keyword, fetch the page.
+  const linksData = linksResult.status === 'fulfilled' ? linksResult.value.data : []
+  const msgLower = (message ?? '').toLowerCase()
+  let fetchedContent = ''
+  for (const link of (linksData ?? []) as { title: string; url: string; keywords: string[] | null }[]) {
+    const kws = (link.keywords ?? []).map((k: string) => k.toLowerCase())
+    const match = kws.some(k => msgLower.includes(k)) ||
+      (link.title && msgLower.includes(link.title.toLowerCase()))
+    if (match) {
+      const page = await fetchPage(link.url)
+      if (page) {
+        fetchedContent = `[${link.title}] (${link.url}):\n${page.text}`
+      }
+      break
+    }
+  }
+
   // Self-heal: ensure Theresa's plans are actually in Google, even if a prior
   // insert failed. Independent of the AI's decision, so it can't be skipped.
   if (calendarConnected) {
@@ -422,7 +469,7 @@ export async function POST(req: NextRequest) {
       model: 'gpt-4o',
       max_tokens: 1536,
       messages: [
-        { role: 'system', content: buildSystemPrompt(freeBusySummary, plannedEventsSummary, bucketListSummary, calendarConnected, weatherContextStr) },
+        { role: 'system', content: buildSystemPrompt(freeBusySummary, plannedEventsSummary, bucketListSummary, calendarConnected, weatherContextStr, standingPlansSummary, fetchedContent) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
@@ -448,11 +495,20 @@ export async function POST(req: NextRequest) {
     tags: string[]
     duration_days: number | null
   }
+  type AiKnownLink = {
+    title: string
+    url: string
+    purpose: string
+    keywords: string[]
+  }
   type AiResponse = {
     reply: string
-    action: 'create_event' | 'add_bucket_list' | 'none'
+    action: 'ask' | 'suggest' | 'create_event' | 'add_bucket_list' | 'add_known_link' | 'none'
+    narrowing?: { question: string; options: { label: string; category: string }[] } | null
+    suggestions?: { title: string; category: string; feasible: boolean; reasoning: string; options: { label: string; event: Record<string, unknown> }[] }[] | null
     event: AiEvent | null
     bucket_list_item: AiBucketItem | null
+    known_link?: AiKnownLink | null
   }
 
   let parsed: AiResponse
@@ -460,6 +516,16 @@ export async function POST(req: NextRequest) {
     parsed = JSON.parse(gptText)
   } catch {
     return Response.json({ reply: gptText })
+  }
+
+  // Pass through narrowing / suggestions for the UI
+  if (parsed.action === 'ask' || parsed.action === 'suggest') {
+    return Response.json({
+      reply: parsed.reply,
+      action: parsed.action,
+      narrowing: parsed.narrowing ?? null,
+      suggestions: parsed.suggestions ?? null,
+    })
   }
 
   let savedEvent = null
@@ -588,6 +654,14 @@ export async function POST(req: NextRequest) {
     await supabase.from('notifications').insert({
       message: `✨ Theresa added to the bucket list: ${savedBucketItem.title}`,
       kind: 'bucket_list',
+    })
+  } else if (parsed.action === 'add_known_link' && parsed.known_link?.url) {
+    const link = parsed.known_link
+    await supabase.from('known_links').insert({
+      title: link.title || link.url,
+      url: link.url,
+      purpose: link.purpose || null,
+      keywords: link.keywords?.length ? link.keywords : null,
     })
   }
 

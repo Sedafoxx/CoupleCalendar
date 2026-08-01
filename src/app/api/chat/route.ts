@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import { getCalendarClient } from '@/lib/google-auth'
 import { NextRequest } from 'next/server'
 import { getViennaWeather, weatherSummary, categorizeItem, feasibilityReason } from '@/lib/weather'
+import { fetchPage } from '@/lib/fetch-page'
 
 const openai = new OpenAI()
 
@@ -33,6 +34,8 @@ function buildSystemPrompt(
   bucketListSummary: string,
   eventsSummary: string,
   weatherContextStr: string,
+  standingPlansSummary: string,
+  fetchedContent: string,
 ): string {
   const now = new Date()
   const today = now.toISOString().split('T')[0]
@@ -54,12 +57,25 @@ AKTUELLER KONTEXT:
 - Wetter in Wien:
 ${weatherContextStr || 'Wetter nicht verfügbar.'}
 
-Du kannst vier Aktionen ausführen:
+Du kannst fünf Aktionen ausführen:
 1. "ask" — Eine Eingrenzungs-Frage stellen wenn es zu viele Optionen gibt
 2. "suggest" — Konkrete Vorschläge mit Optionen präsentieren
 3. "create_event" — Ein Event direkt erstellen
 4. "add_bucket_list" — Zur Bucket List hinzufügen
-5. "none" — Nur chatten
+5. "add_known_link" — Eine URL als bekannte Quelle speichern (z.B. Show-Termine von einer Website)
+6. "none" — Nur chatten
+
+────────────────────────
+WIEDERKEHRENDE PLÄNE (STANDING PLANS):
+────────────────────────
+${standingPlansSummary || 'Keine wiederkehrenden Pläne bekannt.'}
+Diese sind feste wöchentliche Termine. Plane KEINE Konflikte damit und erwähne sie natürlich wenn relevant.
+
+────────────────────────
+AKTUELL ABGERUFENE WEBSITE-INHALTE (Verfügbarkeits-Check):
+────────────────────────
+${fetchedContent || 'Keine Website abgerufen.'}
+Nutze diese Infos um konkrete Termine/Verfügbarkeiten zu nennen (z.B. Improtheater-Show-Daten).
 
 ────────────────────────
 EVENT-TYPEN (für create_event):
@@ -121,7 +137,7 @@ Wähle 2-4 relevante Kategorien basierend auf dem was in der Bucket List ist.
 ANTWORT-FORMAT (IMMER JSON):
 ────────────────────────
 {
-  "action": "ask | suggest | create_event | add_bucket_list | none",
+  "action": "ask | suggest | create_event | add_bucket_list | add_known_link | none",
 
   // FÜR "ask" (Eingrenzungsfrage):
   "reply": "warme Antwort auf Deutsch",
@@ -175,6 +191,15 @@ ANTWORT-FORMAT (IMMER JSON):
     "duration_days": null
   },
 
+  // FÜR "add_known_link" (User gibt eine URL als Quelle an):
+  "reply": "warme Antwort",
+  "known_link": {
+    "title": "Kurzbezeichnung",
+    "url": "https://...",
+    "purpose": "Wofür ist die Seite gut",
+    "keywords": ["impro", "improtheater"]
+  },
+
   // FÜR "none":
   "reply": "warme Antwort"
 }
@@ -205,11 +230,13 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: 'No message or image' }, { status: 400 })
   }
 
-  // Parallel: weather, bucket list, upcoming events
-  const [weatherResult, bucketListResult, eventsResult] = await Promise.allSettled([
+  // Parallel: weather, bucket list, upcoming events, known links, standing plans
+  const [weatherResult, bucketListResult, eventsResult, linksResult, plansResult] = await Promise.allSettled([
     getViennaWeather(),
     supabase.from('bucket_list').select('title, description, tags, duration_days').eq('resolved', false).order('created_at', { ascending: false }),
-    supabase.from('events').select('title, date, start_time, end_time, location, type').gte('date', new Date().toISOString().split('T')[0]).order('date', { ascending: true }).limit(20),
+    supabase.from('events').select('title, date, start_time, end_time, location, type, recurrence_rule').gte('date', new Date().toISOString().split('T')[0]).order('date', { ascending: true }).limit(20),
+    supabase.from('known_links').select('title, url, purpose, keywords'),
+    supabase.from('events').select('title, recurrence_rule').not('recurrence_rule', 'is', null).limit(20),
   ])
 
   const weather = weatherResult.status === 'fulfilled' ? weatherResult.value : null
@@ -237,6 +264,29 @@ export async function POST(req: NextRequest) {
       }).join('\n')
     : 'Keine kommenden Events.'
 
+  // Standing plans = recurring events (e.g. Neubau tanzt every Thursday)
+  const plansData = plansResult.status === 'fulfilled' ? plansResult.value.data : []
+  const standingPlansSummary = (plansData ?? []).length
+    ? (plansData ?? []).map(p => `- ${p.title} (${p.recurrence_rule})`).join('\n')
+    : ''
+
+  // Known links: if the user's message mentions a keyword, fetch the page.
+  const linksData = linksResult.status === 'fulfilled' ? linksResult.value.data : []
+  const msgLower = (message ?? '').toLowerCase()
+  let fetchedContent = ''
+  for (const link of (linksData ?? []) as { title: string; url: string; keywords: string[] | null }[]) {
+    const kws = (link.keywords ?? []).map((k: string) => k.toLowerCase())
+    const match = kws.some(k => msgLower.includes(k)) ||
+      (link.title && msgLower.includes(link.title.toLowerCase()))
+    if (match) {
+      const page = await fetchPage(link.url)
+      if (page) {
+        fetchedContent = `[${link.title}] (${link.url}):\n${page.text}`
+      }
+      break
+    }
+  }
+
   const userContent: OpenAI.ChatCompletionContentPart[] = []
 
   if (imageFile) {
@@ -260,7 +310,7 @@ export async function POST(req: NextRequest) {
       model: 'gpt-4o',
       max_tokens: 1536,
       messages: [
-        { role: 'system', content: buildSystemPrompt(bucketListSummary, eventsSummary, weatherContextStr) },
+        { role: 'system', content: buildSystemPrompt(bucketListSummary, eventsSummary, weatherContextStr, standingPlansSummary, fetchedContent) },
         { role: 'user', content: userContent },
       ],
       response_format: { type: 'json_object' },
@@ -304,14 +354,21 @@ export async function POST(req: NextRequest) {
     question: string
     options: { label: string; category: string }[]
   }
+  type AiKnownLink = {
+    title: string
+    url: string
+    purpose: string
+    keywords: string[]
+  }
   type AiResponse = {
     reply: string
-    action: 'ask' | 'suggest' | 'create_event' | 'add_bucket_list' | 'none'
+    action: 'ask' | 'suggest' | 'create_event' | 'add_bucket_list' | 'add_known_link' | 'none'
     narrowing?: AiNarrowing | null
     suggestions?: AiSuggestion[] | null
     events?: AiEvent[] | null
     event?: AiEvent | null
     bucket_list_item: AiBucketItem | null
+    known_link?: AiKnownLink | null
   }
 
   let parsed: AiResponse
@@ -431,6 +488,16 @@ export async function POST(req: NextRequest) {
       .single()
 
     if (!error) savedBucketItem = data
+  } else if (parsed.action === 'add_known_link' && parsed.known_link?.url) {
+    const link = parsed.known_link
+    await supabase
+      .from('known_links')
+      .insert({
+        title: link.title || link.url,
+        url: link.url,
+        purpose: link.purpose || null,
+        keywords: link.keywords?.length ? link.keywords : null,
+      })
   }
 
   return Response.json({

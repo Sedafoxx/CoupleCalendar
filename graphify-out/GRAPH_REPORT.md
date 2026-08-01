@@ -1,7 +1,7 @@
-# Graph Report - CoupleCalendar  (2026-07-30)
+# Graph Report - CoupleCalendar  (2026-08-01)
 
 ## Corpus Check
-- 71 files · ~26,836 words
+- 71 files · ~26,880 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5b07c501`
+- Built from commit: `bb2baf9f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -174,7 +174,7 @@ Cohesion: 0.40
 Nodes (4): env, key, sup, url
 
 ## Knowledge Gaps
-- **161 isolated node(s):** `openai`, `openai`, `PlannedEvent`, `NarrowingOpt`, `SuggestionOpt` (+156 more)
+- **161 isolated node(s):** `openai`, `Who`, `openai`, `PlannedEvent`, `NarrowingOpt` (+156 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -187,7 +187,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
 - **Are the 5 inferred relationships involving `POST()` (e.g. with `getFreeBusySlots()` and `getCalendarClient()`) actually correct?**
   _`POST()` has 5 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `openai`, `openai`, `PlannedEvent` to the rest of the system?**
+- **What connects `openai`, `Who`, `openai` to the rest of the system?**
   _161 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
   _Cohesion score 0.06038961038961039 - nodes in this community are weakly interconnected._
