@@ -6,12 +6,432 @@
     {
       "label": "route.ts",
       "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_api_chat_route_ts_chat_route",
+      "community": 2,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "openai",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "src_app_api_chat_route_ts_chat_route_openai",
+      "community": 2,
+      "norm_label": "openai"
+    },
+    {
+      "label": "getViennaOffset()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_api_chat_route_ts_chat_route_getviennaoffset",
+      "community": 2,
+      "norm_label": "getviennaoffset()"
+    },
+    {
+      "label": "addOneDay()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "src_app_api_chat_route_ts_chat_route_addoneday",
+      "community": 2,
+      "norm_label": "addoneday()"
+    },
+    {
+      "label": "fmtDate()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "chat_route_fmtdate",
+      "community": 2,
+      "norm_label": "fmtdate()"
+    },
+    {
+      "label": "buildSystemPrompt()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "src_app_api_chat_route_ts_chat_route_buildsystemprompt",
+      "community": 2,
+      "norm_label": "buildsystemprompt()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L196",
+      "_origin": "ast",
+      "id": "src_app_api_chat_route_ts_chat_route_post",
+      "community": 2,
+      "norm_label": "post()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route",
+      "community": 9,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "openai",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_openai",
+      "community": 9,
+      "norm_label": "openai"
+    },
+    {
+      "label": "getViennaOffset()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset",
+      "community": 9,
+      "norm_label": "getviennaoffset()"
+    },
+    {
+      "label": "addOneDay()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_addoneday",
+      "community": 9,
+      "norm_label": "addoneday()"
+    },
+    {
+      "label": "hhmmss()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "chat_route_hhmmss",
+      "community": 9,
+      "norm_label": "hhmmss()"
+    },
+    {
+      "label": "googleHasMatch()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "chat_route_googlehasmatch",
+      "community": 9,
+      "norm_label": "googlehasmatch()"
+    },
+    {
+      "label": "nightsBetween()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "chat_route_nightsbetween",
+      "community": 9,
+      "norm_label": "nightsbetween()"
+    },
+    {
+      "label": "fmtDay()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "chat_route_fmtday",
+      "community": 9,
+      "norm_label": "fmtday()"
+    },
+    {
+      "label": "sleepoverWhen()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "chat_route_sleepoverwhen",
+      "community": 9,
+      "norm_label": "sleepoverwhen()"
+    },
+    {
+      "label": "fmtSlots()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "chat_route_fmtslots",
+      "community": 9,
+      "norm_label": "fmtslots()"
+    },
+    {
+      "label": "PlannedEvent",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "chat_route_plannedevent",
+      "community": 9,
+      "norm_label": "plannedevent"
+    },
+    {
+      "label": "fmtEvents()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "chat_route_fmtevents",
+      "community": 9,
+      "norm_label": "fmtevents()"
+    },
+    {
+      "label": "reconcileTheresaEvents()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L127",
+      "_origin": "ast",
+      "id": "chat_route_reconciletheresaevents",
+      "community": 9,
+      "norm_label": "reconciletheresaevents()"
+    },
+    {
+      "label": "buildSystemPrompt()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L201",
+      "_origin": "ast",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt",
+      "community": 9,
+      "norm_label": "buildsystemprompt()"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L338",
+      "_origin": "ast",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "community": 9,
+      "norm_label": "post()"
+    },
+    {
+      "label": "page.tsx",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_page",
+      "community": 0,
+      "norm_label": "page.tsx"
+    },
+    {
+      "label": "NarrowingOpt",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "app_page_narrowingopt",
+      "community": 0,
+      "norm_label": "narrowingopt"
+    },
+    {
+      "label": "SuggestionOpt",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "app_page_suggestionopt",
+      "community": 0,
+      "norm_label": "suggestionopt"
+    },
+    {
+      "label": "Suggestion",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_page_suggestion",
+      "community": 0,
+      "norm_label": "suggestion"
+    },
+    {
+      "label": "ChatMessage",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L16",
+      "_origin": "ast",
+      "id": "app_page_chatmessage",
+      "community": 0,
+      "norm_label": "chatmessage"
+    },
+    {
+      "label": "PlanPage()",
+      "file_type": "code",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "app_page_planpage",
+      "community": 0,
+      "norm_label": "planpage()"
+    },
+    {
+      "label": "weather.ts",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "lib_weather",
+      "community": 2,
+      "norm_label": "weather.ts"
+    },
+    {
+      "label": "WeatherCondition",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "lib_weather_weathercondition",
+      "community": 2,
+      "norm_label": "weathercondition"
+    },
+    {
+      "label": "DayForecast",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "lib_weather_dayforecast",
+      "community": 2,
+      "norm_label": "dayforecast"
+    },
+    {
+      "label": "WeatherContext",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "lib_weather_weathercontext",
+      "community": 2,
+      "norm_label": "weathercontext"
+    },
+    {
+      "label": "wmo()",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "lib_weather_wmo",
+      "community": 2,
+      "norm_label": "wmo()"
+    },
+    {
+      "label": "getViennaWeather()",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "lib_weather_getviennaweather",
+      "community": 2,
+      "norm_label": "getviennaweather()"
+    },
+    {
+      "label": "weatherSummary()",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "lib_weather_weathersummary",
+      "community": 2,
+      "norm_label": "weathersummary()"
+    },
+    {
+      "label": "FeasibilityCategory",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L93",
+      "_origin": "ast",
+      "id": "lib_weather_feasibilitycategory",
+      "community": 2,
+      "norm_label": "feasibilitycategory"
+    },
+    {
+      "label": "weatherKeywords",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "lib_weather_weatherkeywords",
+      "community": 2,
+      "norm_label": "weatherkeywords"
+    },
+    {
+      "label": "socialKeywords",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "lib_weather_socialkeywords",
+      "community": 2,
+      "norm_label": "socialkeywords"
+    },
+    {
+      "label": "travelKeywords",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L113",
+      "_origin": "ast",
+      "id": "lib_weather_travelkeywords",
+      "community": 2,
+      "norm_label": "travelkeywords"
+    },
+    {
+      "label": "seasonalKeywords",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L120",
+      "_origin": "ast",
+      "id": "lib_weather_seasonalkeywords",
+      "community": 2,
+      "norm_label": "seasonalkeywords"
+    },
+    {
+      "label": "categorizeItem()",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L126",
+      "_origin": "ast",
+      "id": "lib_weather_categorizeitem",
+      "community": 2,
+      "norm_label": "categorizeitem()"
+    },
+    {
+      "label": "feasibilityReason()",
+      "file_type": "code",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L151",
+      "_origin": "ast",
+      "id": "lib_weather_feasibilityreason",
+      "community": 2,
+      "norm_label": "feasibilityreason()"
+    },
+    {
+      "label": "route.ts",
+      "file_type": "code",
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "id_route",
       "community": 25,
-      "norm_label": "route.ts"
+      "norm_label": "route.ts",
+      "id": "id_route"
     },
     {
       "label": "RouteParams",
@@ -19,9 +439,9 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "id_route_routeparams",
       "community": 25,
-      "norm_label": "routeparams"
+      "norm_label": "routeparams",
+      "id": "id_route_routeparams"
     },
     {
       "label": "whoIs()",
@@ -29,9 +449,9 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "id_route_whois",
       "community": 25,
-      "norm_label": "whois()"
+      "norm_label": "whois()",
+      "id": "id_route_whois"
     },
     {
       "label": "DELETE()",
@@ -39,9 +459,9 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "id_route_delete",
       "community": 25,
-      "norm_label": "delete()"
+      "norm_label": "delete()",
+      "id": "id_route_delete"
     },
     {
       "label": "PATCH()",
@@ -49,9 +469,9 @@
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L79",
       "_origin": "ast",
-      "id": "id_route_patch",
       "community": 25,
-      "norm_label": "patch()"
+      "norm_label": "patch()",
+      "id": "id_route_patch"
     },
     {
       "label": "page.tsx",
@@ -59,9 +479,9 @@
       "source_file": "src/app/memories/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "memories_page",
       "community": 0,
-      "norm_label": "page.tsx"
+      "norm_label": "page.tsx",
+      "id": "memories_page"
     },
     {
       "label": "MemoriesPage()",
@@ -69,9 +489,9 @@
       "source_file": "src/app/memories/page.tsx",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "memories_page_memoriespage",
       "community": 0,
-      "norm_label": "memoriespage()"
+      "norm_label": "memoriespage()",
+      "id": "memories_page_memoriespage"
     },
     {
       "label": "MemoryEditor.tsx",
@@ -79,9 +499,9 @@
       "source_file": "src/components/MemoryEditor.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "components_memoryeditor",
       "community": 0,
-      "norm_label": "memoryeditor.tsx"
+      "norm_label": "memoryeditor.tsx",
+      "id": "components_memoryeditor"
     },
     {
       "label": "Props",
@@ -89,9 +509,9 @@
       "source_file": "src/components/MemoryEditor.tsx",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "components_memoryeditor_props",
       "community": 0,
-      "norm_label": "props"
+      "norm_label": "props",
+      "id": "components_memoryeditor_props"
     },
     {
       "label": "MemoryEditor()",
@@ -99,9 +519,9 @@
       "source_file": "src/components/MemoryEditor.tsx",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "components_memoryeditor_memoryeditor",
       "community": 0,
-      "norm_label": "memoryeditor()"
+      "norm_label": "memoryeditor()",
+      "id": "components_memoryeditor_memoryeditor"
     },
     {
       "label": "FeedCards.tsx",
@@ -142,86 +562,6 @@
       "community": 0,
       "norm_label": "feedcards()",
       "id": "components_feedcards_feedcards"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "route.ts",
-      "id": "chat_route"
-    },
-    {
-      "label": "openai",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "openai",
-      "id": "chat_route_openai"
-    },
-    {
-      "label": "getViennaOffset()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "getviennaoffset()",
-      "id": "chat_route_getviennaoffset"
-    },
-    {
-      "label": "addOneDay()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "addoneday()",
-      "id": "chat_route_addoneday"
-    },
-    {
-      "label": "buildSystemPrompt()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "buildsystemprompt()",
-      "id": "chat_route_buildsystemprompt"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L81",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "post()",
-      "id": "chat_route_post"
-    },
-    {
-      "label": "page.tsx",
-      "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "page.tsx",
-      "id": "app_page"
-    },
-    {
-      "label": "PlanPage()",
-      "file_type": "code",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "planpage()",
-      "id": "app_page_planpage"
     },
     {
       "label": "add-column.mjs",
@@ -439,7 +779,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "supabase",
       "id": "lib_supabase_supabase"
     },
@@ -709,7 +1049,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "route.ts",
       "id": "debug_route"
     },
@@ -719,7 +1059,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "get()",
       "id": "debug_route_get"
     },
@@ -2089,7 +2429,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 35,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -2099,7 +2439,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 25,
+      "community": 35,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -2109,7 +2449,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 25,
+      "community": 35,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -2119,7 +2459,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 25,
+      "community": 35,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -2129,7 +2469,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 36,
       "norm_label": "route.ts",
       "id": "bucket_list_route"
     },
@@ -2139,7 +2479,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 25,
+      "community": 36,
       "norm_label": "get()",
       "id": "bucket_list_route_get"
     },
@@ -2149,7 +2489,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 25,
+      "community": 36,
       "norm_label": "post()",
       "id": "bucket_list_route_post"
     },
@@ -2262,156 +2602,6 @@
       "community": 14,
       "norm_label": "post()",
       "id": "theresa_auth_route_post"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "route.ts",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route"
-    },
-    {
-      "label": "openai",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "openai",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_openai"
-    },
-    {
-      "label": "getViennaOffset()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "getviennaoffset()",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "label": "addOneDay()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "addoneday()",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "label": "hhmmss()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "hhmmss()",
-      "id": "chat_route_hhmmss"
-    },
-    {
-      "label": "googleHasMatch()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "googlehasmatch()",
-      "id": "chat_route_googlehasmatch"
-    },
-    {
-      "label": "nightsBetween()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L51",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "nightsbetween()",
-      "id": "chat_route_nightsbetween"
-    },
-    {
-      "label": "fmtDay()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L62",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "fmtday()",
-      "id": "chat_route_fmtday"
-    },
-    {
-      "label": "sleepoverWhen()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L68",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "sleepoverwhen()",
-      "id": "chat_route_sleepoverwhen"
-    },
-    {
-      "label": "fmtSlots()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L74",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "fmtslots()",
-      "id": "chat_route_fmtslots"
-    },
-    {
-      "label": "PlannedEvent",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L89",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "plannedevent",
-      "id": "chat_route_plannedevent"
-    },
-    {
-      "label": "fmtEvents()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L101",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "fmtevents()",
-      "id": "chat_route_fmtevents"
-    },
-    {
-      "label": "reconcileTheresaEvents()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L126",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "reconciletheresaevents()",
-      "id": "chat_route_reconciletheresaevents"
-    },
-    {
-      "label": "buildSystemPrompt()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L200",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "buildsystemprompt()",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
-    },
-    {
-      "label": "POST()",
-      "file_type": "code",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L267",
-      "_origin": "ast",
-      "community": 9,
-      "norm_label": "post()",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_post"
     },
     {
       "label": "page.tsx",
@@ -2749,7 +2939,7 @@
       "source_file": "src/lib/theresa-auth.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "theresa-auth.ts",
       "id": "lib_theresa_auth"
     },
@@ -2759,7 +2949,7 @@
       "source_file": "src/lib/theresa-auth.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 9,
+      "community": 25,
       "norm_label": "istheresaauthed()",
       "id": "lib_theresa_auth_istheresaauthed"
     },
@@ -3208,6 +3398,1035 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "chat_route_fmtdate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_auth_authoptions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_google_auth_getcalendarclient",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_supabase_supabase",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_weather",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_weather_categorizeitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_weather_feasibilityreason",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_weather_getviennaweather",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "lib_weather_weathersummary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "src_app_api_chat_route_ts_chat_route_addoneday",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "src_app_api_chat_route_ts_chat_route_buildsystemprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "src_app_api_chat_route_ts_chat_route_getviennaoffset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "src_app_api_chat_route_ts_chat_route_openai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L196",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route",
+      "target": "src_app_api_chat_route_ts_chat_route_post",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L393",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route_post",
+      "target": "src_app_api_chat_route_ts_chat_route_getviennaoffset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L410",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route_post",
+      "target": "src_app_api_chat_route_ts_chat_route_addoneday",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L263",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route_post",
+      "target": "src_app_api_chat_route_ts_chat_route_buildsystemprompt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L210",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route_post",
+      "target": "lib_weather_getviennaweather"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/chat/route.ts",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "src_app_api_chat_route_ts_chat_route_post",
+      "target": "lib_weather_weathersummary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L62",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_fmtday"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L101",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_fmtevents"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_fmtslots"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_googlehasmatch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_hhmmss"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_nightsbetween"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L89",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_plannedevent"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L126",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_reconciletheresaevents"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "chat_route_sleepoverwhen"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_freebusy"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_freebusy_getfreebusyslots"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_google_auth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_google_auth_getcalendarclient"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_theresa_auth"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_theresa_auth_istheresaauthed"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_weather",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_weather_categorizeitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_weather_feasibilityreason",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_weather_getviennaweather",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "lib_weather_weathersummary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L200",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_openai"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L267",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_post"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_reconciletheresaevents",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L434",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_googlehasmatch",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_nightsbetween",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L143",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_reconciletheresaevents",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L449",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L177",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_reconciletheresaevents",
+      "target": "chat_route_hhmmss"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L440",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_hhmmss"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L433",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_googlehasmatch"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L157",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_reconciletheresaevents",
+      "target": "chat_route_nightsbetween"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L447",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_nightsbetween"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_sleepoverwhen",
+      "target": "chat_route_fmtday"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L502",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_fmtday"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L501",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_sleepoverwhen"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L298",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_fmtslots"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L309",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_fmtevents"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L134",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "chat_route_reconciletheresaevents",
+      "target": "lib_google_auth_getcalendarclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L315",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "chat_route_reconciletheresaevents"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L344",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L282",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "lib_freebusy_getfreebusyslots"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L431",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "lib_google_auth_getcalendarclient"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L268",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "lib_theresa_auth_istheresaauthed"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L356",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "lib_weather_getviennaweather"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/app/api/theresa/chat/route.ts",
+      "source_location": "L369",
+      "weight": 1.0,
+      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
+      "target": "lib_weather_weathersummary"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "source": "app_page",
+      "target": "app_page_chatmessage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_page",
+      "target": "app_page_narrowingopt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "app_page_planpage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_page",
+      "target": "app_page_suggestion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "app_page",
+      "target": "app_page_suggestionopt",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_dualcamera"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_eventdetail"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_feedcards"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "components_memorycard"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_event"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/page.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_page",
+      "target": "lib_supabase_notification"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_categorizeitem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_dayforecast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_feasibilitycategory",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L151",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_feasibilityreason",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_getviennaweather",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_seasonalkeywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_socialkeywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_travelkeywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_weathercondition",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_weathercontext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_weatherkeywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_weathersummary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "lib_weather",
+      "target": "lib_weather_wmo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/weather.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "lib_weather_getviennaweather",
+      "target": "lib_weather_wmo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/app/api/memories/[id]/route.ts",
       "source_location": "L21",
       "weight": 1.0,
@@ -3339,9 +4558,9 @@
       "source_file": "src/app/memories/page.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "memories_page",
-      "target": "components_memoryeditor",
-      "confidence_score": 1.0
+      "target": "components_memoryeditor"
     },
     {
       "relation": "imports",
@@ -3392,9 +4611,9 @@
       "source_file": "src/components/MemoryEditor.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_memoryeditor",
-      "target": "components_memoryeditor_memoryeditor",
-      "confidence_score": 1.0
+      "target": "components_memoryeditor_memoryeditor"
     },
     {
       "relation": "contains",
@@ -3402,9 +4621,9 @@
       "source_file": "src/components/MemoryEditor.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_memoryeditor",
-      "target": "components_memoryeditor_props",
-      "confidence_score": 1.0
+      "target": "components_memoryeditor_props"
     },
     {
       "relation": "imports",
@@ -3413,20 +4632,9 @@
       "source_file": "src/components/MemoryEditor.tsx",
       "source_location": "L3",
       "weight": 1.0,
-      "source": "components_memoryeditor",
-      "target": "lib_supabase_memory",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_feedcards"
+      "source": "components_memoryeditor",
+      "target": "lib_supabase_memory"
     },
     {
       "relation": "contains",
@@ -3479,220 +4687,6 @@
       "confidence_score": 1.0,
       "source": "components_feedcards",
       "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "chat_route_addoneday"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "chat_route_buildsystemprompt"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "chat_route_getviennaoffset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "chat_route_openai"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L79",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "chat_route_post"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_post",
-      "target": "chat_route_getviennaoffset"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L220",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_post",
-      "target": "chat_route_addoneday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/chat/route.ts",
-      "source_location": "L124",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_post",
-      "target": "chat_route_buildsystemprompt"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "app_page_planpage"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_dualcamera"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_eventdetail"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "components_memorycard"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_event"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_memory"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/page.tsx",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_page",
-      "target": "lib_supabase_notification"
     },
     {
       "relation": "contains",
@@ -4179,17 +5173,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/app/theresa/page.tsx",
       "source_location": "L3",
       "weight": 1.0,
@@ -4327,17 +5310,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_app_api_bucket_list_id_route_ts_id_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
       "target": "lib_supabase_supabase"
     },
     {
@@ -5578,17 +6550,6 @@
       "target": "lib_google_auth_getcalendarclient"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_freebusy"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -5653,28 +6614,6 @@
       "weight": 1.0,
       "source": "lib_freebusy_getfreebusyslots",
       "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_freebusy_getfreebusyslots"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L282",
-      "weight": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "lib_freebusy_getfreebusyslots"
     },
     {
       "relation": "contains",
@@ -6485,421 +7424,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L62",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_fmtday"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L101",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_fmtevents"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_fmtslots"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_googlehasmatch"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_hhmmss"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_nightsbetween"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L89",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_plannedevent"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L126",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_reconciletheresaevents"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L68",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "chat_route_sleepoverwhen"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_google_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_theresa_auth"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_theresa_auth_istheresaauthed"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L200",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_openai"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L267",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_post"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_reconciletheresaevents",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L434",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_googlehasmatch",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L57",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_nightsbetween",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_reconciletheresaevents",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L449",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L177",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_reconciletheresaevents",
-      "target": "chat_route_hhmmss"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L440",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_hhmmss"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L433",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_googlehasmatch"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L157",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_reconciletheresaevents",
-      "target": "chat_route_nightsbetween"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L447",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_nightsbetween"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L70",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_sleepoverwhen",
-      "target": "chat_route_fmtday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L502",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_fmtday"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L501",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_sleepoverwhen"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L298",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_fmtslots"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L309",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_fmtevents"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L134",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "chat_route_reconciletheresaevents",
-      "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L315",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "chat_route_reconciletheresaevents"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L344",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L431",
-      "weight": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "lib_google_auth_getcalendarclient"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "src/app/api/theresa/chat/route.ts",
-      "source_location": "L268",
-      "weight": 1.0,
-      "source": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "target": "lib_theresa_auth_istheresaauthed"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/app/plan/page.tsx",
       "source_location": "L6",
       "weight": 1.0,
@@ -7648,5 +8172,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e241a098016b45f1969481b04ea04b1bf536e72e"
+  "built_at_commit": "5b07c501f1467715f9508db56324ac6a64af0195"
 }

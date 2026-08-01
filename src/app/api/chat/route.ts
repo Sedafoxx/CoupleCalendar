@@ -208,7 +208,7 @@ export async function POST(req: NextRequest) {
   // Parallel: weather, bucket list, upcoming events
   const [weatherResult, bucketListResult, eventsResult] = await Promise.allSettled([
     getViennaWeather(),
-    supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
+    supabase.from('bucket_list').select('title, description, tags, duration_days').eq('resolved', false).order('created_at', { ascending: false }),
     supabase.from('events').select('title, date, start_time, end_time, location, type').gte('date', new Date().toISOString().split('T')[0]).order('date', { ascending: true }).limit(20),
   ])
 

@@ -61,6 +61,15 @@ export async function PATCH(
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
+  // If the event title changed, keep auto-created memory captions in sync.
+  if ('title' in patch && typeof patch.title === 'string' && data) {
+    await supabase
+      .from('memories')
+      .update({ caption: `💕 Beide zu: ${patch.title}` })
+      .eq('event_id', data.id)
+      .like('caption', '💕 Beide zu: %')
+  }
+
   // Notify Dimitri when Theresa proposes / RSVPs to something.
   if (who === 'theresa' && 'rsvp_theresa' in patch && data) {
     const verb = body.rsvp_theresa === 'going' ? 'will zu' : 'hat Interesse an'

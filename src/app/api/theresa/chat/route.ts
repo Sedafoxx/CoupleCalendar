@@ -351,7 +351,7 @@ export async function POST(req: NextRequest) {
   // Fetch freebusy, bucket list, and already-planned events for context
   const [freeBusyResult, bucketListResult, eventsResult, weatherResult] = await Promise.allSettled([
     getFreeBusySlots(),
-    supabase.from('bucket_list').select('title, description, tags, duration_days').order('created_at', { ascending: false }),
+    supabase.from('bucket_list').select('title, description, tags, duration_days').eq('resolved', false).order('created_at', { ascending: false }),
     supabase.from('events').select('title, location, date, start_time, end_time, type, end_date, recurrence_rule, added_by').order('date', { ascending: true }),
     getViennaWeather(),
   ])
