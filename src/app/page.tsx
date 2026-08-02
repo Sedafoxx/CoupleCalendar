@@ -37,7 +37,7 @@ export default function PlanPage() {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const chatEndRef = useRef<HTMLDivElement>(null)
+  const chatScrollRef = useRef<HTMLDivElement>(null)
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([])
@@ -91,9 +91,10 @@ export default function PlanPage() {
     }
   }
 
-  // Auto-scroll when messages change
+  // Auto-scroll only the chat box (not the whole page) when messages change.
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    const el = chatScrollRef.current
+    if (el) el.scrollTop = el.scrollHeight
   }, [messages])
 
   async function quickSend(text: string) {
@@ -262,7 +263,7 @@ export default function PlanPage() {
       {/* Chat — richtige Chat-UI mit Sprechblasen & interaktiven Vorschlägen */}
       <section className="space-y-3">
         <h3 className="font-semibold text-stone-700">💬 Chat</h3>
-        <div className="bg-white border border-stone-200 rounded-2xl p-4 h-80 overflow-y-auto flex flex-col gap-3">
+        <div ref={chatScrollRef} className="bg-white border border-stone-200 rounded-2xl p-4 h-80 overflow-y-auto flex flex-col gap-3">
           {messages.length === 0 && (
             <p className="text-stone-400 text-sm text-center m-auto">
               Schreib was wir machen sollen! Z.B. „Kino morgen um 19 Uhr“ ♡
@@ -343,7 +344,7 @@ export default function PlanPage() {
               </div>
             </div>
           )}
-          <div ref={chatEndRef} />
+          <div />
         </div>
         {imagePreview && (
           <div className="relative inline-flex">
