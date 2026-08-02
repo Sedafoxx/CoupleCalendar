@@ -1,8 +1,9 @@
 
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import type { Memory, Event } from '@/lib/supabase'
 import MemoryCard from './MemoryCard'
+import RsvpButtons from './RsvpButtons'
 
 interface FeedCardsProps {
   pastEvents: Event[]
@@ -12,11 +13,8 @@ interface FeedCardsProps {
   showRsvp?: boolean
 }
 
-type RsvpValue = 'going' | 'interested' | 'maybe' | null
-
 export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelectMemory, showRsvp = true }: FeedCardsProps) {
   const [who, setWho] = useState<'dimitri' | 'theresa' | null>(null)
-  const [rsvpUpdating, setRsvpUpdating] = useState<string | null>(null)
 
   useEffect(() => {
     fetch('/api/whoami').then(r => r.json()).then(d => setWho(d.user))
@@ -32,69 +30,6 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
   }
 
   const feed = [...past].sort((a, b) => b.date.localeCompare(a.date))
-
-  const setRsvp = useCallback(async (eventId: string, value: RsvpValue) => {
-    setRsvpUpdating(eventId)
-    const field = who === 'dimitri' ? 'rsvp_dimitri' : 'rsvp_theresa'
-    await fetch(`/api/events/${eventId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ [field]: value }),
-    })
-    setRsvpUpdating(null)
-    // Refresh the page to reflect changes
-    window.location.reload()
-  }, [who])
-
-  function RsvpButton({ ev }: { ev: Event }) {
-    const dimiGoing = ev.rsvp_dimitri === 'going'
-    const theresaGoing = ev.rsvp_theresa === 'going'
-    const bothGoing = dimiGoing && theresaGoing
-    const myRsvp = who === 'dimitri' ? ev.rsvp_dimitri : ev.rsvp_theresa
-    const isUpdating = rsvpUpdating === ev.id
-
-    if (bothGoing) {
-      return (
-        <div className="flex items-center gap-2 mt-2">
-          <span className="text-xs bg-rose-500 text-white px-3 py-1 rounded-full font-medium">💕 Beide zu</span>
-          <button
-            onClick={(e) => { e.stopPropagation(); setRsvp(ev.id, 'maybe') }}
-            disabled={isUpdating}
-            className="text-xs text-stone-400 hover:text-stone-600 transition"
-          >
-            Vielleicht
-          </button>
-        </div>
-      )
-    }
-
-    return (
-      <div className="flex items-center gap-2 mt-2">
-        {/* Dimis Status */}
-        <span className={`text-xs px-2.5 py-1 rounded-full ${dimiGoing ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>
-          Dimi {dimiGoing ? '✅' : '👤'}
-        </span>
-        {/* Theresas Status */}
-        <span className={`text-xs px-2.5 py-1 rounded-full ${theresaGoing ? 'bg-rose-400 text-white' : 'bg-rose-50 text-rose-300'}`}>
-          Theresa {theresaGoing ? '✅' : '👤'}
-        </span>
-        {/* My RSVP button */}
-        {who && (
-          <button
-            onClick={(e) => { e.stopPropagation(); setRsvp(ev.id, myRsvp === 'going' ? null : 'going') }}
-            disabled={isUpdating}
-            className={`text-xs px-3 py-1 rounded-full font-medium transition ${
-              myRsvp === 'going'
-                ? 'bg-rose-500 text-white'
-                : 'bg-rose-100 text-rose-500 hover:bg-rose-200'
-            }`}
-          >
-            {isUpdating ? '...' : myRsvp === 'going' ? '✅ Going' : '🙋 Will hin'}
-          </button>
-        )}
-      </div>
-    )
-  }
 
   if (feed.length === 0) {
     return (
@@ -122,7 +57,11 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
                 memory={{ ...photoMem, event_title: ev.title, event_date: ev.date }}
                 onClick={() => onSelectMemory(photoMem)}
               />
-              {showRsvp && <div className="px-1"><RsvpButton ev={ev} /></div>}
+              {showRsvp && (
+                <div className="px-1">
+                  <RsvpButtons event={ev} who={who} onUpdated={() => window.location.reload()} />
+                </div>
+              )}
             </div>
           )
         }
@@ -147,7 +86,9 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
                 })}
                 {ev.start_time && ` · ${ev.start_time}–${ev.end_time}`}
               </p>
-              {showRsvp && <RsvpButton ev={ev} />}
+              {showRsvp && (
+                <RsvpButtons event={ev} who={who} onUpdated={() => window.location.reload()} />
+              )}
             </div>
           </div>
         )

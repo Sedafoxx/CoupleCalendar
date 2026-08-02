@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { isTheresaAuthed } from '@/lib/theresa-auth'
+import { syncConfirmedEventToGoogle } from '@/lib/google-sync'
 import type { NextRequest } from 'next/server'
 
 type Who = 'dimitri' | 'theresa'
@@ -119,6 +120,10 @@ export async function PATCH(
         event_id: data.id,
       })
     }
+
+    // Both confirmed → also write the date to Dimitri's Google Calendar.
+    // Idempotent (title+day match) and best-effort; never blocks the response.
+    await syncConfirmedEventToGoogle(data)
   }
 
   return Response.json(data)

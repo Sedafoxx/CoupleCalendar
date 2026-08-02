@@ -1,16 +1,16 @@
 # Graph Report - CoupleCalendar  (2026-08-01)
 
 ## Corpus Check
-- 74 files · ~28,082 words
+- 74 files · ~28,322 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 350 nodes · 475 edges · 36 communities (29 shown, 7 thin omitted)
+- 351 nodes · 476 edges · 36 communities (29 shown, 7 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 9 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f9216ccd`
+- Built from commit: `25029a0e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,16 +61,16 @@
 10. `POST()` - 7 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `POST()` --calls--> `fetchPage()`  [INFERRED]
-  src/app/api/theresa/chat/route.ts → src/lib/fetch-page.ts
+- `POST()` --calls--> `getFreeBusySlots()`  [INFERRED]
+  src/app/api/theresa/chat/route.ts → src/lib/freebusy.ts
+- `POST()` --calls--> `getCalendarClient()`  [INFERRED]
+  src/app/api/theresa/chat/route.ts → src/lib/google-auth.ts
 - `POST()` --calls--> `isTheresaAuthed()`  [INFERRED]
   src/app/api/theresa/chat/route.ts → src/lib/theresa-auth.ts
-- `POST()` --calls--> `getViennaWeather()`  [INFERRED]
-  src/app/api/theresa/chat/route.ts → src/lib/weather.ts
-- `POST()` --calls--> `weatherSummary()`  [INFERRED]
-  src/app/api/theresa/chat/route.ts → src/lib/weather.ts
 - `POST()` --calls--> `fetchPage()`  [INFERRED]
   src/app/api/chat/route.ts → src/lib/fetch-page.ts
+- `POST()` --calls--> `getViennaWeather()`  [INFERRED]
+  src/app/api/chat/route.ts → src/lib/weather.ts
 
 ## Import Cycles
 - None detected.
@@ -78,20 +78,20 @@
 ## Communities (36 total, 7 thin omitted)
 
 ### Community 0 - "Community 0"
-Cohesion: 0.06
-Nodes (30): ChatMessage, NarrowingOpt, Suggestion, SuggestionOpt, CalendarProps, MONTHS, WEEKDAYS, CaptureState (+22 more)
+Cohesion: 0.07
+Nodes (24): ChatMessage, NarrowingOpt, Suggestion, SuggestionOpt, CalendarProps, MONTHS, WEEKDAYS, CaptureState (+16 more)
 
 ### Community 1 - "Community 1"
 Cohesion: 0.07
 Nodes (26): dependencies, @auth/supabase-adapter, googleapis, next, next-auth, openai, react, react-dom (+18 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.12
-Nodes (21): FetchedPage, fetchPage(), htmlToText(), categorizeItem(), DayForecast, FeasibilityCategory, feasibilityReason(), getViennaWeather() (+13 more)
+Cohesion: 0.10
+Nodes (35): fmtDay(), fmtEvents(), fmtSlots(), googleHasMatch(), hhmmss(), nightsBetween(), PlannedEvent, reconcileTheresaEvents() (+27 more)
 
 ### Community 3 - "Community 3"
-Cohesion: 0.36
-Nodes (4): authorized(), GET(), GET(), viennaToday()
+Cohesion: 0.10
+Nodes (11): authorized(), GET(), GET(), Ctx, viennaToday(), BucketListItem, EventCategory, EventStatus (+3 more)
 
 ### Community 4 - "Community 4"
 Cohesion: 0.10
@@ -114,8 +114,8 @@ Cohesion: 0.22
 Nodes (8): DateSlots, DEFAULTS, eventOverlapsSlot(), fmtDate(), FreeSlot, HEARTS, PlanPage(), toViennaHHMM()
 
 ### Community 9 - "Community 9"
-Cohesion: 0.14
-Nodes (25): POST(), utcToVienna(), fmtDay(), fmtEvents(), fmtSlots(), googleHasMatch(), hhmmss(), nightsBetween() (+17 more)
+Cohesion: 0.19
+Nodes (12): POST(), utcToVienna(), GET(), BusyBlock, computeFreeSlots(), DateSlots, FreeSlot, getFreeBusySlots() (+4 more)
 
 ### Community 10 - "Community 10"
 Cohesion: 0.28
@@ -142,8 +142,8 @@ Cohesion: 0.33
 Nodes (5): env, renames, serviceKey, supabase, supabaseUrl
 
 ### Community 25 - "Community 25"
-Cohesion: 0.09
-Nodes (14): Ctx, DELETE(), PATCH(), RouteParams, Who, whoIs(), authOptions, supabase (+6 more)
+Cohesion: 0.14
+Nodes (12): DELETE(), PATCH(), RouteParams, Who, whoIs(), authOptions, isTheresaAuthed(), GET() (+4 more)
 
 ### Community 26 - "Community 26"
 Cohesion: 0.33
@@ -178,24 +178,24 @@ Cohesion: 0.29
 Nodes (6): __dirname, env, envContent, envPath, migrationPath, sql
 
 ## Knowledge Gaps
-- **168 isolated node(s):** `__dirname`, `envPath`, `envContent`, `env`, `migrationPath` (+163 more)
+- **168 isolated node(s):** `RouteParams`, `Props`, `__dirname`, `envPath`, `envContent` (+163 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `supabase` connect `Community 25` to `Community 0`, `Community 2`, `Community 3`, `Community 5`, `Community 9`?**
+- **Why does `supabase` connect `Community 9` to `Community 25`, `Community 2`, `Community 3`, `Community 5`?**
   _High betweenness centrality (0.050) - this node is a cross-community bridge._
+- **Why does `Memory` connect `Community 0` to `Community 3`?**
+  _High betweenness centrality (0.020) - this node is a cross-community bridge._
 - **Why does `Event` connect `Community 0` to `Community 8`, `Community 3`?**
   _High betweenness centrality (0.015) - this node is a cross-community bridge._
 - **Are the 6 inferred relationships involving `POST()` (e.g. with `fetchPage()` and `getFreeBusySlots()`) actually correct?**
   _`POST()` has 6 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `__dirname`, `envPath`, `envContent` to the rest of the system?**
+- **What connects `RouteParams`, `Props`, `__dirname` to the rest of the system?**
   _168 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Community 0` be split into smaller, more focused modules?**
-  _Cohesion score 0.06038961038961039 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06956521739130435 - nodes in this community are weakly interconnected._
 - **Should `Community 1` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
-- **Should `Community 2` be split into smaller, more focused modules?**
-  _Cohesion score 0.12333333333333334 - nodes in this community are weakly interconnected._

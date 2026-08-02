@@ -6,6 +6,7 @@ import { getFreeBusySlots } from '@/lib/freebusy'
 import { NextRequest } from 'next/server'
 import { getViennaWeather, weatherSummary, categorizeItem, feasibilityReason } from '@/lib/weather'
 import { fetchPage } from '@/lib/fetch-page'
+import { provenanceOf, compareByProvenanceThenDate } from '@/lib/event-utils'
 
 const openai = new OpenAI()
 
@@ -98,12 +99,16 @@ type PlannedEvent = {
   end_date: string | null
   recurrence_rule: string | null
   added_by: string | null
+  category: string | null
 }
 
 function fmtEvents(events: PlannedEvent[]): string {
   if (!events.length) return 'Noch keine geplanten Events.'
   return events.map(e => {
-    const who = e.added_by === 'theresa' ? ' (von Theresa ♡)' : ''
+    const who = provenanceOf(e) === 'agent' ? ' (entdeckt)'
+      : provenanceOf(e) === 'theresa' ? ' (von Theresa ♡)'
+      : provenanceOf(e) === 'dimi' ? ' (von Dimi)'
+      : ''
     const loc = e.location ? ` @ ${e.location}` : ''
     let when: string
     if (e.type === 'sleepover') {
@@ -330,6 +335,7 @@ Regeln:
 - sleepover: nur date setzen (eine Nacht), oder date + end_date (mehrere Nächte). Keine start_time/end_time. Dimitri wird automatisch benachrichtigt.
 - Bucket-List Tags nur aus: romantic, adventure, food, culture, outdoor, sport
 - location: leerer String wenn unbekannt
+- Wenn du Aktivitäten vorschlägst oder Termine kombinierst: gib zuerst den manuell geplanten Events von Dimi/Theresa (feste Pläne) Vorrang, danach gescrapte/entdeckte Vorschläge.
 - Wenn gespeichert, freundlich bestätigen
 - Bei action "none" nur chatten oder Fragen beantworten
 
@@ -374,7 +380,7 @@ export async function POST(req: NextRequest) {
   const [freeBusyResult, bucketListResult, eventsResult, weatherResult, linksResult, plansResult] = await Promise.allSettled([
     getFreeBusySlots(),
     supabase.from('bucket_list').select('title, description, tags, duration_days').eq('resolved', false).order('created_at', { ascending: false }),
-    supabase.from('events').select('title, location, date, start_time, end_time, type, end_date, recurrence_rule, added_by').order('date', { ascending: true }),
+    supabase.from('events').select('title, location, date, start_time, end_time, type, end_date, recurrence_rule, added_by, category').order('date', { ascending: true }),
     getViennaWeather(),
     supabase.from('known_links').select('title, url, purpose, keywords'),
     supabase.from('events').select('title, recurrence_rule').not('recurrence_rule', 'is', null).limit(20),
@@ -410,6 +416,7 @@ export async function POST(req: NextRequest) {
   const eventsData = (eventsResult.status === 'fulfilled' ? eventsResult.value.data : []) as PlannedEvent[] | null
   const upcomingEvents = (eventsData ?? [])
     .filter(e => e.date >= today || (e.end_date != null && e.end_date >= today))
+    .sort(compareByProvenanceThenDate) // manual plans first, then scraped
     .slice(0, 40)
   const plannedEventsSummary = fmtEvents(upcomingEvents)
 

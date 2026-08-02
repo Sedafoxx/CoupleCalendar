@@ -6,6 +6,7 @@ import { getCalendarClient } from '@/lib/google-auth'
 import { NextRequest } from 'next/server'
 import { getViennaWeather, weatherSummary, categorizeItem, feasibilityReason } from '@/lib/weather'
 import { fetchPage } from '@/lib/fetch-page'
+import { provenanceOf, compareByProvenanceThenDate } from '@/lib/event-utils'
 
 const openai = new OpenAI()
 
@@ -94,6 +95,7 @@ ${bucketListSummary || 'Noch leer — füge etwas hinzu!'}
 KOMMENDE EVENTS (für Kombinations-Vorschläge):
 ────────────────────────
 ${eventsSummary || 'Keine kommenden Events.'}
+Diese Liste ist nach Priorität sortiert: zuerst die von euch manuell geplanten Events (markiert mit [von Dimi] / [von Theresa]), danach gescrapte Vorschläge ([gescrapet]). Behandle manuell geplante Events als FESTE Pläne und gib ihnen bei Vorschlägen oder Kombinationen Vorrang vor gescrapten Ideen.
 
 ────────────────────────
 FEASIBILITY-ANALYSE — Wenn der User nach Vorschlägen fragt:
@@ -234,7 +236,7 @@ export async function POST(req: NextRequest) {
   const [weatherResult, bucketListResult, eventsResult, linksResult, plansResult] = await Promise.allSettled([
     getViennaWeather(),
     supabase.from('bucket_list').select('title, description, tags, duration_days').eq('resolved', false).order('created_at', { ascending: false }),
-    supabase.from('events').select('title, date, start_time, end_time, location, type, recurrence_rule').gte('date', new Date().toISOString().split('T')[0]).order('date', { ascending: true }).limit(20),
+    supabase.from('events').select('title, date, start_time, end_time, location, type, recurrence_rule, added_by, category').gte('date', new Date().toISOString().split('T')[0]).order('date', { ascending: true }).limit(40),
     supabase.from('known_links').select('title, url, purpose, keywords'),
     supabase.from('events').select('title, recurrence_rule').not('recurrence_rule', 'is', null).limit(20),
   ])
@@ -257,11 +259,16 @@ export async function POST(req: NextRequest) {
   // Build upcoming events summary
   const eventsData = eventsResult.status === 'fulfilled' ? eventsResult.value.data : []
   const eventsSummary = (eventsData ?? []).length
-    ? (eventsData ?? []).slice(0, 15).map(e => {
-        const when = e.start_time ? `${fmtDate(e.date)} ${e.start_time}–${e.end_time || ''} Uhr` : fmtDate(e.date)
-        const loc = e.location ? ` @ ${e.location}` : ''
-        return `- ${e.title}${loc} (${when})`
-      }).join('\n')
+    ? [...(eventsData ?? [])]
+        .sort(compareByProvenanceThenDate) // manual plans first, then scraped
+        .slice(0, 15)
+        .map(e => {
+          const when = e.start_time ? `${fmtDate(e.date)} ${e.start_time}–${e.end_time || ''} Uhr` : fmtDate(e.date)
+          const loc = e.location ? ` @ ${e.location}` : ''
+          const p = provenanceOf(e)
+          const who = p === 'agent' ? ' [gescrapet]' : p === 'theresa' ? ' [von Theresa]' : p === 'dimi' ? ' [von Dimi]' : ''
+          return `- ${e.title}${loc} (${when})${who}`
+        }).join('\n')
     : 'Keine kommenden Events.'
 
   // Standing plans = recurring events (e.g. Neubau tanzt every Thursday)

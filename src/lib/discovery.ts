@@ -33,6 +33,15 @@ function plusHours(hhmm: string, h: number): string {
   return `${pad((hh + h) % 24)}:${pad(mm)}`
 }
 
+// UTC ISO datetime → Vienna "YYYY-MM-DD" + "HH:MM" (avoids UTC-midnight drift).
+function utcToVienna(iso: string): { date: string; time: string } | null {
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return null
+  const str = d.toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }) // "YYYY-MM-DD HH:MM:SS"
+  const [date, time] = str.split(' ')
+  return { date, time: time.slice(0, 5) }
+}
+
 function decode(s: string): string {
   return s
     .replace(/&amp;/g, '&').replace(/&quot;/g, '"')
@@ -116,7 +125,116 @@ export async function scrapeYesticket(): Promise<RawEvent[]> {
   return out
 }
 
-const SOURCES: Array<() => Promise<RawEvent[]>> = [scrapeGogogo, scrapeYesticket]
+// ── Source: Resident Advisor (ra.co) — real club/rave/electronic nights ──────
+const RA_GRAPHQL = 'https://ra.co/graphql'
+const RA_AREA_ID = 450
+const RA_DAYS_AHEAD = 30
+const RA_MAX_EVENTS = 100
+
+const RA_QUERY = `
+query($from: DateTime!, $to: DateTime!, $page: Int!) {
+  eventListings(
+    filters: {
+      areas: { eq: 450 }
+      listingDate: { gte: $from, lte: $to }
+    }
+    pageSize: 50
+    page: $page
+  ) {
+    data {
+      id listingDate
+      event {
+        id title date startTime
+        content
+        venue { name address }
+        artists { name }
+        images { filename }
+        pick { blurb }
+      }
+    }
+    totalResults
+  }
+}
+`
+
+type RaListing = {
+  id: string
+  listingDate: string
+  event: {
+    id: string
+    title: string
+    date: string
+    startTime: string | null
+    content: string
+    venue?: { name?: string; address?: string } | null
+    artists?: { name: string }[]
+    images?: { filename: string }[]
+    pick?: { blurb?: string } | null
+  }
+}
+
+export async function scrapeRa(): Promise<RawEvent[]> {
+  const now = new Date()
+  const from = now.toISOString()
+  const to = new Date(now.getTime() + RA_DAYS_AHEAD * 24 * 60 * 60 * 1000).toISOString()
+
+  const out: RawEvent[] = []
+  let page = 1
+  let total = Infinity
+
+  while (out.length < RA_MAX_EVENTS && (page - 1) * 50 < total) {
+    const res = await fetch(RA_GRAPHQL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36',
+        Referer: 'https://ra.co/events/at/vienna',
+        Origin: 'https://ra.co',
+        'ra-content-language': 'en',
+      },
+      body: JSON.stringify({
+        query: RA_QUERY.replace('{ eq: 450 }', `{ eq: ${RA_AREA_ID} }`),
+        variables: { from, to, page },
+      }),
+    })
+    if (!res.ok) throw new Error(`RA request failed: ${res.status}`)
+    const json = await res.json()
+    const listings: RaListing[] = json?.data?.eventListings?.data ?? []
+    total = json?.data?.eventListings?.totalResults ?? listings.length
+    if (!listings.length) break
+
+    for (const item of listings) {
+      const ev = item.event
+      if (!ev?.title) continue
+
+      const v = utcToVienna(ev.startTime || ev.date || item.listingDate)
+      if (!v) continue
+
+      const venue = ev.venue
+      const venueLabel = [venue?.name, venue?.address].filter(Boolean).join(', ') || 'Wien'
+      const img = ev.images?.[0]?.filename ? `https://ra.co${ev.images[0].filename}` : null
+
+      out.push({
+        source: 'ra',
+        // RA reuses the same event id for multi-night runs (festivals etc.), so
+        // include the date to keep each night a separate, dedupable row.
+        source_id: `ra:${ev.id}:${v.date}`,
+        title: ev.title,
+        location: venueLabel,
+        date: v.date,
+        start_time: v.time,
+        end_time: plusHours(v.time, 4), // no end in the listing — assume ~4h night
+        url: `https://ra.co/events/${ev.id}`,
+        image_url: img,
+      })
+    }
+    page += 1
+  }
+
+  return out
+}
+
+const SOURCES: Array<() => Promise<RawEvent[]>> = [scrapeGogogo, scrapeYesticket, scrapeRa]
 
 // AI relevance tags for a couple in Vienna (reuses Eventfinder's tagging idea,
 // re-pointed from a single-guy profile to date-idea suitability).
@@ -155,14 +273,20 @@ export async function runDiscovery(): Promise<IngestResult> {
   )
   const raw = batches.flat()
 
-  // 2. Dedup against what we already imported.
+  // 2. Dedup against what we already imported, then against duplicates *within*
+  //    this batch (a source can emit the same id twice across pages).
   const ids = raw.map(r => r.source_id)
   const { data: existing } = await supabase
     .from('events')
     .select('source_id')
     .in('source_id', ids)
   const known = new Set((existing ?? []).map(e => e.source_id))
-  const fresh = raw.filter(r => !known.has(r.source_id))
+  const seen = new Set<string>()
+  const fresh = raw.filter(r => {
+    if (known.has(r.source_id) || seen.has(r.source_id)) return false
+    seen.add(r.source_id)
+    return true
+  })
 
   if (!fresh.length) return { scraped: raw.length, inserted: 0, skipped: raw.length }
 
@@ -178,7 +302,7 @@ export async function runDiscovery(): Promise<IngestResult> {
     end_time: r.end_time,
     type: 'single' as const,
     category: 'city' as const,
-    status: 'confirmed' as const,
+    status: 'proposed' as const,
     joinable: false,
     rsvp_dimitri: null,
     rsvp_theresa: null,

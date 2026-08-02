@@ -4,14 +4,104 @@
   "graph": {},
   "nodes": [
     {
+      "label": "route.ts",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "id_route",
+      "community": 25,
+      "norm_label": "route.ts"
+    },
+    {
+      "label": "RouteParams",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "id_route_routeparams",
+      "community": 25,
+      "norm_label": "routeparams"
+    },
+    {
+      "label": "whoIs()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "id_route_whois",
+      "community": 25,
+      "norm_label": "whois()"
+    },
+    {
+      "label": "DELETE()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "id_route_delete",
+      "community": 25,
+      "norm_label": "delete()"
+    },
+    {
+      "label": "PATCH()",
+      "file_type": "code",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "id_route_patch",
+      "community": 25,
+      "norm_label": "patch()"
+    },
+    {
+      "label": "MemoryEditor.tsx",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "components_memoryeditor",
+      "community": 0,
+      "norm_label": "memoryeditor.tsx"
+    },
+    {
+      "label": "Props",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "components_memoryeditor_props",
+      "community": 0,
+      "norm_label": "props"
+    },
+    {
+      "label": "compressImage()",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "components_memoryeditor_compressimage",
+      "community": 0,
+      "norm_label": "compressimage()"
+    },
+    {
+      "label": "MemoryEditor()",
+      "file_type": "code",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "components_memoryeditor_memoryeditor",
+      "community": 0,
+      "norm_label": "memoryeditor()"
+    },
+    {
       "label": "run-migration-0005.mjs",
       "file_type": "code",
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005",
       "community": 35,
-      "norm_label": "run-migration-0005.mjs"
+      "norm_label": "run-migration-0005.mjs",
+      "id": "scripts_run_migration_0005"
     },
     {
       "label": "__dirname",
@@ -19,9 +109,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005_dirname",
       "community": 35,
-      "norm_label": "__dirname"
+      "norm_label": "__dirname",
+      "id": "scripts_run_migration_0005_dirname"
     },
     {
       "label": "envPath",
@@ -29,9 +119,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005_envpath",
       "community": 35,
-      "norm_label": "envpath"
+      "norm_label": "envpath",
+      "id": "scripts_run_migration_0005_envpath"
     },
     {
       "label": "envContent",
@@ -39,9 +129,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005_envcontent",
       "community": 35,
-      "norm_label": "envcontent"
+      "norm_label": "envcontent",
+      "id": "scripts_run_migration_0005_envcontent"
     },
     {
       "label": "env",
@@ -49,9 +139,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005_env",
       "community": 35,
-      "norm_label": "env"
+      "norm_label": "env",
+      "id": "scripts_run_migration_0005_env"
     },
     {
       "label": "migrationPath",
@@ -59,9 +149,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005_migrationpath",
       "community": 35,
-      "norm_label": "migrationpath"
+      "norm_label": "migrationpath",
+      "id": "scripts_run_migration_0005_migrationpath"
     },
     {
       "label": "sql",
@@ -69,9 +159,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "scripts_run_migration_0005_sql",
       "community": 35,
-      "norm_label": "sql"
+      "norm_label": "sql",
+      "id": "scripts_run_migration_0005_sql"
     },
     {
       "label": "route.ts",
@@ -79,9 +169,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_api_chat_route_ts_chat_route",
       "community": 2,
-      "norm_label": "route.ts"
+      "norm_label": "route.ts",
+      "id": "src_app_api_chat_route_ts_chat_route"
     },
     {
       "label": "openai",
@@ -89,9 +179,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "src_app_api_chat_route_ts_chat_route_openai",
       "community": 2,
-      "norm_label": "openai"
+      "norm_label": "openai",
+      "id": "src_app_api_chat_route_ts_chat_route_openai"
     },
     {
       "label": "getViennaOffset()",
@@ -99,9 +189,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "src_app_api_chat_route_ts_chat_route_getviennaoffset",
       "community": 2,
-      "norm_label": "getviennaoffset()"
+      "norm_label": "getviennaoffset()",
+      "id": "src_app_api_chat_route_ts_chat_route_getviennaoffset"
     },
     {
       "label": "addOneDay()",
@@ -109,9 +199,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "src_app_api_chat_route_ts_chat_route_addoneday",
       "community": 2,
-      "norm_label": "addoneday()"
+      "norm_label": "addoneday()",
+      "id": "src_app_api_chat_route_ts_chat_route_addoneday"
     },
     {
       "label": "fmtDate()",
@@ -119,9 +209,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "chat_route_fmtdate",
       "community": 2,
-      "norm_label": "fmtdate()"
+      "norm_label": "fmtdate()",
+      "id": "chat_route_fmtdate"
     },
     {
       "label": "buildSystemPrompt()",
@@ -129,9 +219,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "src_app_api_chat_route_ts_chat_route_buildsystemprompt",
       "community": 2,
-      "norm_label": "buildsystemprompt()"
+      "norm_label": "buildsystemprompt()",
+      "id": "src_app_api_chat_route_ts_chat_route_buildsystemprompt"
     },
     {
       "label": "POST()",
@@ -139,9 +229,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L221",
       "_origin": "ast",
-      "id": "src_app_api_chat_route_ts_chat_route_post",
       "community": 2,
-      "norm_label": "post()"
+      "norm_label": "post()",
+      "id": "src_app_api_chat_route_ts_chat_route_post"
     },
     {
       "label": "route.ts",
@@ -149,9 +239,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route",
-      "community": 9,
-      "norm_label": "route.ts"
+      "community": 2,
+      "norm_label": "route.ts",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route"
     },
     {
       "label": "openai",
@@ -159,9 +249,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_openai",
-      "community": 9,
-      "norm_label": "openai"
+      "community": 2,
+      "norm_label": "openai",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_openai"
     },
     {
       "label": "getViennaOffset()",
@@ -169,9 +259,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset",
-      "community": 9,
-      "norm_label": "getviennaoffset()"
+      "community": 2,
+      "norm_label": "getviennaoffset()",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_getviennaoffset"
     },
     {
       "label": "addOneDay()",
@@ -179,9 +269,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_addoneday",
-      "community": 9,
-      "norm_label": "addoneday()"
+      "community": 2,
+      "norm_label": "addoneday()",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_addoneday"
     },
     {
       "label": "hhmmss()",
@@ -189,9 +279,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "chat_route_hhmmss",
-      "community": 9,
-      "norm_label": "hhmmss()"
+      "community": 2,
+      "norm_label": "hhmmss()",
+      "id": "chat_route_hhmmss"
     },
     {
       "label": "googleHasMatch()",
@@ -199,9 +289,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "chat_route_googlehasmatch",
-      "community": 9,
-      "norm_label": "googlehasmatch()"
+      "community": 2,
+      "norm_label": "googlehasmatch()",
+      "id": "chat_route_googlehasmatch"
     },
     {
       "label": "nightsBetween()",
@@ -209,9 +299,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L53",
       "_origin": "ast",
-      "id": "chat_route_nightsbetween",
-      "community": 9,
-      "norm_label": "nightsbetween()"
+      "community": 2,
+      "norm_label": "nightsbetween()",
+      "id": "chat_route_nightsbetween"
     },
     {
       "label": "fmtDay()",
@@ -219,9 +309,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "chat_route_fmtday",
-      "community": 9,
-      "norm_label": "fmtday()"
+      "community": 2,
+      "norm_label": "fmtday()",
+      "id": "chat_route_fmtday"
     },
     {
       "label": "sleepoverWhen()",
@@ -229,9 +319,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L70",
       "_origin": "ast",
-      "id": "chat_route_sleepoverwhen",
-      "community": 9,
-      "norm_label": "sleepoverwhen()"
+      "community": 2,
+      "norm_label": "sleepoverwhen()",
+      "id": "chat_route_sleepoverwhen"
     },
     {
       "label": "fmtSlots()",
@@ -239,9 +329,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L76",
       "_origin": "ast",
-      "id": "chat_route_fmtslots",
-      "community": 9,
-      "norm_label": "fmtslots()"
+      "community": 2,
+      "norm_label": "fmtslots()",
+      "id": "chat_route_fmtslots"
     },
     {
       "label": "PlannedEvent",
@@ -249,9 +339,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "chat_route_plannedevent",
-      "community": 9,
-      "norm_label": "plannedevent"
+      "community": 2,
+      "norm_label": "plannedevent",
+      "id": "chat_route_plannedevent"
     },
     {
       "label": "fmtEvents()",
@@ -259,9 +349,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L103",
       "_origin": "ast",
-      "id": "chat_route_fmtevents",
-      "community": 9,
-      "norm_label": "fmtevents()"
+      "community": 2,
+      "norm_label": "fmtevents()",
+      "id": "chat_route_fmtevents"
     },
     {
       "label": "reconcileTheresaEvents()",
@@ -269,9 +359,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L128",
       "_origin": "ast",
-      "id": "chat_route_reconciletheresaevents",
-      "community": 9,
-      "norm_label": "reconciletheresaevents()"
+      "community": 2,
+      "norm_label": "reconciletheresaevents()",
+      "id": "chat_route_reconciletheresaevents"
     },
     {
       "label": "buildSystemPrompt()",
@@ -279,9 +369,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L202",
       "_origin": "ast",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt",
-      "community": 9,
-      "norm_label": "buildsystemprompt()"
+      "community": 2,
+      "norm_label": "buildsystemprompt()",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_buildsystemprompt"
     },
     {
       "label": "POST()",
@@ -289,9 +379,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L360",
       "_origin": "ast",
-      "id": "src_app_api_theresa_chat_route_ts_chat_route_post",
-      "community": 9,
-      "norm_label": "post()"
+      "community": 2,
+      "norm_label": "post()",
+      "id": "src_app_api_theresa_chat_route_ts_chat_route_post"
     },
     {
       "label": "fetch-page.ts",
@@ -299,9 +389,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "lib_fetch_page",
       "community": 2,
-      "norm_label": "fetch-page.ts"
+      "norm_label": "fetch-page.ts",
+      "id": "lib_fetch_page"
     },
     {
       "label": "FetchedPage",
@@ -309,9 +399,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "lib_fetch_page_fetchedpage",
       "community": 2,
-      "norm_label": "fetchedpage"
+      "norm_label": "fetchedpage",
+      "id": "lib_fetch_page_fetchedpage"
     },
     {
       "label": "htmlToText()",
@@ -319,9 +409,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "lib_fetch_page_htmltotext",
       "community": 2,
-      "norm_label": "htmltotext()"
+      "norm_label": "htmltotext()",
+      "id": "lib_fetch_page_htmltotext"
     },
     {
       "label": "fetchPage()",
@@ -329,19 +419,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "lib_fetch_page_fetchpage",
       "community": 2,
-      "norm_label": "fetchpage()"
-    },
-    {
-      "label": "route.ts",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "route.ts",
-      "id": "id_route"
+      "norm_label": "fetchpage()",
+      "id": "lib_fetch_page_fetchpage"
     },
     {
       "label": "Who",
@@ -352,36 +432,6 @@
       "community": 25,
       "norm_label": "who",
       "id": "id_route_who"
-    },
-    {
-      "label": "whoIs()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "whois()",
-      "id": "id_route_whois"
-    },
-    {
-      "label": "DELETE()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L16",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "delete()",
-      "id": "id_route_delete"
-    },
-    {
-      "label": "PATCH()",
-      "file_type": "code",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "patch()",
-      "id": "id_route_patch"
     },
     {
       "label": "page.tsx",
@@ -584,16 +634,6 @@
       "id": "lib_weather_feasibilityreason"
     },
     {
-      "label": "RouteParams",
-      "file_type": "code",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L7",
-      "_origin": "ast",
-      "community": 25,
-      "norm_label": "routeparams",
-      "id": "id_route_routeparams"
-    },
-    {
       "label": "page.tsx",
       "file_type": "code",
       "source_file": "src/app/memories/page.tsx",
@@ -612,36 +652,6 @@
       "community": 0,
       "norm_label": "memoriespage()",
       "id": "memories_page_memoriespage"
-    },
-    {
-      "label": "MemoryEditor.tsx",
-      "file_type": "code",
-      "source_file": "src/components/MemoryEditor.tsx",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "memoryeditor.tsx",
-      "id": "components_memoryeditor"
-    },
-    {
-      "label": "Props",
-      "file_type": "code",
-      "source_file": "src/components/MemoryEditor.tsx",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "props",
-      "id": "components_memoryeditor_props"
-    },
-    {
-      "label": "MemoryEditor()",
-      "file_type": "code",
-      "source_file": "src/components/MemoryEditor.tsx",
-      "source_location": "L11",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "memoryeditor()",
-      "id": "components_memoryeditor_memoryeditor"
     },
     {
       "label": "FeedCards.tsx",
@@ -839,7 +849,7 @@
       "source_file": "src/app/bucket-list/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "page.tsx",
       "id": "bucket_list_page"
     },
@@ -849,7 +859,7 @@
       "source_file": "src/app/bucket-list/page.tsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "bucketlistpage()",
       "id": "bucket_list_page_bucketlistpage"
     },
@@ -889,7 +899,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "supabase.ts",
       "id": "lib_supabase"
     },
@@ -899,7 +909,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "supabase",
       "id": "lib_supabase_supabase"
     },
@@ -909,7 +919,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "eventtype",
       "id": "lib_supabase_eventtype"
     },
@@ -919,7 +929,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "eventcategory",
       "id": "lib_supabase_eventcategory"
     },
@@ -929,7 +939,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "eventstatus",
       "id": "lib_supabase_eventstatus"
     },
@@ -939,7 +949,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "rsvp",
       "id": "lib_supabase_rsvp"
     },
@@ -959,7 +969,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "bucketlistitem",
       "id": "lib_supabase_bucketlistitem"
     },
@@ -969,7 +979,7 @@
       "source_file": "src/lib/supabase.ts",
       "source_location": "L54",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "notificationkind",
       "id": "lib_supabase_notificationkind"
     },
@@ -1019,7 +1029,7 @@
       "source_file": "src/app/theresa/page.tsx",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "page.tsx",
       "id": "theresa_page"
     },
@@ -1029,7 +1039,7 @@
       "source_file": "src/app/theresa/page.tsx",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 0,
+      "community": 3,
       "norm_label": "theresaredirect()",
       "id": "theresa_page_theresaredirect"
     },
@@ -1169,7 +1179,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "route.ts",
       "id": "debug_route"
     },
@@ -1179,7 +1189,7 @@
       "source_file": "src/app/api/debug/route.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 25,
+      "community": 9,
       "norm_label": "get()",
       "id": "debug_route_get"
     },
@@ -2539,7 +2549,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "route.ts",
       "id": "src_app_api_bucket_list_id_route_ts_id_route"
     },
@@ -2549,7 +2559,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "ctx",
       "id": "id_route_ctx"
     },
@@ -2559,7 +2569,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "delete()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_delete"
     },
@@ -2569,7 +2579,7 @@
       "source_file": "src/app/api/bucket-list/[id]/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "patch()",
       "id": "src_app_api_bucket_list_id_route_ts_id_route_patch"
     },
@@ -2579,7 +2589,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "route.ts",
       "id": "bucket_list_route"
     },
@@ -2589,7 +2599,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "get()",
       "id": "bucket_list_route_get"
     },
@@ -2599,7 +2609,7 @@
       "source_file": "src/app/api/bucket-list/route.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 25,
+      "community": 3,
       "norm_label": "post()",
       "id": "bucket_list_route_post"
     },
@@ -3508,12 +3518,180 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_delete"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/[id]/route.ts",
+      "source_location": "L28",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_patch"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_routeparams"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/[id]/route.ts",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_who"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "id_route_whois"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_auth_authoptions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_supabase_supabase"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route",
+      "target": "lib_theresa_auth_istheresaauthed"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/memories/[id]/route.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route_delete",
+      "target": "id_route_whois"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/api/events/[id]/route.ts",
+      "source_location": "L32",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "id_route_patch",
+      "target": "id_route_whois"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "components_memoryeditor",
+      "target": "components_memoryeditor_compressimage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memoryeditor",
+      "target": "components_memoryeditor_memoryeditor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memoryeditor",
+      "target": "components_memoryeditor_props"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/components/MemoryEditor.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_memoryeditor",
+      "target": "lib_supabase_memory"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/app/memories/page.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "memories_page",
+      "target": "components_memoryeditor"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_run_migration_0005",
-      "target": "scripts_run_migration_0005_dirname",
-      "confidence_score": 1.0
+      "target": "scripts_run_migration_0005_dirname"
     },
     {
       "relation": "contains",
@@ -3521,9 +3699,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_run_migration_0005",
-      "target": "scripts_run_migration_0005_env",
-      "confidence_score": 1.0
+      "target": "scripts_run_migration_0005_env"
     },
     {
       "relation": "contains",
@@ -3531,9 +3709,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_run_migration_0005",
-      "target": "scripts_run_migration_0005_envcontent",
-      "confidence_score": 1.0
+      "target": "scripts_run_migration_0005_envcontent"
     },
     {
       "relation": "contains",
@@ -3541,9 +3719,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_run_migration_0005",
-      "target": "scripts_run_migration_0005_envpath",
-      "confidence_score": 1.0
+      "target": "scripts_run_migration_0005_envpath"
     },
     {
       "relation": "contains",
@@ -3551,9 +3729,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_run_migration_0005",
-      "target": "scripts_run_migration_0005_migrationpath",
-      "confidence_score": 1.0
+      "target": "scripts_run_migration_0005_migrationpath"
     },
     {
       "relation": "contains",
@@ -3561,9 +3739,9 @@
       "source_file": "scripts/run-migration-0005.mjs",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_run_migration_0005",
-      "target": "scripts_run_migration_0005_sql",
-      "confidence_score": 1.0
+      "target": "scripts_run_migration_0005_sql"
     },
     {
       "relation": "contains",
@@ -3593,9 +3771,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_fetch_page",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page"
     },
     {
       "relation": "imports",
@@ -3604,9 +3782,9 @@
       "source_file": "src/app/api/chat/route.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_api_chat_route_ts_chat_route",
-      "target": "lib_fetch_page_fetchpage",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page_fetchpage"
     },
     {
       "relation": "imports",
@@ -3898,9 +4076,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_fetch_page",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page"
     },
     {
       "relation": "imports",
@@ -3909,9 +4087,9 @@
       "source_file": "src/app/api/theresa/chat/route.ts",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_api_theresa_chat_route_ts_chat_route",
-      "target": "lib_fetch_page_fetchpage",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page_fetchpage"
     },
     {
       "relation": "imports_from",
@@ -4387,9 +4565,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_fetch_page",
-      "target": "lib_fetch_page_fetchedpage",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page_fetchedpage"
     },
     {
       "relation": "contains",
@@ -4397,9 +4575,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_fetch_page",
-      "target": "lib_fetch_page_fetchpage",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page_fetchpage"
     },
     {
       "relation": "contains",
@@ -4407,9 +4585,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_fetch_page",
-      "target": "lib_fetch_page_htmltotext",
-      "confidence_score": 1.0
+      "target": "lib_fetch_page_htmltotext"
     },
     {
       "relation": "calls",
@@ -4418,125 +4596,9 @@
       "source_file": "src/lib/fetch-page.ts",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "lib_fetch_page_fetchpage",
-      "target": "lib_fetch_page_htmltotext",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_patch"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_routeparams"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_who"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "id_route_whois"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_auth_authoptions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_supabase_supabase"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route",
-      "target": "lib_theresa_auth_istheresaauthed"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/memories/[id]/route.ts",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route_delete",
-      "target": "id_route_whois"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/api/events/[id]/route.ts",
-      "source_location": "L32",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "id_route_patch",
-      "target": "id_route_whois"
+      "target": "lib_fetch_page_htmltotext"
     },
     {
       "relation": "contains",
@@ -4829,17 +4891,6 @@
       "target": "components_feedcards"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/app/memories/page.tsx",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "memories_page",
-      "target": "components_memoryeditor"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -4881,37 +4932,6 @@
       "confidence_score": 1.0,
       "source": "memories_page",
       "target": "memories_page_memoriespage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryEditor.tsx",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memoryeditor",
-      "target": "components_memoryeditor_memoryeditor"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryEditor.tsx",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memoryeditor",
-      "target": "components_memoryeditor_props"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/components/MemoryEditor.tsx",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_memoryeditor",
-      "target": "lib_supabase_memory"
     },
     {
       "relation": "contains",
@@ -8449,5 +8469,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f9216ccdffe2617261eaf5518cbf6614d15d8260"
+  "built_at_commit": "25029a0eb936fd5916d1588e3579ff39a6b10be9"
 }

@@ -1,8 +1,11 @@
 'use client'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import type { Event, Notification } from '@/lib/supabase'
 import EventDetail from '@/components/EventDetail'
+import RsvpButtons from '@/components/RsvpButtons'
+import ProvenanceBadge from '@/components/ProvenanceBadge'
+import { compareByProvenanceThenDate } from '@/lib/event-utils'
 
 type NarrowingOpt = { label: string; category: string }
 type SuggestionOpt = { label: string; event: Record<string, unknown> }
@@ -26,7 +29,6 @@ export default function PlanPage() {
   const [events, setEvents] = useState<Event[]>([])
   const [who, setWho] = useState<'dimitri' | 'theresa' | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
-  const [rsvpUpdating, setRsvpUpdating] = useState<string | null>(null)
 
   // Chat
   const [messages, setMessages] = useState<ChatMessage[]>([])
@@ -154,52 +156,10 @@ export default function PlanPage() {
     setImagePreview(null)
   }
 
-  async function setRsvp(eventId: string, value: 'going' | null) {
-    if (!who) return
-    setRsvpUpdating(eventId)
-    const field = who === 'dimitri' ? 'rsvp_dimitri' : 'rsvp_theresa'
-    await fetch(`/api/events/${eventId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ [field]: value }),
-    })
-    setRsvpUpdating(null)
-    fetchEvents()
-  }
-
   const today = new Date().toISOString().split('T')[0]
-  const upcoming = events.filter(e => e.date >= today && e.category !== 'city')
-  const past = events.filter(e => e.date < today && e.category !== 'city')
-
-  function RsvpRow({ ev }: { ev: Event }) {
-    const dGoing = ev.rsvp_dimitri === 'going'
-    const tGoing = ev.rsvp_theresa === 'going'
-    const both = dGoing && tGoing
-    const myRsvp = who === 'dimitri' ? ev.rsvp_dimitri : ev.rsvp_theresa
-    const isUpd = rsvpUpdating === ev.id
-
-    return (
-      <div className="flex items-center gap-2">
-        {both ? (
-          <span className="text-xs bg-rose-500 text-white px-2.5 py-1 rounded-full font-medium">💕 Beide</span>
-        ) : (
-          <>
-            <span className={`text-xs px-2 py-0.5 rounded-full ${dGoing ? 'bg-stone-900 text-white' : 'bg-stone-100 text-stone-400'}`}>Dimi {dGoing ? '✅' : '👤'}</span>
-            <span className={`text-xs px-2 py-0.5 rounded-full ${tGoing ? 'bg-rose-400 text-white' : 'bg-rose-50 text-rose-300'}`}>Theresa {tGoing ? '✅' : '👤'}</span>
-          </>
-        )}
-        {who && (
-          <button
-            onClick={(e) => { e.stopPropagation(); setRsvp(ev.id, myRsvp === 'going' ? null : 'going') }}
-            disabled={isUpd}
-            className={`text-xs px-3 py-1 rounded-full font-medium transition ${myRsvp === 'going' ? 'bg-rose-500 text-white' : 'bg-rose-100 text-rose-500 hover:bg-rose-200'}`}
-          >
-            {isUpd ? '...' : myRsvp === 'going' ? '✅' : '🙋 Will hin'}
-          </button>
-        )}
-      </div>
-    )
-  }
+  // Our manually-added plans always come first, then by date.
+  const upcoming = events.filter(e => e.date >= today && e.category !== 'city').sort(compareByProvenanceThenDate)
+  const past = events.filter(e => e.date < today && e.category !== 'city').sort(compareByProvenanceThenDate)
 
   // Theresa PIN login
   const [showPinInput, setShowPinInput] = useState(false)
@@ -305,7 +265,7 @@ export default function PlanPage() {
         <div className="bg-white border border-stone-200 rounded-2xl p-4 h-80 overflow-y-auto flex flex-col gap-3">
           {messages.length === 0 && (
             <p className="text-stone-400 text-sm text-center m-auto">
-              Schreib was wir machen sollen! Z.B. "Kino morgen um 19 Uhr" ♡
+              Schreib was wir machen sollen! Z.B. „Kino morgen um 19 Uhr“ ♡
             </p>
           )}
           {messages.map((msg, i) => (
@@ -410,15 +370,16 @@ export default function PlanPage() {
               <div key={ev.id} className="bg-white border border-stone-200 rounded-xl p-4 space-y-2">
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <p className="font-medium text-stone-800 text-sm">{ev.title}</p>
+                      <ProvenanceBadge event={ev} />
                       {ev.tags?.includes('bucket-list') && <span className="text-xs text-amber-500">✨</span>}
                     </div>
-                    <p className="text-xs text-stone-400">{ev.date}{ev.start_time ? ` · ${ev.start_time}–${ev.end_time}` : ''}</p>
+                    <p className="text-xs text-stone-400">{ev.date}{ev.start_time ? ` · ${ev.start_time.slice(0, 5)}${ev.end_time ? `–${ev.end_time.slice(0, 5)}` : ''}` : ''}</p>
                   </div>
                   <button onClick={() => setSelectedEvent(ev)} className="text-xs text-stone-400 hover:text-rose-500 transition shrink-0">Details</button>
                 </div>
-                <RsvpRow ev={ev} />
+                <RsvpButtons event={ev} who={who} onUpdated={fetchEvents} />
               </div>
             ))}
           </div>
@@ -433,6 +394,7 @@ export default function PlanPage() {
             {past.slice(0, 5).map(ev => (
               <button key={ev.id} onClick={() => setSelectedEvent(ev)} className="w-full text-left bg-stone-50 border border-stone-100 rounded-xl px-4 py-2.5 text-sm text-stone-500 hover:bg-stone-100 transition">
                 <span className="font-medium">{ev.title}</span>
+                <ProvenanceBadge event={ev} className="ml-1.5" />
                 {ev.tags?.includes('bucket-list') && <span className="text-amber-500 ml-1">✨</span>}
                 <span className="text-xs ml-2 text-stone-400">{ev.date}</span>
               </button>
