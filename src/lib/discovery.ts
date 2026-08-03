@@ -323,7 +323,116 @@ export async function scrapeImpulstanz(): Promise<RawEvent[]> {
   return capped
 }
 
-const SOURCES: Array<() => Promise<RawEvent[]>> = [scrapeGogogo, scrapeYesticket, scrapeRa, scrapeImpulstanz]
+// ── Source: Kultursommer Wien (kultursommer.wien) — free summer open-air festival ──
+// The kalender page is a JS app, but it fetches events from a plain JSON API:
+// POST kalender_2026.jartc with cmd=getEventsNew (paginated via sel-start/row-limit).
+const KULTURSOMMER_API = 'https://www.kultursommer.wien/jart/prj3/festival/resources/dbcon-def/reports/apps/kalender_2026/kalender_2026.jartc'
+const KULTURSOMMER_MAX = 200
+const KULTURSOMMER_PAGE = 20
+
+type KsSubmission = {
+  ks_kuenstler?: string | null
+  ks_projekttitel?: string | null
+  ks_pr_foto_upload_1?: string | null
+  from_time?: string | null
+  to_time?: string | null
+}
+type KsSlot = {
+  slot_id: string
+  festival_day_date: string
+  festival_slot_from?: string | null
+  festival_slot_till?: string | null
+  location_name?: string | null
+  zip_code?: string | null
+  submission_slot?: KsSubmission[]
+}
+type KsMonth = { value: string; display_value: string; slot?: KsSlot[] }
+
+async function kultursommerPage(start: number, limit: number): Promise<{ months: KsMonth[]; total: number }> {
+  const body = new URLSearchParams({
+    cmd: 'getEventsNew',
+    data: JSON.stringify({
+      'sel-start': start,
+      'row-limit': limit,
+      '__j-language-file': '/prj3/festival/releases/de/lang-config.json',
+      '__lang': 'de',
+    }),
+  }).toString()
+  const res = await fetch(KULTURSOMMER_API, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      'X-Requested-With': 'XMLHttpRequest',
+      Referer: 'https://www.kultursommer.wien/kalender',
+      'User-Agent': 'Mozilla/5.0',
+    },
+    body,
+  })
+  if (!res.ok) throw new Error(`Kultursommer API failed: ${res.status}`)
+  const json = await res.json()
+  return { months: json.month ?? [], total: Number(json.sub_count ?? 0) }
+}
+
+export async function scrapeKultursommer(): Promise<RawEvent[]> {
+  const today = new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }).slice(0, 10)
+  const seen = new Set<string>()
+  const out: RawEvent[] = []
+  let start = 0
+  let total = Infinity
+
+  while (out.length < KULTURSOMMER_MAX && start < total) {
+    const { months, total: t } = await kultursommerPage(start, KULTURSOMMER_PAGE)
+    total = t
+    let got = 0
+
+    for (const month of months) {
+      const year = (month.display_value ?? '').match(/(\d{4})/)?.[1]
+      if (!year) continue
+      for (const slot of month.slot ?? []) {
+        got++
+        // festival_day_date is "Di 4.8." — day + month (year comes from the month block).
+        const dm = slot.festival_day_date?.match(/(\d{1,2})\.(\d{1,2})\./)
+        if (!dm) continue
+        const date = `${year}-${month.value}-${pad(+dm[1])}`
+        if (date < today) continue
+
+        const sub = slot.submission_slot?.[0]
+        if (!sub) continue
+        const artist = decode(sub.ks_kuenstler ?? '')
+        const proj = decode(sub.ks_projekttitel ?? '')
+        const title = artist ? (proj ? `${artist} – ${proj}` : artist) : (proj || 'Kultursommer Event')
+
+        const startTime = (sub.from_time ?? slot.festival_slot_from ?? '20:00').slice(0, 5)
+        const rawEnd = (sub.to_time ?? slot.festival_slot_till ?? '').slice(0, 5)
+        const endTime = rawEnd && rawEnd > startTime ? rawEnd : plusHours(startTime, 1)
+        const location = [slot.zip_code ? `${slot.zip_code}.` : '', slot.location_name ?? ''].filter(Boolean).join(' ') || 'Wien'
+
+        const uid = `kultursommer:${slot.slot_id}`
+        if (seen.has(uid)) continue
+        seen.add(uid)
+        out.push({
+          source: 'kultursommer',
+          source_id: uid,
+          title,
+          location,
+          date,
+          start_time: startTime,
+          end_time: endTime,
+          url: `https://www.kultursommer.wien/kalender?slot_id=${slot.slot_id}`,
+          image_url: sub.ks_pr_foto_upload_1
+            ? `https://www.kultursommer.wien/jart/pub-prc/img.jart?base=/prj3/festival&img=/data/fotos/${sub.ks_pr_foto_upload_1}`
+            : null,
+        })
+      }
+    }
+
+    if (got === 0) break
+    start += KULTURSOMMER_PAGE
+  }
+  return out
+}
+
+const SOURCES: Array<() => Promise<RawEvent[]>> = [scrapeGogogo, scrapeYesticket, scrapeRa, scrapeImpulstanz, scrapeKultursommer]
 
 // AI relevance tags for a couple in Vienna (reuses Eventfinder's tagging idea,
 // re-pointed from a single-guy profile to date-idea suitability).
