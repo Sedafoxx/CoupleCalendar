@@ -234,7 +234,96 @@ export async function scrapeRa(): Promise<RawEvent[]> {
   return out
 }
 
-const SOURCES: Array<() => Promise<RawEvent[]>> = [scrapeGogogo, scrapeYesticket, scrapeRa]
+// ── Source: ImPulsTanz (impulstanz.com) — Vienna contemporary dance festival ──
+// Both the performance calendar and the side-events calendar are server-rendered
+// with a clean "daycontainer → item (time, cie, titel, info/venue)" structure.
+const IMPULSTANZ_PERF = 'https://www.impulstanz.com/calendar/performances/'
+const IMPULSTANZ_EVENTS = 'https://www.impulstanz.com/calendar/events/'
+const IMPULSTANZ_BASE = 'https://www.impulstanz.com/calendar/'
+const IMPULSTANZ_MAX = 80
+
+function stripHtml(s: string): string {
+  return decode(s.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
+}
+
+async function scrapeImpulstanzPage(url: string, mode: 'perf' | 'events'): Promise<RawEvent[]> {
+  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } })
+  if (!res.ok) throw new Error(`ImPulsTanz ${url} failed: ${res.status}`)
+  const html = await res.text()
+  const today = new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }).slice(0, 10)
+  const out: RawEvent[] = []
+
+  // Split into day blocks — each "daycontainer" holds one day's items.
+  const dayBlocks = html.split(/class=['"]daycontainer/)
+  for (const block of dayBlocks.slice(1)) {
+    let date: string | null = null
+    const dm = block.match(/data-date='(\d{2})\/(\d{2})\/(\d{4})'/)
+    if (dm) {
+      date = `${dm[3]}-${dm[1]}-${dm[2]}`
+    } else {
+      // e.g. <div class='day'>Sonntag, 12.7.</div> — no year, assume festival year.
+      const dl = block.match(/<div class='day'>[^<]*?(\d{1,2})\.(\d{1,2})\./)
+      if (dl) date = `${new Date().getFullYear()}-${pad(+dl[2])}-${pad(+dl[1])}`
+    }
+    if (!date || date < today) continue
+
+    const anchorRe = /<a[^>]*href='([^']*)'[^>]*>([\s\S]*?)<\/a>/g
+    for (const m of block.matchAll(anchorRe)) {
+      const href = m[1]
+      const inner = m[2]
+      if (!/<div class='time'>/.test(inner)) continue
+
+      const time = inner.match(/<div class='time'>([^<]*)<\/div>/)?.[1]?.trim() || '20:00'
+      const cie = stripHtml(inner.match(/<div class='cie'>([^<]*)<\/div>/)?.[1] ?? '')
+      const titel = stripHtml(inner.match(/<div class='titel'>([^<]*)<\/div>/)?.[1] ?? '')
+      const venue = stripHtml(inner.match(/<div class='info'>\s*<div>([^<]*)<\/div>/)?.[1] ?? '') || 'Wien'
+
+      let title: string
+      if (mode === 'perf') {
+        title = titel ? (cie && cie !== titel ? `${titel} – ${cie}` : titel) : cie
+      } else {
+        title = cie ? (titel && titel !== cie ? `${cie} – ${titel}` : cie) : titel
+      }
+      if (!title) continue
+
+      // Stable id: last URL segment + date + time (a show repeats per night).
+      const slug = (href.match(/([^/]+)\/?$/) ?? [])[1] ?? ''
+      const uid = slug ? `${slug}:${date}:${time}` : `${date}:${time}:${title.slice(0, 30)}`
+      const absUrl = href.startsWith('http') ? href : `${IMPULSTANZ_BASE}${href}`
+
+      out.push({
+        source: 'impulstanz',
+        source_id: `impulstanz:${uid}`,
+        title,
+        location: venue,
+        date,
+        start_time: time,
+        end_time: plusHours(time, 2),
+        url: absUrl,
+        image_url: null,
+      })
+    }
+  }
+  return out
+}
+
+export async function scrapeImpulstanz(): Promise<RawEvent[]> {
+  const [perf, ev] = await Promise.all([
+    scrapeImpulstanzPage(IMPULSTANZ_PERF, 'perf').catch(e => { console.error('[impulstanz] performances failed', e); return [] as RawEvent[] }),
+    scrapeImpulstanzPage(IMPULSTANZ_EVENTS, 'events').catch(e => { console.error('[impulstanz] events failed', e); return [] as RawEvent[] }),
+  ])
+  const seen = new Set<string>()
+  const capped: RawEvent[] = []
+  for (const r of [...perf, ...ev]) {
+    if (seen.has(r.source_id)) continue
+    seen.add(r.source_id)
+    capped.push(r)
+    if (capped.length >= IMPULSTANZ_MAX) break
+  }
+  return capped
+}
+
+const SOURCES: Array<() => Promise<RawEvent[]>> = [scrapeGogogo, scrapeYesticket, scrapeRa, scrapeImpulstanz]
 
 // AI relevance tags for a couple in Vienna (reuses Eventfinder's tagging idea,
 // re-pointed from a single-guy profile to date-idea suitability).
@@ -291,7 +380,7 @@ export async function runDiscovery(): Promise<IngestResult> {
   if (!fresh.length) return { scraped: raw.length, inserted: 0, skipped: raw.length }
 
   // 3. AI-tag by vibe.
-  const tagMap = await tagForDates(fresh.map(r => r.title))
+  const tagMap = await tagForDates(fresh.slice(0, 100).map(r => r.title))
 
   // 4. Insert as browsable city suggestions (nobody's committed yet).
   const rows = fresh.map(r => ({
