@@ -6,6 +6,8 @@ interface Props {
   memory: Memory
   onClose: () => void
   onUpdated?: () => void
+  /** Open the underlying event's edit dialog (title/date/location). */
+  onEditEvent?: (eventId: string) => void
 }
 
 /** Compress an image File/Blob to max 1200px, JPEG quality 0.8 */
@@ -33,7 +35,7 @@ function compressImage(file: Blob, maxDim = 1200): Promise<Blob> {
   })
 }
 
-export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
+export default function MemoryEditor({ memory, onClose, onUpdated, onEditEvent }: Props) {
   const [isEditing, setIsEditing] = useState(false)
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
@@ -181,6 +183,14 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
           ) : (
             <>
               <button onClick={onClose} className="w-full border border-stone-200 py-2.5 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Back</button>
+              {memory.event_id && onEditEvent && (
+                <button
+                  onClick={() => onEditEvent(memory.event_id!)}
+                  className="w-full py-2.5 rounded-xl text-sm text-stone-700 bg-stone-100 hover:bg-stone-200 transition"
+                >
+                  ✏️ Edit event
+                </button>
+              )}
               {memory.event_id && (
                 <button
                   onClick={deleteEvent}

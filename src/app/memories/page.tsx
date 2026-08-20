@@ -85,6 +85,15 @@ export default function MemoriesPage() {
   function handleMemorySaved() { setShowCamera(false); fetchAll() }
   function handleMemoryClick(memory: Memory) { setSelectedMemory(memory) }
 
+  // From a memory's photo editor, jump to the underlying event's edit dialog
+  // (title/date/location/etc.). Find the event in the fetched past events.
+  function handleEditEventFromMemory(eventId: string) {
+    const ev = pastEvents.find(e => e.id === eventId) ?? events.find(e => e.id === eventId)
+    if (!ev) return
+    setSelectedMemory(null)
+    setSelectedEvent(ev)
+  }
+
   if (status === 'loading') return <div className="p-8 text-stone-400">Loading...</div>
 
   const [showPinInput, setShowPinInput] = useState(false)
@@ -148,6 +157,7 @@ export default function MemoriesPage() {
         memory={selectedMemory}
         onClose={() => setSelectedMemory(null)}
         onUpdated={() => { setSelectedMemory(null); fetchAll() }}
+        onEditEvent={handleEditEventFromMemory}
       />
     )
   }
