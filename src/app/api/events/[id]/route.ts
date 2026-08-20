@@ -3,6 +3,8 @@ import { authOptions } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { isTheresaAuthed } from '@/lib/theresa-auth'
 import { syncConfirmedEventToGoogle } from '@/lib/google-sync'
+import { ensureBothConfirmedMemory } from '@/lib/memory-utils'
+import { viennaToday } from '@/lib/event-utils'
 import type { NextRequest } from 'next/server'
 
 type Who = 'dimitri' | 'theresa'
@@ -39,9 +41,10 @@ export async function PATCH(
   if (typeof body.joinable === 'boolean') patch.joinable = body.joinable
   if ('status' in body) patch.status = body.status
   if ('category' in body) patch.category = body.category
-  // Each partner may only set their own RSVP.
-  if (who === 'dimitri' && 'rsvp_dimitri' in body) patch.rsvp_dimitri = body.rsvp_dimitri
-  if (who === 'theresa' && 'rsvp_theresa' in body) patch.rsvp_theresa = body.rsvp_theresa
+  // Symmetric RSVP: either partner may set either person's RSVP field, so
+  // Dimi can confirm for Theresa and Theresa can confirm for Dimi.
+  if ('rsvp_dimitri' in body) patch.rsvp_dimitri = body.rsvp_dimitri
+  if ('rsvp_theresa' in body) patch.rsvp_theresa = body.rsvp_theresa
   // Editable fields for event detail
   if ('title' in body && body.title) patch.title = body.title
   if ('date' in body && body.date) patch.date = body.date
@@ -81,44 +84,33 @@ export async function PATCH(
     })
   }
 
-  // Both RSVP 'going' → auto-create a memory placeholder + notify both.
+  // Both RSVP 'going' → it's a confirmed date. Notify both + sync to Google.
+  // A memory is ONLY created once the event date has passed (history), not
+  // the moment the second person confirms. See ensureBothConfirmedMemory.
   if (data && data.rsvp_dimitri === 'going' && data.rsvp_theresa === 'going') {
-    // Check if a memory already exists for this event (don't double-create)
-    const { data: existingMems } = await supabase
-      .from('memories')
+    // Notify both that it's a date — but only once per event (idempotent),
+    // so toggling RSVP back and forth doesn't spam notifications.
+    const { data: existingNotif } = await supabase
+      .from('notifications')
       .select('id')
       .eq('event_id', data.id)
+      .eq('kind', 'event')
+      .like('message', '💕 Date bestätigt:%')
       .limit(1)
 
-    if (!existingMems || existingMems.length === 0) {
-      // Create a note-style memory as a placeholder
-      const emptyPixel = new Uint8Array([71,73,70,56,57,97,1,0,1,0,128,0,0,255,255,255,0,0,0,33,249,4,1,0,0,0,0,44,0,0,0,0,1,0,1,0,0,2,2,68,1,0,59])
-      const bucket = supabase.storage.from('memory-photos')
-      const placeholderPath = `system/placeholder-${data.id}.gif`
-
-      // Upload placeholder if not exists
-      const { data: existingFile } = await bucket.list('system')
-      const needsUpload = !existingFile?.some(f => f.name === `placeholder-${data.id}.gif`)
-      if (needsUpload) {
-        await bucket.upload(placeholderPath, emptyPixel, { contentType: 'image/gif', upsert: true })
-      }
-
-      const { data: { publicUrl: placeholderUrl } } = bucket.getPublicUrl(placeholderPath)
-
-      await supabase.from('memories').insert({
-        event_id: data.id,
-        captured_by: 'dimitri',
-        photo_front: placeholderUrl,
-        photo_back: placeholderUrl,
-        caption: `💕 Beide zu: ${data.title}`,
-      })
-
-      // Notify both that it's a date!
+    if (!existingNotif || existingNotif.length === 0) {
       await supabase.from('notifications').insert({
         message: `💕 Date bestätigt: ${data.title} ♡`,
         kind: 'event',
         event_id: data.id,
       })
+    }
+
+    // If this event is already in the past (history), promote it to a memory
+    // immediately. Future events wait for the date to pass, then the daily
+    // cron (and this same check) creates the memory.
+    if (data.date < viennaToday()) {
+      await ensureBothConfirmedMemory(data)
     }
 
     // Both confirmed → also write the date to Dimitri's Google Calendar.

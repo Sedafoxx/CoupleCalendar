@@ -5,7 +5,7 @@ import type { Event, Notification } from '@/lib/supabase'
 import EventDetail from '@/components/EventDetail'
 import RsvpButtons from '@/components/RsvpButtons'
 import ProvenanceBadge from '@/components/ProvenanceBadge'
-import { compareByProvenanceThenDate } from '@/lib/event-utils'
+import { compareByProvenanceThenDate, bothGoing, anyoneGoing } from '@/lib/event-utils'
 
 type NarrowingOpt = { label: string; category: string }
 type SuggestionOpt = { label: string; event: Record<string, unknown> }
@@ -158,9 +158,15 @@ export default function PlanPage() {
   }
 
   const today = new Date().toISOString().split('T')[0]
-  // Our manually-added plans always come first, then by date.
-  const upcoming = events.filter(e => e.date >= today && e.category !== 'city').sort(compareByProvenanceThenDate)
-  const past = events.filter(e => e.date < today && e.category !== 'city').sort(compareByProvenanceThenDate)
+  // Our manually-added plans always come first, then by date. Only events where
+  // at least one of us said "going" show here — unconfirmed ones live in the
+  // calendar, not in the Upcoming list.
+  const upcoming = events
+    .filter(e => e.date >= today && e.category !== 'city' && anyoneGoing(e))
+    .sort(compareByProvenanceThenDate)
+  const past = events
+    .filter(e => e.date < today && e.category !== 'city' && anyoneGoing(e))
+    .sort(compareByProvenanceThenDate)
 
   // Theresa PIN login
   const [showPinInput, setShowPinInput] = useState(false)
@@ -375,6 +381,9 @@ export default function PlanPage() {
                       <p className="font-medium text-stone-800 text-sm">{ev.title}</p>
                       <ProvenanceBadge event={ev} />
                       {ev.tags?.includes('bucket-list') && <span className="text-xs text-amber-500">✨</span>}
+                      {bothGoing(ev) && (
+                        <span className="text-xs bg-rose-500 text-white px-2 py-0.5 rounded-full font-medium">💕 Beide zu</span>
+                      )}
                     </div>
                     <p className="text-xs text-stone-400">{ev.date}{ev.start_time ? ` · ${ev.start_time.slice(0, 5)}${ev.end_time ? `–${ev.end_time.slice(0, 5)}` : ''}` : ''}</p>
                   </div>

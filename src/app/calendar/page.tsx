@@ -6,7 +6,8 @@ import Calendar from '@/components/Calendar'
 import EventDetail from '@/components/EventDetail'
 import DiscoverFeed from '@/components/DiscoverFeed'
 import ProvenanceBadge from '@/components/ProvenanceBadge'
-import { compareByProvenanceThenDate } from '@/lib/event-utils'
+import RsvpButtons from '@/components/RsvpButtons'
+import { compareByProvenanceThenDate, anyoneGoing } from '@/lib/event-utils'
 
 export default function CalendarPage() {
   const { data: session, status } = useSession()
@@ -82,8 +83,13 @@ export default function CalendarPage() {
   }
 
   // Plans mode shows only the couple's own events; scraped suggestions live in Discover.
-  // Manually-added plans sort first, then by date.
-  const plansEvents = events.filter((e) => e.category !== 'city').sort(compareByProvenanceThenDate)
+  // Manually-added plans sort first, then by date. Upcoming unconfirmed events stay
+  // visible here (they live in the calendar), but unconfirmed PAST events are treated
+  // as never-happened and don't show up.
+  const today = new Date().toISOString().split('T')[0]
+  const plansEvents = events
+    .filter((e) => e.category !== 'city' && (e.date >= today || anyoneGoing(e)))
+    .sort(compareByProvenanceThenDate)
   const dayEvents = selectedDate
     ? plansEvents.filter((e) => e.date === selectedDate)
     : []
@@ -135,10 +141,10 @@ export default function CalendarPage() {
               </h3>
               <ul className="space-y-2">
                 {dayEvents.map((ev) => (
-                  <li key={ev.id}>
+                  <li key={ev.id} className="bg-white border border-stone-200 rounded-xl p-4 hover:border-rose-200 hover:shadow-sm transition">
                     <button
                       onClick={() => setSelectedEvent(ev)}
-                      className="w-full text-left bg-white border border-stone-200 rounded-xl p-4 hover:border-rose-200 hover:shadow-sm transition"
+                      className="w-full text-left"
                     >
                       <div className="flex items-center gap-2 flex-wrap">
                         <p className="font-medium text-stone-800">{ev.title}</p>
@@ -153,6 +159,8 @@ export default function CalendarPage() {
                         </p>
                       )}
                     </button>
+                    {/* Confirm "we are going" right from the day view */}
+                    <RsvpButtons event={ev} who={who} onUpdated={refreshEvents} />
                   </li>
                 ))}
               </ul>

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import type { Memory, Event } from '@/lib/supabase'
 import MemoryCard from './MemoryCard'
 import RsvpButtons from './RsvpButtons'
+import { anyoneGoing } from '@/lib/event-utils'
 
 interface FeedCardsProps {
   pastEvents: Event[]
@@ -21,7 +22,9 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
   }, [])
 
   const today = new Date().toISOString().split('T')[0]
-  const past = pastEvents.filter(ev => ev.date < today && ev.category !== 'city')
+  // Only events where at least one of us actually went show as memories —
+  // unconfirmed past events are treated as never-happened.
+  const past = pastEvents.filter(ev => ev.date < today && ev.category !== 'city' && anyoneGoing(ev))
   const memsByEvent = new Map<string, Memory[]>()
   for (const m of memories) {
     const list = memsByEvent.get(m.event_id) || []

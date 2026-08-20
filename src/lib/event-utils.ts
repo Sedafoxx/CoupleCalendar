@@ -11,6 +11,13 @@ export function bothGoing(e: Pick<Event, 'rsvp_dimitri' | 'rsvp_theresa'>): bool
   return e.rsvp_dimitri === 'going' && e.rsvp_theresa === 'going'
 }
 
+// At least one partner said "going" → someone committed to it.
+// Past events where NOBODY confirmed are treated as never-happened: they don't
+// become memories and don't show up as past events.
+export function anyoneGoing(e: Pick<Event, 'rsvp_dimitri' | 'rsvp_theresa'>): boolean {
+  return e.rsvp_dimitri === 'going' || e.rsvp_theresa === 'going'
+}
+
 // ── Provenance: who added an event ─────────────────────────────
 // dimi/theresa = manually added by the couple (real plans),
 // agent       = scraped/discovered suggestions (category 'city'),
