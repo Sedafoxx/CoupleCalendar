@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef } from 'react'
 import type { Memory } from '@/lib/supabase'
+import YouTubeCard from './YouTubeCard'
 
 interface Props {
   memory: Memory
@@ -172,6 +173,7 @@ export default function MemoryEditor({ memory, onClose, onUpdated, onEditEvent }
 
         {/* Bottom panel */}
         <div className="bg-white rounded-t-3xl p-6 relative z-10 space-y-3 shrink-0">
+          <YouTubeCard text={memory.caption} />
           {memory.caption && <p className="text-stone-700 text-sm">&ldquo;{memory.caption}&rdquo;</p>}
           {error && <p className="text-red-400 text-sm">{error}</p>}
 

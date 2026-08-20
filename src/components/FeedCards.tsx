@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import type { Memory, Event } from '@/lib/supabase'
 import MemoryCard from './MemoryCard'
 import RsvpButtons from './RsvpButtons'
+import YouTubeCard from './YouTubeCard'
 import { anyoneGoing } from '@/lib/event-utils'
 
 interface FeedCardsProps {
@@ -81,6 +82,14 @@ export default function FeedCards({ pastEvents, memories, onSelectEvent, onSelec
                 <p className="text-rose-300 text-xs mt-1 font-medium">{hasNote ? '📝 Notiz' : 'Memory'}</p>
               </div>
             </div>
+            {/* If the note contains a YouTube link, show its thumbnail in the feed */}
+            {hasNote && (
+              <div onClick={(e) => e.stopPropagation()} className="bg-black">
+                <YouTubeCard
+                  text={(eventMems.find(m => m.photo_back.includes('note.gif'))?.caption) ?? undefined}
+                />
+              </div>
+            )}
             <div className="px-4 py-3 space-y-2">
               <span className="font-semibold text-sm text-stone-800 truncate block">{ev.title}</span>
               <p className="text-xs text-stone-400">

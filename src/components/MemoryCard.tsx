@@ -1,6 +1,7 @@
 'use client'
 import type { Memory } from '@/lib/supabase'
-import type { Event } from '@/lib/supabase'
+import YouTubeCard from './YouTubeCard'
+import { extractYouTubeId } from '@/lib/youtube'
 
 // ── Helpers ────────────────────────────────────────────────
 function fmtDate(dateStr: string) {
@@ -28,39 +29,50 @@ interface MemoryCardProps {
 
 // ── Component ──────────────────────────────────────────────
 export default function MemoryCard({ memory, onClick }: MemoryCardProps) {
+  const hasVideo = !!extractYouTubeId(memory.caption)
+
   return (
     <button
       onClick={onClick}
       className="w-full text-left bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition"
     >
-      {/* BeReal-style split photo */}
-      <div className="flex h-48 sm:h-64">
-        {/* Back camera (main scene) — 66% */}
-        <div className="flex-[2] relative">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={memory.photo_back}
-            alt="Memory"
-            className="w-full h-full object-cover"
-          />
+      {hasVideo ? (
+        /* Video memory: show the YouTube thumbnail as the preview. The inner
+           card opens its own playable modal; stop propagation so the whole
+           card doesn't also open the memory editor. */
+        <div onClick={(e) => e.stopPropagation()} className="bg-black">
+          <YouTubeCard text={memory.caption} />
         </div>
+      ) : (
+        /* BeReal-style split photo */
+        <div className="flex h-48 sm:h-64">
+          {/* Back camera (main scene) — 66% */}
+          <div className="flex-[2] relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={memory.photo_back}
+              alt="Memory"
+              className="w-full h-full object-cover"
+            />
+          </div>
 
-        {/* Front camera (selfie) — 34% */}
-        <div className="flex-[1] relative">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={memory.photo_front}
-            alt="Selfie"
-            className="w-full h-full object-cover opacity-85"
-          />
-          {/* Selfie label */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2">
-            <span className="text-[10px] text-white bg-black/40 px-2 py-0.5 rounded-full">
-              selfie
-            </span>
+          {/* Front camera (selfie) — 34% */}
+          <div className="flex-[1] relative">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={memory.photo_front}
+              alt="Selfie"
+              className="w-full h-full object-cover opacity-85"
+            />
+            {/* Selfie label */}
+            <div className="absolute top-2 left-1/2 -translate-x-1/2">
+              <span className="text-[10px] text-white bg-black/40 px-2 py-0.5 rounded-full">
+                selfie
+              </span>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Info footer */}
       <div className="px-4 py-3 space-y-1">

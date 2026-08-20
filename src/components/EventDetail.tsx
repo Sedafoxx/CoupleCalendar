@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import type { Event, Memory } from '@/lib/supabase'
 import DualCamera from './DualCamera'
+import YouTubeCard from './YouTubeCard'
 
 // ── Helpers ────────────────────────────────────────────────
 function fmtDate(dateStr: string) {
@@ -162,6 +163,7 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
 
           {/* Info overlay at bottom */}
           <div className="bg-white rounded-t-3xl p-6 space-y-3 -mt-4 relative z-10">
+            <YouTubeCard text={selectedMemory.caption} />
             {selectedMemory.caption && (
               <p className="text-stone-700 text-sm leading-relaxed">
                 &ldquo;{selectedMemory.caption}&rdquo;
@@ -309,6 +311,7 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
                   <div key={memory.id} className="bg-amber-50 border border-amber-100 rounded-2xl p-4 space-y-1">
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
+                        <YouTubeCard text={memory.caption} compact />
                         <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">{memory.caption}</p>
                         <p className="text-xs text-stone-400 mt-1">
                           📝 Notiz · {memory.captured_by === 'dimitri' ? 'Dimitri' : 'Theresa'} · {timeAgo(memory.created_at)}
