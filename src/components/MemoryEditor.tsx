@@ -36,6 +36,7 @@ function compressImage(file: Blob, maxDim = 1200): Promise<Blob> {
 export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
   const [isEditing, setIsEditing] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [frontPreview, setFrontPreview] = useState<string | null>(null)
   const [backPreview, setBackPreview] = useState<string | null>(null)
   const [frontFile, setFrontFile] = useState<File | null>(null)
@@ -43,6 +44,24 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
   const [error, setError] = useState<string | null>(null)
   const frontRef = useRef<HTMLInputElement>(null)
   const backRef = useRef<HTMLInputElement>(null)
+
+  // Delete the underlying event (memories cascade via DB FK). Lets you remove
+  // a past confirmed event straight from its memory view.
+  async function deleteEvent() {
+    if (!memory.event_id) return
+    if (!confirm('Really delete this event?')) return
+    setDeleting(true)
+    setError(null)
+    try {
+      const res = await fetch(`/api/events/${memory.event_id}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error(`Delete failed (${res.status})`)
+      onClose()
+      onUpdated?.()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Delete failed — try again')
+      setDeleting(false)
+    }
+  }
 
   const isNote = memory.photo_back.includes('note.gif')
 
@@ -160,7 +179,18 @@ export default function MemoryEditor({ memory, onClose, onUpdated }: Props) {
               <button onClick={saveChanges} disabled={saving} className="flex-1 bg-rose-400 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-rose-500 transition disabled:opacity-40">{saving ? 'Saving...' : 'Save Changes'}</button>
             </div>
           ) : (
-            <button onClick={onClose} className="w-full border border-stone-200 py-2.5 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Back</button>
+            <>
+              <button onClick={onClose} className="w-full border border-stone-200 py-2.5 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Back</button>
+              {memory.event_id && (
+                <button
+                  onClick={deleteEvent}
+                  disabled={deleting}
+                  className="w-full py-2.5 rounded-xl text-sm text-red-400 hover:bg-red-50 transition disabled:opacity-40"
+                >
+                  {deleting ? 'Deleting...' : '🗑️ Delete event'}
+                </button>
+              )}
+            </>
           )}
         </div>
       </div>
