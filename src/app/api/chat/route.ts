@@ -86,6 +86,8 @@ EVENT-TYPEN (für create_event):
 3. **recurring** – wiederkehrend (jeden Donnerstag). Braucht: title, date, recurrence_rule "weekly:DAY".
 4. **bucket_list** – noch kein Datum. Braucht: title, description, tags, duration_days.
 
+HINWEIS: Termine werden NEUTRAL angelegt (going: false) — sie erscheinen im Kalender, aber NICHT als Zusage/"going" im Plan. Setze going: true NUR wenn der User EXPLIZIT zusagt (z.B. "wir gehen hin", "ich bin dabei", "sag zu", "wir kommen").
+
 ────────────────────────
 BUCKET LIST:
 ────────────────────────
@@ -179,6 +181,7 @@ ANTWORT-FORMAT (IMMER JSON):
       "end_time": "HH:MM",
       "end_date": "YYYY-MM-DD",
       "recurrence_rule": "weekly:thursday",
+      "going": false,
       "tags": ["bucket-list"],
       "bucket_list_item_title": "exakter Titel aus Bucket List"
     }
@@ -212,6 +215,8 @@ REGELN:
 - relative Daten ("diesen Samstag"): von heute (${today}) berechnen
 - Für single: wenn kein end_time, +2h zu start_time
 - Für recurring: recurrence_rule = "weekly:DAYNAME" (Englisch)
+- NEUTRAL: create_event legt Events OHNE Zusage an (going: false). NUR wenn der User explizit sagt er/sie geht hin (z.B. "wir gehen", "ich bin dabei", "sag zu"), setze going: true.
+- "jeden X" / "wöchentlich" / "jede Woche" → type "recurring" mit recurrence_rule "weekly:X" (Englisch), NICHT einzelne Events pro Datum anlegen.
 - Bucket-List Tags: romantic, adventure, food, culture, outdoor, sport
 - PAST DATES sind erlaubt (Erinnerungen)
 - BUCKET LIST MATCHING: Wenn Event zu Bucket List passt → tags: ["bucket-list"] + bucket_list_item_title
@@ -337,6 +342,7 @@ export async function POST(req: NextRequest) {
     end_time: string
     end_date: string
     recurrence_rule: string
+    going?: boolean
     tags?: string[]
     bucket_list_item_title?: string
   }
@@ -426,7 +432,11 @@ export async function POST(req: NextRequest) {
         added_by: 'dimitri',
         category: 'personal',
         status: 'confirmed',
-        rsvp_dimitri: 'going',
+        // Neutral by default — only auto-mark "going" when the user explicitly
+        // said they're going. Neutral appointments live in the calendar, not in
+        // the plan's Upcoming list, and aren't joinable for Theresa.
+        rsvp_dimitri: ev.going ? 'going' : null,
+        joinable: ev.going ? true : false,
       }
 
       if (ev.tags?.includes('bucket-list')) {

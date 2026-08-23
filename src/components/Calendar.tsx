@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useMemo } from 'react'
 import type { Event, Memory } from '@/lib/supabase'
+import { occurrencesBetween } from '@/lib/event-utils'
 
 // ── Helpers ────────────────────────────────────────────────
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -42,16 +43,23 @@ export default function Calendar({
   const year = viewDate.getFullYear()
   const month = viewDate.getMonth()
 
-  // Build lookup maps
+  // Build lookup maps — recurring events are expanded across every occurrence
+  // in the currently viewed month, so a "weekly:sunday" event shows a dot on
+  // every Sunday instead of only its first date.
   const eventsByDate = useMemo(() => {
     const map = new Map<string, Event[]>()
+    const lastDayOfMonth = new Date(year, month + 1, 0).getDate()
+    const firstStr = toDateStr(year, month, 1)
+    const lastStr = toDateStr(year, month, lastDayOfMonth)
     for (const ev of events) {
-      const existing = map.get(ev.date) || []
-      existing.push(ev)
-      map.set(ev.date, existing)
+      for (const dateStr of occurrencesBetween(ev, firstStr, lastStr)) {
+        const existing = map.get(dateStr) || []
+        existing.push(ev)
+        map.set(dateStr, existing)
+      }
     }
     return map
-  }, [events])
+  }, [events, year, month])
 
   const memoriesByDate = useMemo(() => {
     const map = new Map<string, Memory[]>()

@@ -7,7 +7,7 @@ import EventDetail from '@/components/EventDetail'
 import DiscoverFeed from '@/components/DiscoverFeed'
 import ProvenanceBadge from '@/components/ProvenanceBadge'
 import RsvpButtons from '@/components/RsvpButtons'
-import { compareByProvenanceThenDate, anyoneGoing } from '@/lib/event-utils'
+import { compareByProvenanceThenDate, anyoneGoing, eventOccursOn } from '@/lib/event-utils'
 
 export default function CalendarPage() {
   const { data: session, status } = useSession()
@@ -85,13 +85,14 @@ export default function CalendarPage() {
   // Plans mode shows only the couple's own events; scraped suggestions live in Discover.
   // Manually-added plans sort first, then by date. Upcoming unconfirmed events stay
   // visible here (they live in the calendar), but unconfirmed PAST events are treated
-  // as never-happened and don't show up.
+  // as never-happened and don't show up. Recurring events (standing appointments)
+  // always stay visible, even when their first occurrence lies in the past.
   const today = new Date().toISOString().split('T')[0]
   const plansEvents = events
-    .filter((e) => e.category !== 'city' && (e.date >= today || anyoneGoing(e)))
+    .filter((e) => e.category !== 'city' && (e.date >= today || anyoneGoing(e) || !!e.recurrence_rule))
     .sort(compareByProvenanceThenDate)
   const dayEvents = selectedDate
-    ? plansEvents.filter((e) => e.date === selectedDate)
+    ? plansEvents.filter((e) => eventOccursOn(e, selectedDate))
     : []
 
   return (

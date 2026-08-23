@@ -57,3 +57,66 @@ export function compareByProvenanceThenDate(
 export function viennaToday(): string {
   return new Date().toLocaleString('sv-SE', { timeZone: 'Europe/Vienna' }).slice(0, 10)
 }
+
+// ── Recurrence (weekly) ─────────────────────────────────────
+// A recurring event is stored as ONE row with a start `date` plus a
+// `recurrence_rule` like "weekly:sunday". These helpers expand that rule into
+// the concrete dates it actually falls on, so the calendar can show every
+// occurrence instead of just the first one.
+
+function addDays(dateStr: string, n: number): string {
+  const d = new Date(dateStr + 'T12:00:00')
+  d.setDate(d.getDate() + n)
+  return d.toISOString().split('T')[0]
+}
+
+// Map a "weekly:DAY" rule (English or German, full or abbreviated) to a
+// JS weekday: 0 = Sunday … 6 = Saturday. Returns null for anything else.
+export function weeklyWeekday(rule: string | null | undefined): number | null {
+  if (!rule) return null
+  const m = rule.toLowerCase().match(/weekly[:\s]+([a-zäöü]+)/)
+  if (!m) return null
+  const day = m[1]
+  const map: Record<string, number> = {
+    sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6,
+    sun: 0, mon: 1, tue: 2, tues: 2, wed: 3, thu: 4, thur: 4, thurs: 4, fri: 5, sat: 6,
+    sonntag: 0, montag: 1, dienstag: 2, mittwoch: 3, donnerstag: 4, freitag: 5, samstag: 6,
+    so: 0, mo: 1, di: 2, mi: 3, do: 4, fr: 5, sa: 6,
+  }
+  return map[day] ?? null
+}
+
+// Does this event fall on the given date (YYYY-MM-DD)?
+// Recurring events match their weekday on/after the start (up to end_date);
+// window events cover their whole date range; everything else matches exactly.
+export function eventOccursOn(
+  e: Pick<Event, 'type' | 'date' | 'end_date' | 'recurrence_rule'>,
+  dateStr: string,
+): boolean {
+  if (e.recurrence_rule) {
+    const wd = weeklyWeekday(e.recurrence_rule)
+    if (wd === null) return false
+    if (dateStr < e.date) return false
+    if (e.end_date && dateStr > e.end_date) return false
+    return new Date(dateStr + 'T00:00:00').getDay() === wd
+  }
+  if (e.type === 'window' && e.end_date) {
+    return dateStr >= e.date && dateStr <= e.end_date
+  }
+  return dateStr === e.date
+}
+
+// All dates (inclusive) in [startDate, endDate] on which the event occurs.
+export function occurrencesBetween(
+  e: Pick<Event, 'type' | 'date' | 'end_date' | 'recurrence_rule'>,
+  startDate: string,
+  endDate: string,
+): string[] {
+  const out: string[] = []
+  let cur = startDate
+  while (cur <= endDate) {
+    if (eventOccursOn(e, cur)) out.push(cur)
+    cur = addDays(cur, 1)
+  }
+  return out
+}
