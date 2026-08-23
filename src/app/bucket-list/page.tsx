@@ -13,6 +13,12 @@ export default function BucketListPage() {
   const [showPinInput, setShowPinInput] = useState(false)
   const [pinValue, setPinValue] = useState('')
   const [pinError, setPinError] = useState(false)
+  // Edit state (one item edited at a time)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editTitle, setEditTitle] = useState('')
+  const [editDescription, setEditDescription] = useState('')
+  const [editDuration, setEditDuration] = useState('')
+  const [editTags, setEditTags] = useState<string[]>([])
 
   async function loginTheresa(e: React.FormEvent) {
     e.preventDefault()
@@ -26,15 +32,16 @@ export default function BucketListPage() {
 
   useEffect(() => {
     fetch('/api/whoami').then(r => r.json()).then(d => setWho(d.user))
-    if (status === 'authenticated' || who) fetchItems()
+    if (status === 'authenticated' || who) {
+      fetch('/api/bucket-list')
+        .then(r => r.json())
+        .then(d => {
+          setItems(Array.isArray(d) ? d : [])
+          setLoading(false)
+        })
+        .catch(() => setLoading(false))
+    }
   }, [status, who])
-
-  async function fetchItems() {
-    const res = await fetch('/api/bucket-list')
-    const data = await res.json()
-    setItems(Array.isArray(data) ? data : [])
-    setLoading(false)
-  }
 
   async function addItem(e: React.FormEvent) {
     e.preventDefault()
@@ -68,6 +75,37 @@ export default function BucketListPage() {
     if (res.ok) {
       setItems(prev => prev.map(i => i.id === item.id ? { ...i, resolved: newVal } as BucketListItem : i))
     }
+  }
+
+  function startEdit(item: BucketListItem) {
+    setEditingId(item.id)
+    setEditTitle(item.title)
+    setEditDescription(item.description || '')
+    setEditDuration(item.duration_days ? String(item.duration_days) : '')
+    setEditTags(item.tags || [])
+  }
+
+  async function saveEdit(id: string) {
+    if (!editTitle.trim()) return
+    const res = await fetch(`/api/bucket-list/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: editTitle.trim(),
+        description: editDescription.trim() || null,
+        duration_days: editDuration ? Number(editDuration) : null,
+        tags: editTags.length ? editTags : null,
+      }),
+    })
+    if (res.ok) {
+      const updated = await res.json()
+      setItems(prev => prev.map(i => i.id === id ? { ...i, ...updated } : i))
+      setEditingId(null)
+    }
+  }
+
+  function toggleEditTag(tag: string) {
+    setEditTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag])
   }
 
   const pending = items.filter(i => !(i as Record<string, unknown>).resolved)
@@ -111,6 +149,51 @@ export default function BucketListPage() {
   }
 
   function ItemCard({ item, isDone }: { item: BucketListItem; isDone?: boolean }) {
+    // Edit mode: title, description, duration and tag chips.
+    if (editingId === item.id) {
+      return (
+        <div className="border border-rose-200 rounded-xl p-4 space-y-3 bg-white">
+          <input
+            value={editTitle}
+            onChange={e => setEditTitle(e.target.value)}
+            placeholder="Title"
+            className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          <textarea
+            value={editDescription}
+            onChange={e => setEditDescription(e.target.value)}
+            placeholder="Description (optional)"
+            rows={2}
+            className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          <input
+            value={editDuration}
+            onChange={e => setEditDuration(e.target.value)}
+            type="number"
+            min={1}
+            placeholder="Duration in days (optional)"
+            className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          <div className="flex flex-wrap gap-1.5">
+            {Object.keys(TAG_COLORS).map(tag => (
+              <button
+                key={tag}
+                type="button"
+                onClick={() => toggleEditTag(tag)}
+                className={`text-xs px-2.5 py-1 rounded-full transition ${editTags.includes(tag) ? 'bg-rose-500 text-white' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <button onClick={() => setEditingId(null)} className="flex-1 border border-stone-200 py-2 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Cancel</button>
+            <button onClick={() => saveEdit(item.id)} disabled={!editTitle.trim()} className="flex-1 bg-rose-400 text-white py-2 rounded-xl text-sm font-medium hover:bg-rose-500 transition disabled:opacity-40">Save</button>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className={`border rounded-xl p-4 flex items-start justify-between gap-3 ${isDone ? 'bg-stone-50 border-stone-200 opacity-70' : 'bg-white border-stone-200'}`}>
         <div className="space-y-1 min-w-0 flex-1">
@@ -133,6 +216,7 @@ export default function BucketListPage() {
           <button onClick={() => toggleResolved(item)} className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${isDone ? 'bg-stone-200 text-stone-500 hover:bg-stone-300' : 'bg-green-100 text-green-600 hover:bg-green-200'}`}>
             {isDone ? '↩ Undo' : '✅ Done'}
           </button>
+          <button onClick={() => startEdit(item)} className="text-xs text-stone-400 hover:text-rose-500 transition">✏️ Edit</button>
           <button onClick={() => deleteItem(item.id)} className="text-xs text-stone-300 hover:text-red-400 transition">Delete</button>
         </div>
       </div>
