@@ -83,7 +83,7 @@ EVENT-TYPEN (für create_event):
 ────────────────────────
 1. **single** – bestimmtes Datum und Uhrzeit (Konzert, Abendessen, Kino). Braucht: title, date, start_time, end_time.
 2. **window** – über mehrere Tage aktiv, keine feste Zeit (Zirkus, Festival, Ausstellung). Braucht: title, date (Start), end_date.
-3. **recurring** – wiederkehrend (jeden Donnerstag). Braucht: title, date, recurrence_rule "weekly:DAY".
+3. **recurring** – wiederkehrend (jeden Donnerstag). Braucht: title, date, recurrence_rule "weekly:DAY". Optional: end_date = LETZTE Occurrence der Serie (z.B. bei "jeden Sonntag bis 20.12." → end_date "2026-12-20").
 4. **bucket_list** – noch kein Datum. Braucht: title, description, tags, duration_days.
 
 HINWEIS: Termine werden NEUTRAL angelegt (going: false) — sie erscheinen im Kalender, aber NICHT als Zusage/"going" im Plan. Setze going: true NUR wenn der User EXPLIZIT zusagt (z.B. "wir gehen hin", "ich bin dabei", "sag zu", "wir kommen").
@@ -215,6 +215,7 @@ REGELN:
 - relative Daten ("diesen Samstag"): von heute (${today}) berechnen
 - Für single: wenn kein end_time, +2h zu start_time
 - Für recurring: recurrence_rule = "weekly:DAYNAME" (Englisch)
+- Bei recurring-Serien mit Enddatum ("bis ...", "bis Ende ..."): end_date = letzte Occurrence als YYYY-MM-DD setzen. Ohne Enddatum → end_date null/weglassen (endlos).
 - NEUTRAL: create_event legt Events OHNE Zusage an (going: false). NUR wenn der User explizit sagt er/sie geht hin (z.B. "wir gehen", "ich bin dabei", "sag zu"), setze going: true.
 - "jeden X" / "wöchentlich" / "jede Woche" → type "recurring" mit recurrence_rule "weekly:X" (Englisch), NICHT einzelne Events pro Datum anlegen.
 - Bucket-List Tags: romantic, adventure, food, culture, outdoor, sport

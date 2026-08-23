@@ -27,7 +27,9 @@ export async function DELETE(
   return new Response(null, { status: 204 })
 }
 
-// Partial updates: { joinable?, rsvp_dimitri?, rsvp_theresa?, status?, category? }
+// Partial updates: { joinable?, rsvp_dimitri?, rsvp_theresa?, status?, category?,
+//                    title?, date?, start_time?, end_time?, location?,
+//                    type?, recurrence_rule?, end_date? }
 export async function PATCH(
   req: NextRequest,
   ctx: RouteContext<'/api/events/[id]'>
@@ -51,6 +53,10 @@ export async function PATCH(
   if ('start_time' in body) patch.start_time = body.start_time || null
   if ('end_time' in body) patch.end_time = body.end_time || null
   if ('location' in body) patch.location = body.location || ''
+  // Recurrence / series editing (switching single ↔ recurring, end date).
+  if ('type' in body && body.type) patch.type = body.type
+  if ('recurrence_rule' in body) patch.recurrence_rule = body.recurrence_rule || null
+  if ('end_date' in body) patch.end_date = body.end_date || null
 
   if (!Object.keys(patch).length) {
     return Response.json({ error: 'Nothing to update' }, { status: 400 })

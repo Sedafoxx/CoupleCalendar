@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import type { Event, Memory } from '@/lib/supabase'
 import DualCamera from './DualCamera'
 import YouTubeCard from './YouTubeCard'
+import { weeklyWeekday } from '@/lib/event-utils'
 
 // ── Helpers ────────────────────────────────────────────────
 function fmtDate(dateStr: string) {
@@ -13,6 +14,25 @@ function fmtDate(dateStr: string) {
 
 function fmtTime(timeStr: string) {
   return timeStr // Already in HH:MM format
+}
+
+// ── Recurrence (weekly) editing helpers ─────────────────────
+const WEEKDAY_OPTIONS = [
+  { value: 0, label: 'Sonntag' },
+  { value: 1, label: 'Montag' },
+  { value: 2, label: 'Dienstag' },
+  { value: 3, label: 'Mittwoch' },
+  { value: 4, label: 'Donnerstag' },
+  { value: 5, label: 'Freitag' },
+  { value: 6, label: 'Samstag' },
+]
+const WEEKDAY_NAMES = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+// "weekly:sunday" → "jeden Sonntag" for display.
+function fmtRule(rule: string | null | undefined): string {
+  const wd = weeklyWeekday(rule)
+  if (wd === null) return rule || ''
+  return `jeden ${WEEKDAY_OPTIONS[wd].label}`
 }
 
 function timeAgo(iso: string): string {
@@ -46,6 +66,9 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
   const [editStart, setEditStart] = useState(event.start_time || '')
   const [editEnd, setEditEnd] = useState(event.end_time || '')
   const [editLocation, setEditLocation] = useState(event.location || '')
+  const [editRepeat, setEditRepeat] = useState<'none' | 'weekly'>(event.recurrence_rule ? 'weekly' : 'none')
+  const [editRepeatDay, setEditRepeatDay] = useState<number>(weeklyWeekday(event.recurrence_rule) ?? 0)
+  const [editEndDate, setEditEndDate] = useState(event.end_date || '')
   const [saving, setSaving] = useState(false)
   const [noteText, setNoteText] = useState('')
   const [savingNote, setSavingNote] = useState(false)
@@ -82,16 +105,25 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
 
   async function saveEdit() {
     setSaving(true)
+    const isRecurring = editRepeat === 'weekly'
+    const body: Record<string, unknown> = {
+      title: editTitle,
+      date: editDate,
+      start_time: editStart || null,
+      end_time: editEnd || null,
+      location: editLocation || '',
+    }
+    // Recurrence editing (single ↔ weekly + end of series). Leave multi-day
+    // window events untouched so their date range isn't lost.
+    if (event.type !== 'window') {
+      body.type = isRecurring ? 'recurring' : 'single'
+      body.recurrence_rule = isRecurring ? `weekly:${WEEKDAY_NAMES[editRepeatDay]}` : null
+      body.end_date = isRecurring && editEndDate ? editEndDate : null
+    }
     const res = await fetch(`/api/events/${event.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: editTitle,
-        date: editDate,
-        start_time: editStart || null,
-        end_time: editEnd || null,
-        location: editLocation || '',
-      }),
+      body: JSON.stringify(body),
     })
     if (res.ok) {
       const updated = await res.json()
@@ -222,6 +254,50 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
                   <input value={editEnd} onChange={e => setEditEnd(e.target.value)} type="time" className="flex-1 border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300" />
                 </div>
                 <input value={editLocation} onChange={e => setEditLocation(e.target.value)} placeholder="Location" className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300" />
+                {/* Repeat */}
+                <div className="space-y-2 pt-1 border-t border-stone-100">
+                  <label className="text-xs text-stone-400 block">Wiederholung</label>
+                  <select
+                    value={editRepeat}
+                    onChange={e => setEditRepeat(e.target.value as 'none' | 'weekly')}
+                    className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+                  >
+                    <option value="none">Keine Wiederholung</option>
+                    <option value="weekly">Wöchentlich</option>
+                  </select>
+                  {editRepeat === 'weekly' && (
+                    <>
+                      <div className="flex items-center gap-2">
+                        <label className="text-xs text-stone-400 shrink-0">Jeden</label>
+                        <select
+                          value={editRepeatDay}
+                          onChange={e => setEditRepeatDay(Number(e.target.value))}
+                          className="flex-1 border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+                        >
+                          {WEEKDAY_OPTIONS.map(d => (
+                            <option key={d.value} value={d.value}>{d.label}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <label className="text-xs text-stone-400 shrink-0">Endet</label>
+                        <input
+                          value={editEndDate}
+                          onChange={e => setEditEndDate(e.target.value)}
+                          type="date"
+                          className="flex-1 border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setEditEndDate('')}
+                          className="text-xs text-stone-400 hover:text-rose-500 transition shrink-0"
+                        >
+                          Nie
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
                 <div className="flex gap-2 pt-1">
                   <button onClick={() => setEditing(false)} className="flex-1 border border-stone-200 py-2 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Cancel</button>
                   <button onClick={saveEdit} disabled={saving} className="flex-1 bg-rose-400 text-white py-2 rounded-xl text-sm font-medium hover:bg-rose-500 transition disabled:opacity-40">Save</button>
@@ -237,10 +313,17 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
           </div>
           {!editing && (
             <>
-              <p className="text-sm text-rose-400 font-medium">{fmtDate(event.date)}</p>
+              <p className="text-sm text-rose-400 font-medium">
+                {event.recurrence_rule ? 'Ab ' : ''}{fmtDate(event.date)}
+              </p>
               {event.start_time && (
                 <p className="text-xs text-stone-400">
                   {fmtTime(event.start_time)}{event.end_time ? ` – ${fmtTime(event.end_time)}` : ''}
+                </p>
+              )}
+              {event.recurrence_rule && (
+                <p className="text-xs text-rose-400 font-medium">
+                  🔁 {fmtRule(event.recurrence_rule)}{event.end_date ? ` · bis ${fmtDate(event.end_date)}` : ''}
                 </p>
               )}
               <div className="flex gap-3">
