@@ -149,53 +149,11 @@ export default function BucketListPage() {
   }
 
   function ItemCard({ item, isDone }: { item: BucketListItem; isDone?: boolean }) {
-    // Edit mode: title, description, duration and tag chips.
-    if (editingId === item.id) {
-      return (
-        <div className="border border-rose-200 rounded-xl p-4 space-y-3 bg-white">
-          <input
-            value={editTitle}
-            onChange={e => setEditTitle(e.target.value)}
-            placeholder="Title"
-            className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-rose-300"
-          />
-          <textarea
-            value={editDescription}
-            onChange={e => setEditDescription(e.target.value)}
-            placeholder="Description (optional)"
-            rows={2}
-            className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
-          />
-          <input
-            value={editDuration}
-            onChange={e => setEditDuration(e.target.value)}
-            type="number"
-            min={1}
-            placeholder="Duration in days (optional)"
-            className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
-          />
-          <div className="flex flex-wrap gap-1.5">
-            {Object.keys(TAG_COLORS).map(tag => (
-              <button
-                key={tag}
-                type="button"
-                onClick={() => toggleEditTag(tag)}
-                className={`text-xs px-2.5 py-1 rounded-full transition ${editTags.includes(tag) ? 'bg-rose-500 text-white' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-          <div className="flex gap-2">
-            <button onClick={() => setEditingId(null)} className="flex-1 border border-stone-200 py-2 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Cancel</button>
-            <button onClick={() => saveEdit(item.id)} disabled={!editTitle.trim()} className="flex-1 bg-rose-400 text-white py-2 rounded-xl text-sm font-medium hover:bg-rose-500 transition disabled:opacity-40">Save</button>
-          </div>
-        </div>
-      )
-    }
-
     return (
-      <div className={`border rounded-xl p-4 flex items-start justify-between gap-3 ${isDone ? 'bg-stone-50 border-stone-200 opacity-70' : 'bg-white border-stone-200'}`}>
+      <div
+        onClick={() => startEdit(item)}
+        className={`border rounded-xl p-4 flex items-start justify-between gap-3 cursor-pointer transition ${isDone ? 'bg-stone-50 border-stone-200 opacity-70' : 'bg-white border-stone-200 hover:border-rose-200 hover:shadow-sm'}`}
+      >
         <div className="space-y-1 min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <p className={`font-medium ${isDone ? 'text-stone-400 line-through' : 'text-stone-800'}`}>{item.title}</p>
@@ -213,11 +171,14 @@ export default function BucketListPage() {
           <p className="text-xs text-stone-400">added by {item.added_by === 'theresa' ? 'Theresa ♡' : 'you'}</p>
         </div>
         <div className="flex flex-col gap-2 shrink-0">
-          <button onClick={() => toggleResolved(item)} className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${isDone ? 'bg-stone-200 text-stone-500 hover:bg-stone-300' : 'bg-green-100 text-green-600 hover:bg-green-200'}`}>
+          <button
+            onClick={(e) => { e.stopPropagation(); toggleResolved(item) }}
+            className={`text-xs px-3 py-1.5 rounded-full font-medium transition ${isDone ? 'bg-stone-200 text-stone-500 hover:bg-stone-300' : 'bg-green-100 text-green-600 hover:bg-green-200'}`}
+          >
             {isDone ? '↩ Undo' : '✅ Done'}
           </button>
-          <button onClick={() => startEdit(item)} className="text-xs text-stone-400 hover:text-rose-500 transition">✏️ Edit</button>
-          <button onClick={() => deleteItem(item.id)} className="text-xs text-stone-300 hover:text-red-400 transition">Delete</button>
+          <button onClick={(e) => { e.stopPropagation(); startEdit(item) }} className="text-xs text-stone-400 hover:text-rose-500 transition">✏️ Edit</button>
+          <button onClick={(e) => { e.stopPropagation(); deleteItem(item.id) }} className="text-xs text-stone-300 hover:text-red-400 transition">Delete</button>
         </div>
       </div>
     )
@@ -261,6 +222,59 @@ export default function BucketListPage() {
           )}
         </div>
       )}
+
+      {/* Edit dialog — opens when a bucket list entry is clicked */}
+      {editingId && (() => {
+        const item = items.find(i => i.id === editingId)
+        if (!item) return null
+        return (
+          <div className="fixed inset-0 z-50 bg-black/30 backdrop-blur-sm flex items-end sm:items-center justify-center p-4">
+            <div className="bg-white rounded-3xl w-full max-w-md p-6 space-y-4 shadow-xl max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-lg text-stone-800">✏️ Bucket List Eintrag</h3>
+                <button onClick={() => setEditingId(null)} className="p-1 text-stone-400 hover:text-stone-700 transition">✕</button>
+              </div>
+              <input
+                value={editTitle}
+                onChange={e => setEditTitle(e.target.value)}
+                placeholder="Title"
+                className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-rose-300"
+              />
+              <textarea
+                value={editDescription}
+                onChange={e => setEditDescription(e.target.value)}
+                placeholder="Description (optional)"
+                rows={3}
+                className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+              />
+              <input
+                value={editDuration}
+                onChange={e => setEditDuration(e.target.value)}
+                type="number"
+                min={1}
+                placeholder="Duration in days (optional)"
+                className="w-full border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+              />
+              <div className="flex flex-wrap gap-1.5">
+                {Object.keys(TAG_COLORS).map(tag => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => toggleEditTag(tag)}
+                    className={`text-xs px-2.5 py-1 rounded-full transition ${editTags.includes(tag) ? 'bg-rose-500 text-white' : 'bg-stone-100 text-stone-500 hover:bg-stone-200'}`}
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2 pt-1">
+                <button onClick={() => setEditingId(null)} className="flex-1 border border-stone-200 py-2.5 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition">Cancel</button>
+                <button onClick={() => saveEdit(item.id)} disabled={!editTitle.trim()} className="flex-1 bg-rose-400 text-white py-2.5 rounded-xl text-sm font-medium hover:bg-rose-500 transition disabled:opacity-40">Save</button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </div>
   )
 }
