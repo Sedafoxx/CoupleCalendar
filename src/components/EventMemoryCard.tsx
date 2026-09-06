@@ -16,16 +16,11 @@ function fmtDate(dateStr: string) {
 
 // An item is only "real" if it actually has content to show — photos/videos need
 // a storage URL, youtube needs a link, notes need text. Rows without usable
-// content (e.g. broken leftovers) are treated as empty so they never render as
-// a black/blank block.
+// content (e.g. broken leftovers) never render as a black/blank tile.
 function isUsable(m: EventMedia): boolean {
   if (m.kind === 'note') return !!m.caption?.trim()
   if (m.kind === 'youtube') return !!m.youtube_url
   return !!m.url
-}
-
-export function eventHasContent(media: EventMedia[]): boolean {
-  return media.some(isUsable)
 }
 
 interface EventMemoryCardProps {
@@ -44,9 +39,6 @@ export default function EventMemoryCard({ event, media, onEditEvent, onDeleteIte
   const usable = media.filter(isUsable)
   const gallery = usable.filter(m => m.kind !== 'note')
   const notes = usable.filter(m => m.kind === 'note')
-
-  // Nothing to show → collapse entirely (no blank/empty card).
-  if (gallery.length === 0 && notes.length === 0) return null
 
   return (
     <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm">
@@ -124,6 +116,17 @@ export default function EventMemoryCard({ event, media, onEditEvent, onDeleteIte
           <p className="text-xs text-stone-400 mt-1">📝 Notiz · {n.added_by === 'dimitri' ? 'Dimitri' : 'Theresa'}</p>
         </div>
       ))}
+
+      {/* No media yet — still show the event as a memory you can open to add media */}
+      {gallery.length === 0 && notes.length === 0 && (
+        <button
+          onClick={() => onEditEvent?.(event)}
+          className="w-full px-4 py-5 flex flex-col items-center gap-1 text-stone-300 hover:text-rose-400 hover:bg-rose-50/40 transition"
+        >
+          <span className="text-2xl">♡</span>
+          <span className="text-xs">Noch keine Medien — tippen zum Hinzufügen</span>
+        </button>
+      )}
 
       {/* Full-screen viewer */}
       {viewerIndex !== null && gallery.length > 0 && (
