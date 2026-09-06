@@ -6,6 +6,7 @@ import EventDetail from '@/components/EventDetail'
 import RsvpButtons from '@/components/RsvpButtons'
 import ProvenanceBadge from '@/components/ProvenanceBadge'
 import { compareByProvenanceThenDate, bothGoing, anyoneGoing } from '@/lib/event-utils'
+import { track } from '@/lib/activity'
 
 type NarrowingOpt = { label: string; category: string }
 type SuggestionOpt = { label: string; event: Record<string, unknown> }
@@ -105,12 +106,14 @@ export default function PlanPage() {
       formData.append('message', text)
       const res = await fetch('/api/chat', { method: 'POST', body: formData })
       const data = await res.json()
+      track('chat_quick_send', { action: data.action ?? 'unknown', text: text.slice(0, 200) })
       const msg: ChatMessage = { role: 'assistant', text: data.reply || 'Done! ♡' }
       if (data.action === 'ask' && data.narrowing) msg.narrowing = data.narrowing
       if (data.action === 'suggest' && data.suggestions) msg.suggestions = data.suggestions
       setMessages(prev => [...prev, msg])
       if (data.events?.length || data.event) fetchEvents()
     } catch {
+      track('chat_send_failed', {}, 'error')
       setMessages(prev => [...prev, { role: 'assistant', text: 'Failed. Try again?' }])
     }
     setSending(false)
@@ -132,12 +135,18 @@ export default function PlanPage() {
       if (currentImage) formData.append('image', currentImage)
       const res = await fetch('/api/chat', { method: 'POST', body: formData })
       const data = await res.json()
+      track('chat_send', {
+        action: data.action ?? 'unknown',
+        with_image: !!currentImage,
+        text: text.slice(0, 200),
+      })
       const msg: ChatMessage = { role: 'assistant', text: data.reply || 'Done! ♡' }
       if (data.action === 'ask' && data.narrowing) msg.narrowing = data.narrowing
       if (data.action === 'suggest' && data.suggestions) msg.suggestions = data.suggestions
       setMessages(prev => [...prev, msg])
       if (data.events?.length || data.event) fetchEvents()
     } catch {
+      track('chat_send_failed', {}, 'error')
       setMessages(prev => [...prev, { role: 'assistant', text: 'Failed. Try again?' }])
     }
     setSending(false)

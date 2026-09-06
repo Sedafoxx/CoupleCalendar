@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import type { Event } from '@/lib/supabase'
 import { bothGoing } from '@/lib/event-utils'
+import { track } from '@/lib/activity'
 
 // Shared RSVP controls used by the Plan page, calendar day view, memories feed
 // and the Discover feed. Either partner may toggle EITHER person's RSVP
@@ -35,6 +36,12 @@ export default function RsvpButtons({ event, who, onUpdated }: RsvpButtonsProps)
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ [field]: currentlyGoing ? 'maybe' : 'going' }),
+      })
+      track('rsvp_toggle', {
+        event_id: event.id,
+        event_title: event.title?.slice(0, 120),
+        person: name,
+        value: currentlyGoing ? 'maybe' : 'going',
       })
       onUpdated?.()
     } finally {

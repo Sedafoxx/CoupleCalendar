@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import type { Event } from '@/lib/supabase'
 import { extractYouTubeId, youtubeWatchUrl } from '@/lib/youtube'
+import { track } from '@/lib/activity'
 
 // Modal for adding media to an event: pick multiple photos/videos from the
 // device, paste a YouTube link, and/or write a text note. Each selected file /
@@ -113,10 +114,17 @@ export default function MediaUploader({ preselectedEventId, onDone, onClose }: M
       }
 
       setSuccess('Gespeichert ♡')
+      track('media_uploaded', {
+        event_id: selectedEventId,
+        files: files.length,
+        has_youtube: !!youtubeUrl.trim(),
+        has_note: !!noteText.trim(),
+      })
       clearForm()
       onDone?.()
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Upload fehlgeschlagen — nochmal versuchen')
+      track('media_upload_failed', { event_id: selectedEventId }, 'error')
     }
     setUploading(false)
   }

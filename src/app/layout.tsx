@@ -3,6 +3,8 @@ import { Geist } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
 import BottomNav from "@/components/BottomNav";
+import ActivityMonitor from "@/components/ActivityMonitor";
+import BugReporter from "@/components/BugReporter";
 
 const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 
@@ -22,6 +24,8 @@ export default function RootLayout({
         <Providers>
           {children}
           <BottomNav />
+          <ActivityMonitor />
+          <BugReporter />
         </Providers>
       </body>
     </html>
