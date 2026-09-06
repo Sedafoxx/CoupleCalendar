@@ -1,7 +1,8 @@
 'use client'
-import { useState, useEffect, useMemo } from 'react'
-import type { Event, Memory } from '@/lib/supabase'
+import { useState, useMemo } from 'react'
+import type { Event, EventMedia } from '@/lib/supabase'
 import { occurrencesBetween } from '@/lib/event-utils'
+import { youtubeThumbnail } from '@/lib/youtube'
 
 // ── Helpers ────────────────────────────────────────────────
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -10,12 +11,6 @@ const MONTHS = [
   'July', 'August', 'September', 'October', 'November', 'December',
 ]
 
-function fmtDate(dateStr: string) {
-  return new Date(dateStr + 'T00:00:00').toLocaleDateString('de-AT', {
-    weekday: 'long', day: 'numeric', month: 'long',
-  })
-}
-
 function toDateStr(year: number, month: number, day: number): string {
   return `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
 }
@@ -23,7 +18,8 @@ function toDateStr(year: number, month: number, day: number): string {
 // ── Calendar Props ─────────────────────────────────────────
 interface CalendarProps {
   events: Event[]
-  memories: Memory[]
+  /** Recent media items (with event_date) used for cover thumbnails on days. */
+  media?: EventMedia[]
   loading?: boolean
   onSelectDate?: (dateStr: string) => void
   onSelectEvent?: (event: Event) => void
@@ -33,11 +29,9 @@ interface CalendarProps {
 // ── Component ──────────────────────────────────────────────
 export default function Calendar({
   events,
-  memories,
+  media = [],
   loading,
   onSelectDate,
-  onSelectEvent,
-  onAddMemory,
 }: CalendarProps) {
   const [viewDate, setViewDate] = useState(new Date())
   const year = viewDate.getFullYear()
@@ -61,19 +55,28 @@ export default function Calendar({
     return map
   }, [events, year, month])
 
-  const memoriesByDate = useMemo(() => {
-    const map = new Map<string, Memory[]>()
-    for (const m of memories) {
-      // Memories don't have a date field directly — use created_at date
-      const dateKey = m.created_at?.split('T')[0]
-      if (dateKey) {
-        const existing = map.get(dateKey) || []
-        existing.push(m)
-        map.set(dateKey, existing)
-      }
+  // Covers (photo thumbnails / youtube thumbs) keyed by the EVENT's date, so a
+  // photo added later still appears on the day the memory happened.
+  const coversByDate = useMemo(() => {
+    const map = new Map<string, string[]>()
+    for (const m of media) {
+      const dateKey = m.event_date?.split('T')[0]
+      if (!dateKey || m.kind === 'note') continue
+      const cover = m.kind === 'youtube'
+        ? youtubeThumbnail(m.youtube_url ?? '')
+        : m.url
+      if (!cover) continue
+      const list = map.get(dateKey) || []
+      if (list.length >= 3) continue
+      list.push(cover)
+      map.set(dateKey, list)
+    }
+    // Photos first for each day (youtube thumbs contain 'ytimg').
+    for (const list of map.values()) {
+      list.sort((a) => (a.includes('ytimg') ? 1 : -1))
     }
     return map
-  }, [memories])
+  }, [media])
 
   // Calendar grid calculation
   const calendarDays = useMemo(() => {
@@ -150,9 +153,9 @@ export default function Calendar({
         {/* Day cells */}
         {calendarDays.map((cell, i) => {
           const dayEvents = cell.dateStr ? eventsByDate.get(cell.dateStr) || [] : []
-          const dayMemories = cell.dateStr ? memoriesByDate.get(cell.dateStr) || [] : []
+          const dayCovers = cell.dateStr ? coversByDate.get(cell.dateStr) || [] : []
           const isToday = cell.dateStr === todayStr
-          const hasContent = dayEvents.length > 0 || dayMemories.length > 0
+          const hasContent = dayEvents.length > 0 || dayCovers.length > 0
 
           return (
             <button
@@ -185,14 +188,14 @@ export default function Calendar({
                 </div>
               )}
 
-              {/* Memory photo thumbnails */}
-              {dayMemories.length > 0 && cell.isCurrentMonth && (
+              {/* Media cover thumbnails */}
+              {dayCovers.length > 0 && cell.isCurrentMonth && (
                 <div className="flex -space-x-1 mt-0.5">
-                  {dayMemories.slice(0, 3).map((m) => (
+                  {dayCovers.map((src, ci) => (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      key={m.id}
-                      src={m.photo_back}
+                      key={ci}
+                      src={src}
                       alt=""
                       className="w-4 h-4 rounded-full border border-white object-cover"
                     />

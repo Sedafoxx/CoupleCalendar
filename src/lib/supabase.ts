@@ -74,3 +74,21 @@ export type Memory = {
   event_title?: string
   event_date?: string
 }
+
+export type MediaKind = 'photo' | 'video' | 'youtube' | 'note'
+
+// One media item attached to an event (photo / video / youtube link / text note).
+// An event may have many items — replaces the old forced front/back pair.
+export type EventMedia = {
+  id: string
+  event_id: string
+  kind: MediaKind
+  url: string | null          // storage URL for photo/video
+  youtube_url: string | null  // watch URL for kind === 'youtube'
+  caption: string | null
+  added_by: 'dimitri' | 'theresa'
+  created_at: string
+  // Joined from events table when fetched with event details
+  event_title?: string
+  event_date?: string
+}

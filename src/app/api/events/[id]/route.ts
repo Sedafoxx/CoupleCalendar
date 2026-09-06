@@ -3,8 +3,6 @@ import { authOptions } from '@/lib/auth'
 import { supabase } from '@/lib/supabase'
 import { isTheresaAuthed } from '@/lib/theresa-auth'
 import { syncConfirmedEventToGoogle } from '@/lib/google-sync'
-import { ensureBothConfirmedMemory } from '@/lib/memory-utils'
-import { viennaToday } from '@/lib/event-utils'
 import type { NextRequest } from 'next/server'
 
 type Who = 'dimitri' | 'theresa'
@@ -71,15 +69,6 @@ export async function PATCH(
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
 
-  // If the event title changed, keep auto-created memory captions in sync.
-  if ('title' in patch && typeof patch.title === 'string' && data) {
-    await supabase
-      .from('memories')
-      .update({ caption: `💕 Beide zu: ${patch.title}` })
-      .eq('event_id', data.id)
-      .like('caption', '💕 Beide zu: %')
-  }
-
   // Notify Dimitri when Theresa proposes / RSVPs to something.
   if (who === 'theresa' && 'rsvp_theresa' in patch && data) {
     const verb = body.rsvp_theresa === 'going' ? 'will zu' : 'hat Interesse an'
@@ -91,8 +80,8 @@ export async function PATCH(
   }
 
   // Both RSVP 'going' → it's a confirmed date. Notify both + sync to Google.
-  // A memory is ONLY created once the event date has passed (history), not
-  // the moment the second person confirms. See ensureBothConfirmedMemory.
+  // The memories feed is event-driven now (past + both-going events show up as
+  // memories with their media gallery), so no placeholder media is created here.
   if (data && data.rsvp_dimitri === 'going' && data.rsvp_theresa === 'going') {
     // Notify both that it's a date — but only once per event (idempotent),
     // so toggling RSVP back and forth doesn't spam notifications.
@@ -110,13 +99,6 @@ export async function PATCH(
         kind: 'event',
         event_id: data.id,
       })
-    }
-
-    // If this event is already in the past (history), promote it to a memory
-    // immediately. Future events wait for the date to pass, then the daily
-    // cron (and this same check) creates the memory.
-    if (data.date < viennaToday()) {
-      await ensureBothConfirmedMemory(data)
     }
 
     // Both confirmed → also write the date to Dimitri's Google Calendar.

@@ -1,8 +1,8 @@
 'use client'
 import { useState, useEffect } from 'react'
-import type { Event, Memory } from '@/lib/supabase'
-import DualCamera from './DualCamera'
-import YouTubeCard from './YouTubeCard'
+import type { Event, EventMedia } from '@/lib/supabase'
+import MediaUploader from './MediaUploader'
+import MediaViewer from './MediaViewer'
 import { weeklyWeekday } from '@/lib/event-utils'
 
 // ── Helpers ────────────────────────────────────────────────
@@ -10,10 +10,6 @@ function fmtDate(dateStr: string) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('de-AT', {
     weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
   })
-}
-
-function fmtTime(timeStr: string) {
-  return timeStr // Already in HH:MM format
 }
 
 // ── Recurrence (weekly) editing helpers ─────────────────────
@@ -35,18 +31,6 @@ function fmtRule(rule: string | null | undefined): string {
   return `jeden ${WEEKDAY_OPTIONS[wd].label}`
 }
 
-function timeAgo(iso: string): string {
-  const diff = Date.now() - new Date(iso).getTime()
-  const mins = Math.floor(diff / 60000)
-  if (mins < 1) return 'just now'
-  if (mins < 60) return `${mins}m ago`
-  const hours = Math.floor(mins / 60)
-  if (hours < 24) return `${hours}h ago`
-  const days = Math.floor(hours / 24)
-  if (days < 7) return `${days}d ago`
-  return new Date(iso).toLocaleDateString('de-AT', { day: 'numeric', month: 'short' })
-}
-
 // ── Props ──────────────────────────────────────────────────
 interface EventDetailProps {
   event: Event
@@ -56,10 +40,10 @@ interface EventDetailProps {
 // ── Component ──────────────────────────────────────────────
 export default function EventDetail({ event, onClose }: EventDetailProps) {
   const [deleting, setDeleting] = useState(false)
-  const [memories, setMemories] = useState<Memory[]>([])
+  const [media, setMedia] = useState<EventMedia[]>([])
   const [loading, setLoading] = useState(true)
-  const [showCamera, setShowCamera] = useState(false)
-  const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null)
+  const [showUploader, setShowUploader] = useState(false)
+  const [viewerIndex, setViewerIndex] = useState<number | null>(null)
   const [editing, setEditing] = useState(false)
   const [editTitle, setEditTitle] = useState(event.title)
   const [editDate, setEditDate] = useState(event.date)
@@ -70,20 +54,18 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
   const [editRepeatDay, setEditRepeatDay] = useState<number>(weeklyWeekday(event.recurrence_rule) ?? 0)
   const [editEndDate, setEditEndDate] = useState(event.end_date || '')
   const [saving, setSaving] = useState(false)
-  const [noteText, setNoteText] = useState('')
-  const [savingNote, setSavingNote] = useState(false)
 
   useEffect(() => {
-    fetchMemories()
+    fetchMedia()
   }, [event.id])
 
-  async function fetchMemories() {
+  async function fetchMedia() {
     setLoading(true)
     try {
-      const res = await fetch(`/api/memories?event_id=${event.id}`)
+      const res = await fetch(`/api/event-media?event_id=${event.id}`)
       if (res.ok) {
         const data = await res.json()
-        setMemories(Array.isArray(data) ? data : [])
+        setMedia(Array.isArray(data) ? data : [])
       }
     } catch {
       // Silently fail
@@ -91,15 +73,12 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
     setLoading(false)
   }
 
-  function handleSaved() {
-    setShowCamera(false)
-    fetchMemories()
-  }
-
-  async function handleDeleteMemory(id: string) {
-    const res = await fetch(`/api/memories/${id}`, { method: 'DELETE' })
+  async function handleDeleteMedia(item: EventMedia) {
+    if (!confirm('Dieses Medium wirklich löschen?')) return
+    const res = await fetch(`/api/event-media/${item.id}`, { method: 'DELETE' })
     if (res.ok) {
-      setMemories((prev) => prev.filter((m) => m.id !== id))
+      setMedia(prev => prev.filter(m => m.id !== item.id))
+      setViewerIndex(null)
     }
   }
 
@@ -141,102 +120,32 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
     setDeleting(false)
   }
 
-  async function addNote() {
-    if (!noteText.trim()) return
-    setSavingNote(true)
-    // Create a text-only memory (no photos)
-    const formData = new FormData()
-    // Use a 1x1 transparent pixel as placeholder for both photos
-    const emptyPixel = new Blob([new Uint8Array([71,73,70,56,57,97,1,0,1,0,128,0,0,255,255,255,0,0,0,33,249,4,1,0,0,0,0,44,0,0,0,0,1,0,1,0,0,2,2,68,1,0,59])], { type: 'image/gif' })
-    formData.append('photo_front', emptyPixel, 'note.gif')
-    formData.append('photo_back', emptyPixel, 'note.gif')
-    formData.append('event_id', event.id)
-    formData.append('caption', noteText.trim())
-
-    const res = await fetch('/api/memories', { method: 'POST', body: formData })
-    if (res.ok) {
-      setNoteText('')
-      fetchMemories()
-    }
-    setSavingNote(false)
-  }
-
-  // Full-screen memory view
-  if (selectedMemory) {
+  // Uploader full-screen
+  if (showUploader) {
     return (
-      <div className="fixed inset-0 z-50 bg-black overflow-y-auto">
-        <div className="min-h-full flex flex-col">
-          {/* Back camera photo */}
-          <div className="flex-1 bg-stone-900 flex items-center justify-center min-h-[50vh]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={selectedMemory.photo_back}
-              alt="Memory"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Front camera photo */}
-          <div className="relative h-[28vh] bg-stone-800">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={selectedMemory.photo_front}
-              alt="Selfie"
-              className="w-full h-full object-cover opacity-90"
-            />
-            <div className="absolute inset-x-0 top-0 flex items-center gap-3 px-4 -translate-y-1/2">
-              <div className="flex-1 h-px bg-white/30" />
-              <span className="text-white/60 text-xs bg-stone-800 px-3 py-1 rounded-full">
-                📸 {selectedMemory.captured_by === 'dimitri' ? 'Dimitri' : 'Theresa'}
-              </span>
-              <div className="flex-1 h-px bg-white/30" />
-            </div>
-          </div>
-
-          {/* Info overlay at bottom */}
-          <div className="bg-white rounded-t-3xl p-6 space-y-3 -mt-4 relative z-10">
-            <YouTubeCard text={selectedMemory.caption} />
-            {selectedMemory.caption && (
-              <p className="text-stone-700 text-sm leading-relaxed">
-                &ldquo;{selectedMemory.caption}&rdquo;
-              </p>
-            )}
-            <p className="text-xs text-stone-400">
-              {timeAgo(selectedMemory.created_at)}
-            </p>
-            <div className="flex gap-3 pt-1">
-              <button
-                onClick={() => setSelectedMemory(null)}
-                className="flex-1 border border-stone-200 py-2.5 rounded-xl text-sm text-stone-500 hover:bg-stone-50 transition"
-              >
-                Back
-              </button>
-              <button
-                onClick={() => {
-                  handleDeleteMemory(selectedMemory.id)
-                  setSelectedMemory(null)
-                }}
-                className="px-4 py-2.5 rounded-xl text-sm text-red-400 hover:bg-red-50 transition"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  // Camera view
-  if (showCamera) {
-    return (
-      <DualCamera
+      <MediaUploader
         preselectedEventId={event.id}
-        onSaved={handleSaved}
-        onClose={() => setShowCamera(false)}
+        onDone={() => { setShowUploader(false); fetchMedia() }}
+        onClose={() => setShowUploader(false)}
       />
     )
   }
+
+  // Full-screen viewer
+  if (viewerIndex !== null) {
+    const gallery = media.filter(m => m.kind !== 'note')
+    return (
+      <MediaViewer
+        items={gallery}
+        initialIndex={viewerIndex}
+        onClose={() => setViewerIndex(null)}
+        onDelete={handleDeleteMedia}
+      />
+    )
+  }
+
+  const gallery = media.filter(m => m.kind !== 'note')
+  const notes = media.filter(m => m.kind === 'note')
 
   // Normal detail view
   return (
@@ -318,7 +227,7 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
               </p>
               {event.start_time && (
                 <p className="text-xs text-stone-400">
-                  {fmtTime(event.start_time)}{event.end_time ? ` – ${fmtTime(event.end_time)}` : ''}
+                  {event.start_time}{event.end_time ? ` – ${event.end_time}` : ''}
                 </p>
               )}
               {event.recurrence_rule && (
@@ -342,101 +251,74 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
           )}
         </div>
 
-        {/* Memories section */}
+        {/* Media section */}
         <div className="p-6 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-stone-700">
-              Memories {memories.length > 0 && `(${memories.length})`}
+              ♡ Erinnerungen {gallery.length > 0 && `(${gallery.length})`}
             </h3>
-            <div className="flex gap-1">
-              <button
-                onClick={() => setShowCamera(true)}
-                className="bg-gradient-to-r from-rose-400 to-pink-500 text-white text-xs px-3 py-2 rounded-full font-medium hover:from-rose-500 hover:to-pink-600 transition shadow-sm"
-              >
-                📸 Photo
-              </button>
-            </div>
-          </div>
-
-          {/* Add a text note */}
-          <div className="flex gap-2">
-            <input
-              value={noteText}
-              onChange={e => setNoteText(e.target.value)}
-              placeholder="Add a note about this memory..."
-              className="flex-1 border border-stone-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-200"
-              maxLength={500}
-            />
             <button
-              onClick={addNote}
-              disabled={savingNote || !noteText.trim()}
-              className="bg-stone-900 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-stone-700 transition disabled:opacity-40"
+              onClick={() => setShowUploader(true)}
+              className="bg-gradient-to-r from-rose-400 to-pink-500 text-white text-xs px-3 py-2 rounded-full font-medium hover:from-rose-500 hover:to-pink-600 transition shadow-sm"
             >
-              {savingNote ? '...' : 'Add Note'}
+              ➕ Foto / Video / Link
             </button>
           </div>
 
           {loading ? (
-            <p className="text-stone-400 text-sm text-center py-8">Loading memories...</p>
-          ) : memories.length === 0 ? (
+            <p className="text-stone-400 text-sm text-center py-8">Lädt…</p>
+          ) : gallery.length === 0 && notes.length === 0 ? (
             <div className="text-center py-8 space-y-2">
               <p className="text-3xl">📸</p>
               <p className="text-stone-400 text-sm">
-                No memories yet. Capture this moment!
+                Noch keine Erinnerungen. Füge Fotos, Videos oder einen YouTube-Link hinzu!
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
-              {memories.map((memory) => {
-                const isNote = memory.photo_back.includes('note.gif')
-                return isNote ? (
-                  /* Text note card */
-                  <div key={memory.id} className="bg-amber-50 border border-amber-100 rounded-2xl p-4 space-y-1">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <YouTubeCard text={memory.caption} compact />
-                        <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">{memory.caption}</p>
-                        <p className="text-xs text-stone-400 mt-1">
-                          📝 Notiz · {memory.captured_by === 'dimitri' ? 'Dimitri' : 'Theresa'} · {timeAgo(memory.created_at)}
-                        </p>
-                      </div>
-                      <button onClick={() => handleDeleteMemory(memory.id)} className="text-stone-300 hover:text-red-400 transition shrink-0">✕</button>
+            <div className="space-y-3">
+              {/* Photo/video/youtube grid */}
+              {gallery.length > 0 && (
+                <div className="grid grid-cols-3 gap-1.5">
+                  {gallery.map((m, i) => (
+                    <button
+                      key={m.id}
+                      onClick={() => setViewerIndex(i)}
+                      className="relative aspect-square rounded-lg overflow-hidden bg-stone-100 group"
+                    >
+                      {m.kind === 'youtube' ? (
+                        <span className="absolute inset-0 flex items-center justify-center text-3xl">▶️</span>
+                      ) : m.kind === 'video' ? (
+                        <video src={m.url ?? undefined} muted playsInline preload="metadata" className="w-full h-full object-cover" />
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={m.url ?? undefined} alt={m.caption ?? ''} className="w-full h-full object-cover" loading="lazy" />
+                      )}
+                      {m.kind === 'youtube' && (
+                        <span className="absolute inset-0 flex items-center justify-center">
+                          <span className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
+                            <svg viewBox="0 0 24 24" className="w-4 h-4 text-rose-500 ml-0.5" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                          </span>
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Notes */}
+              {notes.map(n => (
+                <div key={n.id} className="bg-amber-50 border border-amber-100 rounded-2xl p-4 space-y-1">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-stone-700 leading-relaxed whitespace-pre-wrap">“{n.caption}”</p>
+                      <p className="text-xs text-stone-400 mt-1">
+                        📝 Notiz · {n.added_by === 'dimitri' ? 'Dimitri' : 'Theresa'}
+                      </p>
                     </div>
+                    <button onClick={() => handleDeleteMedia(n)} className="text-stone-300 hover:text-red-400 transition shrink-0">✕</button>
                   </div>
-                ) : (
-                  /* Photo memory card */
-                  <button
-                    key={memory.id}
-                    onClick={() => setSelectedMemory(memory)}
-                    className="w-full text-left bg-stone-50 rounded-2xl overflow-hidden hover:bg-stone-100 transition"
-                  >
-                    <div className="flex h-32">
-                      <div className="flex-1 relative">
-                        <img src={memory.photo_back} alt="" className="w-full h-full object-cover" />
-                      </div>
-                      <div className="w-20 relative">
-                        <img src={memory.photo_front} alt="" className="w-full h-full object-cover opacity-80" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-white text-xs bg-black/40 px-1.5 py-0.5 rounded">selfie</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="px-4 py-2.5 flex items-center justify-between gap-3">
-                      <div className="min-w-0">
-                        {memory.caption ? (
-                          <p className="text-sm text-stone-700 truncate">{memory.caption}</p>
-                        ) : (
-                          <p className="text-sm text-stone-400 italic">No caption</p>
-                        )}
-                        <p className="text-xs text-stone-400 mt-0.5">
-                          {memory.captured_by === 'dimitri' ? 'Dimitri' : 'Theresa'} · {timeAgo(memory.created_at)}
-                        </p>
-                      </div>
-                      <button onClick={(e) => { e.stopPropagation(); handleDeleteMemory(memory.id) }} className="text-stone-300 hover:text-red-400 transition text-sm shrink-0">✕</button>
-                    </div>
-                  </button>
-                )
-              })}
+                </div>
+              ))}
             </div>
           )}
         </div>

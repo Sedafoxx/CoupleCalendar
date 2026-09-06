@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useSession, signIn } from 'next-auth/react'
-import type { Event, Memory } from '@/lib/supabase'
+import type { Event, EventMedia } from '@/lib/supabase'
 import Calendar from '@/components/Calendar'
 import EventDetail from '@/components/EventDetail'
 import DiscoverFeed from '@/components/DiscoverFeed'
@@ -12,7 +12,7 @@ import { compareByProvenanceThenDate, anyoneGoing, eventOccursOn } from '@/lib/e
 export default function CalendarPage() {
   const { data: session, status } = useSession()
   const [events, setEvents] = useState<Event[]>([])
-  const [memories, setMemories] = useState<Memory[]>([])
+  const [media, setMedia] = useState<EventMedia[]>([])
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState<string | null>(null)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
@@ -44,10 +44,10 @@ export default function CalendarPage() {
     if (status === 'authenticated' || who) {
       Promise.all([
         fetch('/api/events?past=true').then((r) => r.json()),
-        fetch('/api/memories?recent=true&limit=100').then((r) => r.json()),
-      ]).then(([eventsData, memoriesData]) => {
+        fetch('/api/event-media?recent=true&limit=200').then((r) => r.json()),
+      ]).then(([eventsData, mediaData]) => {
         setEvents(Array.isArray(eventsData) ? eventsData : [])
-        setMemories(Array.isArray(memoriesData) ? memoriesData : [])
+        setMedia(Array.isArray(mediaData) ? mediaData : [])
         setLoading(false)
       }).catch(() => setLoading(false))
     }
@@ -126,7 +126,7 @@ export default function CalendarPage() {
         <>
           <Calendar
             events={plansEvents}
-            memories={memories}
+            media={media}
             loading={loading}
             onSelectDate={(dateStr) => setSelectedDate(dateStr)}
             onSelectEvent={(ev) => setSelectedEvent(ev)}

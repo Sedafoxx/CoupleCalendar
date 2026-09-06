@@ -1,19 +1,16 @@
 'use client'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
-import type { Memory, Event, Notification } from '@/lib/supabase'
-import DualCamera from '@/components/DualCamera'
+import type { Event, EventMedia, Notification } from '@/lib/supabase'
 import EventDetail from '@/components/EventDetail'
 import FeedCards from '@/components/FeedCards'
-import MemoryEditor from '@/components/MemoryEditor'
+import MediaUploader from '@/components/MediaUploader'
 
 export default function MemoriesPage() {
   const { data: session, status } = useSession()
-  const [memories, setMemories] = useState<(Memory & { event_title?: string; event_date?: string })[]>([])
-  const [events, setEvents] = useState<Event[]>([])
+  const [media, setMedia] = useState<EventMedia[]>([])
   const [loading, setLoading] = useState(true)
-  const [showCamera, setShowCamera] = useState(false)
-  const [selectedMemory, setSelectedMemory] = useState<Memory | null>(null)
+  const [showUploader, setShowUploader] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [showDebug, setShowDebug] = useState(false)
   const [pastEvents, setPastEvents] = useState<Event[]>([])
@@ -29,16 +26,13 @@ export default function MemoriesPage() {
 
   const fetchAll = useCallback(async () => {
     try {
-      const [memoriesRes, eventsRes, pastRes] = await Promise.all([
-        fetch('/api/memories?recent=true&limit=50'),
-        fetch('/api/events'),
+      const [mediaRes, pastRes] = await Promise.all([
+        fetch('/api/event-media?recent=true&limit=200'),
         fetch('/api/events?past=true'),
       ])
-      const memoriesData = await memoriesRes.json()
-      const eventsData = await eventsRes.json()
+      const mediaData = await mediaRes.json()
       const pastData = await pastRes.json()
-      setMemories(Array.isArray(memoriesData) ? memoriesData : [])
-      setEvents(Array.isArray(eventsData) ? eventsData : [])
+      setMedia(Array.isArray(mediaData) ? mediaData : [])
       setPastEvents(Array.isArray(pastData) ? pastData : [])
     } catch {}
     setLoading(false)
@@ -82,16 +76,14 @@ export default function MemoriesPage() {
     }
   }
 
-  function handleMemorySaved() { setShowCamera(false); fetchAll() }
-  function handleMemoryClick(memory: Memory) { setSelectedMemory(memory) }
+  // From a gallery card's edit, open the underlying event detail.
+  function handleEditEvent(ev: Event) { setSelectedEvent(ev) }
 
-  // From a memory's photo editor, jump to the underlying event's edit dialog
-  // (title/date/location/etc.). Find the event in the fetched past events.
-  function handleEditEventFromMemory(eventId: string) {
-    const ev = pastEvents.find(e => e.id === eventId) ?? events.find(e => e.id === eventId)
-    if (!ev) return
-    setSelectedMemory(null)
-    setSelectedEvent(ev)
+  // Delete a single media item from the full-screen viewer.
+  async function handleDeleteMedia(item: EventMedia) {
+    if (!confirm('Dieses Medium wirklich löschen?')) return
+    const res = await fetch(`/api/event-media/${item.id}`, { method: 'DELETE' })
+    if (res.ok) fetchAll()
   }
 
   if (status === 'loading') return <div className="p-8 text-stone-400">Loading...</div>
@@ -149,17 +141,8 @@ export default function MemoriesPage() {
     )
   }
 
-  if (showCamera) return <DualCamera onSaved={handleMemorySaved} onClose={() => setShowCamera(false)} />
-
-  if (selectedMemory) {
-    return (
-      <MemoryEditor
-        memory={selectedMemory}
-        onClose={() => setSelectedMemory(null)}
-        onUpdated={() => { setSelectedMemory(null); fetchAll() }}
-        onEditEvent={handleEditEventFromMemory}
-      />
-    )
+  if (showUploader) {
+    return <MediaUploader onClose={() => setShowUploader(false)} onDone={fetchAll} />
   }
 
   return (
@@ -203,19 +186,28 @@ export default function MemoriesPage() {
         {loading ? (
           <div className="space-y-4">{[1, 2, 3].map(i => <div key={i} className="bg-stone-50 rounded-2xl h-64 animate-pulse" />)}</div>
         ) : null}
-        {!loading && <FeedCards pastEvents={pastEvents} memories={memories} onSelectEvent={setSelectedEvent} onSelectMemory={handleMemoryClick} showRsvp={false} />}
+        {!loading && (
+          <FeedCards
+            pastEvents={pastEvents}
+            media={media}
+            onSelectEvent={handleEditEvent}
+            onDeleteMedia={handleDeleteMedia}
+            onUpdated={fetchAll}
+            showRsvp={false}
+          />
+        )}
       </section>
 
       {showDebug && (
         <div className="bg-stone-50 border border-stone-200 rounded-xl p-4 text-xs space-y-1 font-mono">
-          <p>Memories: {memories.length} | Past: {pastEvents.length}</p>
+          <p>Media: {media.length} | Past: {pastEvents.length}</p>
           <button onClick={fetchAll} className="text-rose-400 hover:text-rose-600 underline">Refresh</button>
         </div>
       )}
 
-      <button onClick={() => setShowCamera(true)} className="fixed bottom-20 right-6 z-30 w-14 h-14 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 text-white shadow-lg flex items-center justify-center text-2xl hover:from-rose-500 hover:to-pink-600 transition active:scale-95">📸</button>
+      <button onClick={() => setShowUploader(true)} className="fixed bottom-20 right-6 z-30 w-14 h-14 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 text-white shadow-lg flex items-center justify-center text-2xl hover:from-rose-500 hover:to-pink-600 transition active:scale-95">➕</button>
 
-      {selectedEvent && <EventDetail event={selectedEvent} onClose={() => setSelectedEvent(null)} />}
+      {selectedEvent && <EventDetail event={selectedEvent} onClose={() => { setSelectedEvent(null); fetchAll() }} />}
     </div>
   )
 }

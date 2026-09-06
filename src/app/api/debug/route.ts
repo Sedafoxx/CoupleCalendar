@@ -11,42 +11,45 @@ export async function GET(req: NextRequest) {
     return Response.json({ error: 'unauthorized' }, { status: 401 })
   }
 
-  const [eventsRes, memsRes] = await Promise.all([
+  const [eventsRes, mediaRes] = await Promise.all([
     supabase.from('events').select('id,title,date,category').order('date', { ascending: false }).limit(100),
-    supabase.from('memories').select('id,event_id,caption,photo_back'),
+    supabase.from('event_media').select('id,event_id,kind,url,added_by'),
   ])
 
   const events = eventsRes.data || []
-  const mems = memsRes.data || []
+  const media = mediaRes.data || []
 
   const today = new Date().toISOString().split('T')[0]
   const pastPersonal = events.filter(e => e.date < today && e.category !== 'city')
-  const photoMems = mems.filter(m => !m.photo_back?.includes('note.gif'))
-  const memsByEvent = new Map<string, typeof mems>()
-  for (const m of mems) {
-    const list = memsByEvent.get(m.event_id) || []
+  const photoItems = media.filter(m => m.kind === 'photo' || m.kind === 'video' || m.kind === 'youtube')
+  const noteItems = media.filter(m => m.kind === 'note')
+  const itemsByEvent = new Map<string, typeof media>()
+  for (const m of media) {
+    const list = itemsByEvent.get(m.event_id) || []
     list.push(m)
-    memsByEvent.set(m.event_id, list)
+    itemsByEvent.set(m.event_id, list)
   }
 
   return Response.json({
     stats: {
       total_events: events.length,
       past_personal_events: pastPersonal.length,
-      total_memories: mems.length,
-      photo_memories: photoMems.length,
-      events_with_photos: [...new Set(photoMems.map(m => m.event_id))].length,
+      total_media: media.length,
+      photo_video_items: photoItems.length,
+      note_items: noteItems.length,
+      events_with_media: [...new Set(photoItems.map(m => m.event_id))].length,
     },
     recent_events: events.slice(0, 10).map(e => ({
       date: e.date,
       title: e.title?.substring(0, 50),
-      has_photo: photoMems.some(m => m.event_id === e.id),
-      has_note: mems.some(m => m.event_id === e.id && m.photo_back?.includes('note.gif')),
+      media_count: (itemsByEvent.get(e.id) || []).length,
+      has_photo: photoItems.some(m => m.event_id === e.id),
+      has_note: noteItems.some(m => m.event_id === e.id),
     })),
-    recent_memories: mems.slice(0, 10).map(m => ({
+    recent_media: media.slice(0, 10).map(m => ({
       event_id: m.event_id,
-      is_note: m.photo_back?.includes('note.gif') || false,
-      caption: m.caption?.substring(0, 40),
+      kind: m.kind,
+      url: (m.url ?? '').substring(0, 60),
     })),
   })
 }
