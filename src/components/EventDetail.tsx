@@ -4,6 +4,7 @@ import type { Event, EventMedia } from '@/lib/supabase'
 import MediaUploader from './MediaUploader'
 import MediaViewer from './MediaViewer'
 import VideoPreview from './VideoPreview'
+import { youtubeThumbnail } from '@/lib/youtube'
 import { weeklyWeekday } from '@/lib/event-utils'
 
 // ── Helpers ────────────────────────────────────────────────
@@ -287,19 +288,25 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
                       className="relative aspect-square rounded-lg overflow-hidden bg-stone-100 group"
                     >
                       {m.kind === 'youtube' ? (
-                        <span className="absolute inset-0 flex items-center justify-center text-3xl">▶️</span>
+                        <>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={youtubeThumbnail(m.youtube_url ?? '')}
+                            alt="YouTube video"
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                          <span className="absolute inset-0 flex items-center justify-center">
+                            <span className="w-8 h-8 rounded-full bg-black/45 flex items-center justify-center">
+                              <svg viewBox="0 0 24 24" className="w-4 h-4 text-white ml-0.5" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                            </span>
+                          </span>
+                        </>
                       ) : m.kind === 'video' ? (
                         <VideoPreview src={m.url ?? ''} />
                       ) : (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={m.url ?? undefined} alt={m.caption ?? ''} className="w-full h-full object-cover" loading="lazy" />
-                      )}
-                      {m.kind === 'youtube' && (
-                        <span className="absolute inset-0 flex items-center justify-center">
-                          <span className="w-8 h-8 rounded-full bg-white/90 flex items-center justify-center">
-                            <svg viewBox="0 0 24 24" className="w-4 h-4 text-rose-500 ml-0.5" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                          </span>
-                        </span>
                       )}
                     </button>
                   ))}
