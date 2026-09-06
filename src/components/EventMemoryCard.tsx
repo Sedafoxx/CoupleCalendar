@@ -19,18 +19,17 @@ interface EventMemoryCardProps {
   media: EventMedia[]
   onEditEvent?: (ev: Event) => void
   onDeleteItem?: (item: EventMedia) => void
+  onAddMedia?: (ev: Event) => void
   onUpdated?: () => void
 }
 
-export default function EventMemoryCard({ event, media, onEditEvent, onDeleteItem }: EventMemoryCardProps) {
+export default function EventMemoryCard({ event, media, onEditEvent, onDeleteItem, onAddMedia }: EventMemoryCardProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [viewerIndex, setViewerIndex] = useState<number | null>(null)
 
   // Gallery items = photos, videos, youtube links (newest first). Notes shown separately.
   const gallery = media.filter(m => m.kind !== 'note')
   const notes = media.filter(m => m.kind === 'note')
-
-  if (gallery.length === 0 && notes.length === 0) return null
 
   return (
     <div className="bg-white border border-stone-200 rounded-2xl overflow-hidden shadow-sm">
@@ -109,8 +108,16 @@ export default function EventMemoryCard({ event, media, onEditEvent, onDeleteIte
         </div>
       ))}
 
+      {/* Empty state: a past confirmed event with no media yet */}
+      {gallery.length === 0 && notes.length === 0 && onAddMedia && (
+        <button onClick={() => onAddMedia(event)} className="w-full px-4 py-6 flex flex-col items-center gap-1 text-stone-300 hover:text-rose-400 hover:bg-rose-50/40 transition">
+          <span className="text-3xl">➕</span>
+          <span className="text-xs">Fotos / Videos / Notiz hinzufügen</span>
+        </button>
+      )}
+
       {/* Full-screen viewer */}
-      {viewerIndex !== null && (
+      {viewerIndex !== null && gallery.length > 0 && (
         <MediaViewer
           items={gallery}
           initialIndex={viewerIndex}

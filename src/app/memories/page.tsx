@@ -11,6 +11,7 @@ export default function MemoriesPage() {
   const [media, setMedia] = useState<EventMedia[]>([])
   const [loading, setLoading] = useState(true)
   const [showUploader, setShowUploader] = useState(false)
+  const [uploadEventId, setUploadEventId] = useState<string | undefined>(undefined)
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [showDebug, setShowDebug] = useState(false)
   const [pastEvents, setPastEvents] = useState<Event[]>([])
@@ -79,6 +80,18 @@ export default function MemoriesPage() {
   // From a gallery card's edit, open the underlying event detail.
   function handleEditEvent(ev: Event) { setSelectedEvent(ev) }
 
+  // From a card's "+" (empty event), open the uploader pre-scoped to that event.
+  function handleAddMedia(ev: Event) {
+    setUploadEventId(ev.id)
+    setShowUploader(true)
+  }
+
+  // The global FAB picks any event.
+  function handleAddAny() {
+    setUploadEventId(undefined)
+    setShowUploader(true)
+  }
+
   // Delete a single media item from the full-screen viewer.
   async function handleDeleteMedia(item: EventMedia) {
     if (!confirm('Dieses Medium wirklich löschen?')) return
@@ -142,7 +155,13 @@ export default function MemoriesPage() {
   }
 
   if (showUploader) {
-    return <MediaUploader onClose={() => setShowUploader(false)} onDone={fetchAll} />
+    return (
+      <MediaUploader
+        preselectedEventId={uploadEventId}
+        onClose={() => setShowUploader(false)}
+        onDone={fetchAll}
+      />
+    )
   }
 
   return (
@@ -192,6 +211,7 @@ export default function MemoriesPage() {
             media={media}
             onSelectEvent={handleEditEvent}
             onDeleteMedia={handleDeleteMedia}
+            onAddMedia={handleAddMedia}
             onUpdated={fetchAll}
             showRsvp={false}
           />
@@ -205,7 +225,7 @@ export default function MemoriesPage() {
         </div>
       )}
 
-      <button onClick={() => setShowUploader(true)} className="fixed bottom-20 right-6 z-30 w-14 h-14 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 text-white shadow-lg flex items-center justify-center text-2xl hover:from-rose-500 hover:to-pink-600 transition active:scale-95">➕</button>
+      <button onClick={handleAddAny} className="fixed bottom-20 right-6 z-30 w-14 h-14 rounded-full bg-gradient-to-r from-rose-400 to-pink-500 text-white shadow-lg flex items-center justify-center text-2xl hover:from-rose-500 hover:to-pink-600 transition active:scale-95">➕</button>
 
       {selectedEvent && <EventDetail event={selectedEvent} onClose={() => { setSelectedEvent(null); fetchAll() }} />}
     </div>

@@ -11,6 +11,7 @@ interface FeedCardsProps {
   media: EventMedia[]
   onSelectEvent: (ev: Event) => void
   onDeleteMedia: (item: EventMedia) => void
+  onAddMedia?: (ev: Event) => void
   onUpdated?: () => void
   showRsvp?: boolean
 }
@@ -20,6 +21,7 @@ export default function FeedCards({
   media,
   onSelectEvent,
   onDeleteMedia,
+  onAddMedia,
   onUpdated,
   showRsvp = true,
 }: FeedCardsProps) {
@@ -44,16 +46,13 @@ export default function FeedCards({
     mediaByEvent.set(m.event_id, list)
   }
 
-  // Events that have any media (photo/video/youtube/note) get a gallery card.
-  const eventsWithMedia = past.filter(ev => (mediaByEvent.get(ev.id) || []).length > 0)
-
-  if (eventsWithMedia.length === 0) {
+  if (past.length === 0) {
     return (
       <div className="text-center py-16 space-y-4">
         <p className="text-6xl">📸</p>
         <h2 className="text-xl font-semibold text-stone-700">Noch keine Erinnerungen</h2>
         <p className="text-stone-400 text-sm max-w-xs mx-auto">
-          Füge Fotos, Videos oder Notizen zu vergangenen Momenten hinzu — sie erscheinen hier.
+          Erinnerungen erscheinen hier, sobald ihr vergangene Events gemeinsam bestätigt habt.
         </p>
       </div>
     )
@@ -61,7 +60,7 @@ export default function FeedCards({
 
   return (
     <div className="space-y-4">
-      {eventsWithMedia.map(ev => {
+      {past.map(ev => {
         const eventMedia = (mediaByEvent.get(ev.id) || [])
           .slice()
           .sort((a, b) => b.created_at.localeCompare(a.created_at))
@@ -72,6 +71,7 @@ export default function FeedCards({
               media={eventMedia}
               onEditEvent={onSelectEvent}
               onDeleteItem={onDeleteMedia}
+              onAddMedia={onAddMedia}
             />
             {showRsvp && (
               <div className="px-1">
