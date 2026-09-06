@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import type { Event, EventMedia } from '@/lib/supabase'
 import MediaUploader from './MediaUploader'
 import MediaViewer from './MediaViewer'
+import VideoPreview from './VideoPreview'
 import { weeklyWeekday } from '@/lib/event-utils'
 
 // ── Helpers ────────────────────────────────────────────────
@@ -288,7 +289,7 @@ export default function EventDetail({ event, onClose }: EventDetailProps) {
                       {m.kind === 'youtube' ? (
                         <span className="absolute inset-0 flex items-center justify-center text-3xl">▶️</span>
                       ) : m.kind === 'video' ? (
-                        <video src={m.url ?? undefined} muted playsInline preload="metadata" className="w-full h-full object-cover" />
+                        <VideoPreview src={m.url ?? ''} />
                       ) : (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={m.url ?? undefined} alt={m.caption ?? ''} className="w-full h-full object-cover" loading="lazy" />

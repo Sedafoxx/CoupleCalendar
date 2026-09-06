@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react'
 import type { Event, EventMedia } from '@/lib/supabase'
 import MediaViewer from './MediaViewer'
+import VideoPreview from './VideoPreview'
 import { youtubeThumbnail } from '@/lib/youtube'
 
 // One card per event in the Memories feed: header (title/date) + a swipeable
@@ -86,15 +87,11 @@ export default function EventMemoryCard({ event, media, onEditEvent, onDeleteIte
                     </span>
                   </>
                 ) : m.kind === 'video' ? (
-                  <video src={m.url ?? undefined} muted playsInline preload="metadata" className="w-full h-full object-contain bg-black" />
+                  <VideoPreview src={m.url ?? ''} />
                 ) : (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={m.url ?? undefined} alt={m.caption ?? event.title} className="w-full h-full object-cover" loading="lazy" />
                 )}
-                {/* kind badge */}
-                <span className="absolute top-2 right-2 text-[10px] font-semibold text-white bg-black/50 px-1.5 py-0.5 rounded">
-                  {m.kind === 'youtube' ? '▶ YouTube' : m.kind === 'video' ? '🎬 Video' : '📷'}
-                </span>
               </button>
             ))}
           </div>
