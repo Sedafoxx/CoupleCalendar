@@ -80,12 +80,6 @@ export default function MemoriesPage() {
   // From a gallery card's edit, open the underlying event detail.
   function handleEditEvent(ev: Event) { setSelectedEvent(ev) }
 
-  // From a card's "+" (empty event), open the uploader pre-scoped to that event.
-  function handleAddMedia(ev: Event) {
-    setUploadEventId(ev.id)
-    setShowUploader(true)
-  }
-
   // The global FAB picks any event.
   function handleAddAny() {
     setUploadEventId(undefined)
@@ -211,7 +205,6 @@ export default function MemoriesPage() {
             media={media}
             onSelectEvent={handleEditEvent}
             onDeleteMedia={handleDeleteMedia}
-            onAddMedia={handleAddMedia}
             onUpdated={fetchAll}
             showRsvp={false}
           />
