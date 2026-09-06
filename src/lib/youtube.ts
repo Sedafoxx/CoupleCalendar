@@ -14,17 +14,25 @@ export function extractYouTubeId(text: string | null | undefined): string | null
   return m ? m[1] : null
 }
 
-/** Highest-resolution thumbnail available for a video id. */
-export function youtubeThumbnail(id: string): string {
-  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
+// Normalize input that may be a full URL OR a bare 11-char id down to the id.
+function toId(value: string | null | undefined): string {
+  const id = extractYouTubeId(value)
+  return id ?? (value || '')
 }
 
-/** Playable embed URL (autoplay=1 for the modal). */
-export function youtubeEmbedUrl(id: string, autoplay = false): string {
-  return `https://www.youtube.com/embed/${id}${autoplay ? '?autoplay=1' : ''}`
+/** Highest-resolution thumbnail available for a video URL or id. */
+export function youtubeThumbnail(value: string | null | undefined): string {
+  return `https://i.ytimg.com/vi/${toId(value)}/hqdefault.jpg`
 }
 
-/** Canonical watch URL for opening in a new tab. */
-export function youtubeWatchUrl(id: string): string {
-  return `https://www.youtube.com/watch?v=${id}`
+/** Playable embed URL (autoplay=1 for the modal). Accepts a URL or id. */
+export function youtubeEmbedUrl(value: string | null | undefined, autoplay = false): string {
+  return `https://www.youtube.com/embed/${toId(value)}${autoplay ? '?autoplay=1' : ''}`
+}
+
+/** Canonical watch URL for opening in a new tab. Accepts a URL or id. */
+export function youtubeWatchUrl(value: string | null | undefined): string {
+  const id = extractYouTubeId(value)
+  if (id) return `https://www.youtube.com/watch?v=${id}`
+  return value || ''
 }
